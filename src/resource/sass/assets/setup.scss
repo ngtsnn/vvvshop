@@ -1,0 +1,105 @@
+/*gap*/
+.gap-xs, .gap-sm, .gap-md, .gap-lg, .gap-xl{
+  display: block;
+  height: 0.625em;
+  width: 100%;
+}
+.gap-sm{
+  height: 1.25em;
+}
+.gap-md{
+  height: 1.875em;
+}
+.gap-lg{
+  height: 2.5em;
+}
+.gap-xl{
+  height: 3.125em;
+}
+@media screen and (max-width: 61.9375em){ //991px
+  .gap-xs{
+    height: 0.375em;
+  }
+  .gap-sm{
+    height: 0.75em;
+  }
+  .gap-md{
+    height: 1.125em;
+  }
+  .gap-lg{
+    height: 1.5em;
+  }
+  .gap-xl{
+    height: 1.875em;
+  }
+}
+
+/*font size*/
+.fs-xs, .fs-sm, .fs-md, .fs-lg, .fs-xl{
+  font-size: 0.5em;
+}
+.fs-sm{
+  font-size: 0.75em;
+}
+.fs-md{
+  font-size: 1em;
+}
+.fs-lg{
+  font-size: 1.5em;
+}
+.fs-xl{
+  font-size: 2.5em;
+}
+@media screen and (max-width: 61.9375em){ //991px
+  .fs-xs{
+    font-size: 0.375em;
+  }
+  .fs-sm{
+    font-size: 0.625em;
+  }
+  .fs-md{
+    font-size: 0.875em;
+  }
+  .fs-lg{
+    font-size: 1.25em;
+  }
+  .fs-xl{
+    font-size: 2.25em;
+  }
+}
+
+/*colours*/
+.bg-white{
+  background-color: #fff;
+}
+.bg-dark-trans{
+  background-color: rgba($color: #000000, $alpha: .1);
+}
+.bg-grey{
+  background-color: #f7f7f7;
+}
+.bg-green{
+  background-color: #00f5ab;
+}
+.bg-green-trans{
+  background-color: rgba($color: #00f5ab, $alpha: .1);
+}
+
+.text-dark-0{
+  color: #444444;
+}
+.text-green{
+  color: #00f5ab;
+}
+.text-white{
+  color: #fff;
+}
+
+/*text style*/
+.text-cross{
+  text-decoration: line-through;
+}
+.text-bold{
+  font-weight: bold;
+  font-family: 'Roboto-Bold', sans-serif, Arial;
+}

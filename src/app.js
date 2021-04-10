@@ -2,8 +2,13 @@
 
 //import dependencies
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const exphbs = require('express-handlebars');
+
+
+//import internal files
+const route = require('./app/routes/index.routes');
+const db = require('./db');
 
 
 
@@ -12,7 +17,16 @@ const app = express();
 
 
 //set static
-app.use(express.static("src/public"))
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+//setting middleware
+app.use(express.urlencoded({
+  extended: true,
+}));
+app.use(express.json());
+
 
 
 //configure view engine
@@ -22,17 +36,28 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   helpers      : path.join(__dirname, 'resource/views/helpers'),
   partialsDir  : [
-    path.join(__dirname, 'resource/views/components')
+    path.join(__dirname, 'resource/views/components'),
   ]
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resource/views'));
 
+
+
+//connect database
+db.conn();
+
+
 //configure port
 const port = 8080;
 
-//run app
-app.get('/', (req, res) => {
-  return res.render("sites/index");
-})
+
+
+//route
+route(app);
+
+
+
+
+//listening
 app.listen(port, () => console.log(`Listening on port ${port}!`));

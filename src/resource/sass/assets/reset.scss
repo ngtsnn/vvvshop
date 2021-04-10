@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Roboto-Thin';
+  src: url('../../fonts/Roboto-Thin.ttf');
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Regular.ttf');
+}
+@font-face {
+  font-family: 'Roboto-Bold';
+  src: url('../../fonts/Roboto-Bold.ttf');
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif, Arial;
+}
+
+ul, ol{
+  list-style: none;
+}
+
+a, input, button, textarea{
+  border: none;
+  outline: none;
+}
+

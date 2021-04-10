@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app",
     "dev": "nodemon src/app",
-    "watch": "sass --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
-    "live-dev": "nodemon src/app & sass --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites"
+    "edit-assets": "sass --no-source-map --watch src/resource/sass/assets:src/public/css/assets",
+    "watch": "sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
+    "live-dev": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
+    "mongoose": "^5.12.3",
     "sass": "^1.32.8"
   },
   "devDependencies": {
