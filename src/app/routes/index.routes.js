@@ -1,3 +1,5 @@
+'use strict';
+
 //import routes
 const productsRoutes = require('./products.routes')
 
