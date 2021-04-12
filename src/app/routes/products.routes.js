@@ -1,3 +1,5 @@
+'use strict';
+
 const router = require('express').Router();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -10,7 +12,7 @@ const productController = require('../controllers/product.controller');
 
 
 //routing for product routes
-router.get('/:add', productController.add);
+router.get('/add', productController.add);
 router.get('/', productController.index);
 
 
