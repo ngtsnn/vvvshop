@@ -8,8 +8,12 @@ const ProductController = function () {
 
 // [GET] /products
 ProductController.prototype.index = function(req, res, next){
+  //sample get data
   Product.find({}).then(products => {
-    console.log(products);
+    //handle somethings before sending data to view
+    products = products.map(product => product.toObject())
+
+    //send data
     res.render("sites/products/dashboard", {products});
   })
   .catch(err => console.log(err.message))
