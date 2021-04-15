@@ -6,8 +6,10 @@ const config = require('./config')
 const conn = async () => {
   try {
     await mongoose.connect(`mongodb://${config.host}:${config.db_port}/${config.db_name}`, {
-      useNewUrlParser: true, 
-      useUnifiedTopology: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true
     });
     console.log("Connect to database successfully!!!!");
   } catch (error) {
