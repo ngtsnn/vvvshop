@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 {{>head}}
-<body>
-  {{>header}}
+<body class="bg-grey">
+  <div class="container-fluid bg-white h-full">
+    <div class="row">
+      {{>nav}}
+      <div class="right-dashboard">
+        {{>header}}
+        <div class="gap-sm"></div>
+        {{{body}}}
+      </div>
+    </div>
+  </div>
 
-  {{{body}}}
-
-  {{>footer}}
 </body>
 {{>dynamic_js/dashboard}}
 </html>

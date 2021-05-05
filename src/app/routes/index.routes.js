@@ -1,12 +1,12 @@
 'use strict';
 
 //import routes
-const productsRoutes = require('./products.routes')
+const dashboardRoutes = require('./dashboard.routes')
 
 
 
 module.exports = function (app) {
-  app.use('/products' ,productsRoutes);
+  app.use('/dashboard' ,dashboardRoutes);
   app.get('/', (req, res) => {
     return res.render("sites/index");
   });

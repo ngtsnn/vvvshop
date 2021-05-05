@@ -60,4 +60,5 @@ route(app);
 
 
 //listening
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!
+App is running at https://127.0.0.1:${port}`));

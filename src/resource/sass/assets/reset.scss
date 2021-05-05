@@ -17,6 +17,7 @@
   box-sizing: border-box;
   text-decoration: none;
   font-family: 'Roboto', sans-serif, Arial;
+  color: #444444;
 }
 
 ul, ol{
@@ -28,3 +29,21 @@ a, input, button, textarea{
   outline: none;
 }
 
+a:hover{
+  text-decoration: none !important;
+}
+
+/*custom scrollbar*/
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar:horizontal{
+  height: 5px;
+}
+::-webkit-scrollbar-track{
+  background: transparent;
+}
+::-webkit-scrollbar-thumb{
+  background: #00f5ab;
+  border-radius: 24px;
+}

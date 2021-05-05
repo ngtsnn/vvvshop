@@ -34,6 +34,9 @@
   }
 }
 
+/*margin - padding*/
+
+
 /*font size*/
 .fs-xs, .fs-sm, .fs-md, .fs-lg, .fs-xl{
   font-size: 0.5em;
@@ -84,6 +87,9 @@
 .bg-green-trans{
   background-color: rgba($color: #00f5ab, $alpha: .1);
 }
+.bg-transparent{
+  background: transparent;
+}
 
 .text-dark-0{
   color: #444444;
@@ -96,10 +102,105 @@
 }
 
 /*text style*/
+.text-underline{
+  text-decoration: underline;
+}
 .text-cross{
   text-decoration: line-through;
 }
 .text-bold{
   font-weight: bold;
   font-family: 'Roboto-Bold', sans-serif, Arial;
+}
+
+/*outline*/
+.no-outline{
+  outline: none;
+}
+
+/*rounded*/
+.rounded-12{
+  border-radius: 12px;
+  overflow: hidden;
+}
+.rounded-24{
+  border-radius: 24px;
+  overflow: hidden;
+}
+.rounded-circle{
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+/*width - height*/
+.w-16p{
+  width: 16px !important;
+}
+.w-20p{
+  width: 20px !important;
+}
+.w-40p{
+  width: 40px !important;
+}
+.w-full{
+  width: 100% !important;
+}
+
+.h-16p{
+  height: 16px !important;
+}
+.h-20p{
+  height: 20px !important;
+}
+.h-40p{
+  height: 40px !important;
+}
+
+/* overflow - hide scrollbar */
+.overflow-auto{
+  overflow: auto;
+}
+.overflow-x-auto{
+  overflow-x: auto;
+}
+.overflow-y-auto{
+  overflow-y: auto;
+}
+.overflow-hidden{
+  overflow: hidden;
+}
+.overflow-x-hidden{
+  overflow-x: hidden;
+}
+.overflow-y-hidden{
+  overflow-y: hidden;
+}
+.overflow-scroll{
+  overflow: scroll;
+}
+.overflow-x-scroll{
+  overflow-x: scroll;
+}
+.overflow-y-scroll{
+  overflow-y: scroll;
+}
+.overflow-visible{
+  overflow: visible;
+}
+.overflow-x-visible{
+  overflow-x: visible;
+}
+.overflow-y-visible{
+  overflow-y: visible;
+}
+
+.hide-scrollbar::-webkit-scrollbar{
+  display: none;
+}
+
+
+/*display*/
+.hidden{
+  display: none;
 }

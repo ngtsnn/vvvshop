@@ -9,7 +9,8 @@
     "dev": "nodemon src/app",
     "edit-assets": "sass --no-source-map --watch src/resource/sass/assets:src/public/css/assets",
     "watch": "sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
-    "live-dev": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites"
+    "live-dev": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
+    "live-dev-assets": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites src/resource/sass/assets:src/public/css/assets"
   },
   "repository": {
     "type": "git",

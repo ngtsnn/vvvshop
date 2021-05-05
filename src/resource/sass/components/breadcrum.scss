@@ -1,0 +1,20 @@
+.wrap-breadcrumb{
+  .my-breadcrumb{
+    display: flex;
+
+    .my-breadcrumb-item{
+      .my-breadcrumb-link{
+        display: block;
+        padding: 1em 0;
+        font-size: 1em;
+        color: #444444;
+      }
+    }
+    .my-breadcrumb-item + .my-breadcrumb-item{
+      .my-breadcrumb-link::before{
+        content: '\003E';
+        padding: .75em;
+      }
+    }
+  }
+}
