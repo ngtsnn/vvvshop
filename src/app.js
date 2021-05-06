@@ -49,7 +49,7 @@ db.conn();
 
 
 //configure port
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
 
 
