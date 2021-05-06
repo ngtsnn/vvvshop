@@ -1,6 +1,10 @@
+@import "./variables.scss";
+
 .wrap-breadcrumb{
   .my-breadcrumb{
     display: flex;
+    margin: 0;
+
 
     .my-breadcrumb-item{
       .my-breadcrumb-link{

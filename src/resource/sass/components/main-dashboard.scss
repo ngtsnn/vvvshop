@@ -1,5 +1,13 @@
+@import "./variables.scss";
+
+@import "./variables.scss";
+
 .right-dashboard{
   width: calc(100% - 250px);
   padding-left: 15px;
   padding-right: 15px;
+
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 }

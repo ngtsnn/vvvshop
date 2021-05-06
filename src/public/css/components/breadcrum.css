@@ -1,5 +1,6 @@
 .wrap-breadcrumb .my-breadcrumb {
   display: flex;
+  margin: 0;
 }
 .wrap-breadcrumb .my-breadcrumb .my-breadcrumb-item .my-breadcrumb-link {
   display: block;

@@ -58,9 +58,43 @@ const tgCollapse = function (object){
         }
       }
       
-    })
+    });
 
-  })
+  });
+}
 
+const tgWithClasses = (object) => {
+  
+  // validate object
+  if(!object.queryStr){
+    console.log("does not have query string!");
+    return;
+  }
+  if(!object.attrTarget){
+    console.log("does not have attribute target!");
+    return;
+  }
 
+  // validate data
+  const elements = $(object.queryStr);
+  // validate elements
+  if(!elements.length){
+    console.log("there is no element of: " + object.queryStr);
+    return;
+  }
+
+  elements.on("click", function(){
+    if(!$(this).attr(object.attrTarget)){
+      console.log(`object does not have attribute target!`);
+      return;
+    }
+
+    const target = $($(this).attr(object.attrTarget));
+    if (!target.length){
+      console.log(`can not found ${$(this).attr(object.attrTarget)}`);
+      return;
+    }
+
+    target.toggleClass(object.withClasses || "active");
+  });
 }

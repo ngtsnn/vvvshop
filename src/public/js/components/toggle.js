@@ -8,5 +8,15 @@ $(document).ready(function () {
       iconQuery: 'this',
       toggleClass: 'rotate-z-90',
     },
-  })
+  });
+  tgWithClasses({
+    queryStr: "#nav-toggler",
+    attrTarget: 'tg-target',
+    withClasses: 'active',
+  });
+  tgWithClasses({
+    queryStr: ".wrap-nav-container #dark-layer",
+    attrTarget: 'tg-target',
+    withClasses: 'active',
+  });
 });
