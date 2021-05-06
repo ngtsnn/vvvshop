@@ -49,7 +49,7 @@ db.conn();
 
 
 //configure port
-const port = 8080;
+const port = process.env.PORT;
 
 
 
@@ -61,4 +61,4 @@ route(app);
 
 //listening
 app.listen(port, () => console.log(`Listening on port ${port}!
-App is running at https://127.0.0.1:${port}`));
+App is running at http://127.0.0.1:${port}`));
