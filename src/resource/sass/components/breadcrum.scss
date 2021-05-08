@@ -18,7 +18,28 @@
       .my-breadcrumb-link::before{
         content: '\003E';
         padding: .75em;
+        color: #444444 !important;
       }
     }
+
+    .my-breadcrumb-item:last-child .my-breadcrumb-link{
+      color: #007bff;
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    .my-breadcrumb{  
+      .my-breadcrumb-item{
+        .my-breadcrumb-link{
+          padding: .2em .3em .2em 0;
+        }
+      }
+
+      .my-breadcrumb-item + .my-breadcrumb-item{
+        .my-breadcrumb-link::before{
+          padding: .75em .3em .75em 0;
+        }
+      }
+    }    
   }
 }

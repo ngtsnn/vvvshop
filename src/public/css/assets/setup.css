@@ -126,6 +126,39 @@
   color: #fff;
 }
 
+.btn-main {
+  background-color: #027492;
+  padding: 7px 12px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.btn-main:hover {
+  border: 1px solid #027492;
+  background: none;
+  padding: 6px 11px;
+  color: #027492;
+}
+
+.btn-outline-main {
+  padding: 6px 11px;
+  border: 1px solid #027492;
+  color: #027492;
+  border-radius: 4px;
+  background: none;
+  outline: none;
+}
+
+.btn-outline-main:hover {
+  border: 1px solid #027492;
+  background-color: #027492;
+  padding: 7px 12px;
+  color: white;
+  border: none;
+}
+
 /*text style*/
 .text-underline {
   text-decoration: underline;

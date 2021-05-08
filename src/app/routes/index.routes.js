@@ -1,16 +1,20 @@
 'use strict';
 
-//import routes
-// const dashboardRoutes = require('./dashboard.routes');
+// import routes
+const dashboardRoutes = require('./dashboard/index.routes');
 
 
 
 module.exports = function (app) {
 
-  app.get('/', (req, res) => {
+  // /dashboard
+  app.use('/dashboard', dashboardRoutes);
+  // home page
+  app.get('/', (req, res, next) => {
     return res.render("sites/index");
   });
-  app.get('*', (req, res) => {
+  // not found
+  app.get('*', (req, res, next) => {
     return res.render("404");
   });
   

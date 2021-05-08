@@ -11,4 +11,16 @@
 .wrap-breadcrumb .my-breadcrumb .my-breadcrumb-item + .my-breadcrumb-item .my-breadcrumb-link::before {
   content: ">";
   padding: 0.75em;
+  color: #444444 !important;
+}
+.wrap-breadcrumb .my-breadcrumb .my-breadcrumb-item:last-child .my-breadcrumb-link {
+  color: #007bff;
+}
+@media screen and (max-width: 991px) {
+  .wrap-breadcrumb .my-breadcrumb .my-breadcrumb-item .my-breadcrumb-link {
+    padding: 0.2em 0.3em 0.2em 0;
+  }
+  .wrap-breadcrumb .my-breadcrumb .my-breadcrumb-item + .my-breadcrumb-item .my-breadcrumb-link::before {
+    padding: 0.75em 0.3em 0.75em 0;
+  }
 }

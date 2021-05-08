@@ -21,3 +21,15 @@
     </div>
   </div>
 </header>
+
+<div class="gap-md d-lg-none"></div>
+<div class="wrap-breadcrumb d-lg-none">
+  <ul class="my-breadcrumb flex-wrap">
+    {{#each routeArr}}
+    <li class="my-breadcrumb-item">
+      <a href={{{this.url}}} class="my-breadcrumb-link">{{this.breadcrumbTitle}}</a>
+    </li>
+    {{else}}
+    {{/each}}
+  </ul>
+</div>
