@@ -7,15 +7,6 @@
   transition: all ease-in-out .5s;
   z-index: 200;
 
-  #dark-layer{
-    position: fixed;
-    z-index: -100;
-    top: 0;
-    left: 0;
-    display: none;
-    opacity: 0;
-    transition: all ease-in-out .5s;
-  }
 
   .wrap-user{
     .wrap-avatar{
@@ -106,9 +97,5 @@
 @media screen and (max-width: $tablet) {
   .wrap-nav-container.active{
     left: 0;
-    #dark-layer{
-      display: block;
-      opacity: 1;
-    }
   }
 }

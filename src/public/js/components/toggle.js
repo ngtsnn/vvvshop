@@ -15,7 +15,7 @@ $(document).ready(function () {
     withClasses: 'active',
   });
   tgWithClasses({
-    queryStr: ".wrap-nav-container #dark-layer",
+    queryStr: "#dark-layer",
     attrTarget: 'tg-target',
     withClasses: 'active',
   });

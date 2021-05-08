@@ -9,6 +9,7 @@ const exphbs = require('express-handlebars');
 //import internal files
 const route = require('./app/routes/index.routes');
 const db = require('./db');
+const slicedURL = require('./utility/middlewares/app/sliced_url.middleware');
 
 
 
@@ -29,12 +30,17 @@ app.use(express.json());
 
 
 
+// custom middlewares
+app.use(slicedURL);
+
+
+
 //configure view engine
 app.engine('hbs', exphbs({
   extname      :'hbs',
   layoutsDir   : path.join(__dirname, 'resource/views/layouts'),
   defaultLayout: 'main',
-  helpers      : path.join(__dirname, 'resource/views/helpers'),
+  helpers      : require("./utility/helpers"),
   partialsDir  : [
     path.join(__dirname, 'resource/views/components'),
   ]

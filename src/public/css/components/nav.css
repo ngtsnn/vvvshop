@@ -5,15 +5,6 @@
   transition: all ease-in-out 0.5s;
   z-index: 200;
 }
-.wrap-nav-container #dark-layer {
-  position: fixed;
-  z-index: -100;
-  top: 0;
-  left: 0;
-  display: none;
-  opacity: 0;
-  transition: all ease-in-out 0.5s;
-}
 .wrap-nav-container .wrap-user .wrap-avatar {
   width: 40px;
   height: 40px;
@@ -93,9 +84,5 @@
 @media screen and (max-width: 991px) {
   .wrap-nav-container.active {
     left: 0;
-  }
-  .wrap-nav-container.active #dark-layer {
-    display: block;
-    opacity: 1;
   }
 }

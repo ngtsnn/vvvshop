@@ -90,6 +90,7 @@ const tgWithClasses = (object) => {
     }
 
     const target = $($(this).attr(object.attrTarget));
+    console.log(target)
     if (!target.length){
       console.log(`can not found ${$(this).attr(object.attrTarget)}`);
       return;
