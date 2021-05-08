@@ -9,8 +9,7 @@ const exphbs = require('express-handlebars');
 //import internal files
 const route = require('./app/routes/index.routes');
 const db = require('./db');
-const slicedURL = require('./utility/middlewares/app/sliced_url.middleware');
-
+const customMiddlewares = require('./utility/middlewares/app/');
 
 
 //init app
@@ -31,7 +30,7 @@ app.use(express.json());
 
 
 // custom middlewares
-app.use(slicedURL);
+app.use(customMiddlewares);
 
 
 

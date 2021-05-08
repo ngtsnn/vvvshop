@@ -19,7 +19,28 @@
   <nav class="wrap-nav overflow-y-auto">
     <div class="gap-xs"></div>
     <ul class="wrap-nav-lv1">
+      {{#each navs}}
       <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12 {{#if (isSelected ../baseURL this.url)}}active{{/if}}"}>          
+          <a href={{this.url}} class="d-block nav-link-lv1 text-bold">{{this.name}}</a>
+          {{#if this.lv2}}
+          <button class="bg-transparent tg-icon my-collapse-1 {{#if (isSelected ../baseURL this.url)}}rotate-z-90{{/if}}" tg-target="#nav-lv2-{{@index}}">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          {{/if}}
+        </div>
+        {{#if this.lv2}}
+        <ul class="wrap-nav-lv2 {{#if (isSelected ../baseURL this.url)}}{{else}}hidden{{/if}}" id="nav-lv2-{{@index}}">
+          {{#each this.lv2}}
+          <li>
+            <a href={{this.url}} class="nav-link-lv2 rounded-12 {{#if (isSelected ../../baseURL this.url)}}active{{/if}}">{{this.name}}</a>
+          </li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </li>
+      {{/each}}
+      {{!-- <li class="nav-lv1-container">
         <div class="nav-lv1 d-flex rounded-12 active">
           <a href="/dashboard/products" class="d-block nav-link-lv1 text-bold">Bảng điều khiển</a>
           <button class="bg-transparent tg-icon my-collapse-1 rotate-z-90" tg-target="#nav-lv2-1">
@@ -66,7 +87,7 @@
         <div class="nav-lv1 d-flex rounded-12">
           <a href="/settings" class="d-block nav-link-lv1 text-bold w-full">Cài đặt</a>
         </div>
-      </li>
+      </li> --}}
     </ul>
-    </nav>
+  </nav>
 </section>
