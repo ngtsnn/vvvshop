@@ -18,6 +18,7 @@ const engToVie = {
   "order": "đơn hàng",
   "settings": "cài đặt",
   "setting": "cài đặt",
+  "trashbin": "thùng rác",
 }
 
 const capitalize = function (string) {

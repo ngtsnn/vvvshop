@@ -5,4 +5,8 @@ router.get("/", (req, res, next) => {
   res.render("sites/dashboard/products/index");
 });
 
+router.get("/trashbin", (req, res, next) => {
+  res.render("sites/dashboard/products/trashbin");
+});
+
 module.exports = router;
