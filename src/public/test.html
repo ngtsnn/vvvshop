@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="test">nhấn đi</button>
+</body>
+
+<script>
+  const API = "http://127.0.0.1:8080/api/products"
+  const btn = document.querySelector("#test");
+  btn.addEventListener("click", () => {
+    fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        "name": "Laptop Dell Inspiron 5406 70232602",
+        "price": "20990000",
+        "description": "Laptop Dell Inspiron 14 5406 nhỏ gọn, tiện nghi, năng động và sành điệu\nDell là một trong số những thương hiệu laptop nổi tiếng được đông đảo người tiêu dùng yêu thích và lựa chọn. Nếu bạn đang tìm kiếm một chiếc laptop vừa đảm bảo được yếu tố thẩm mỹ, vừa có hiệu năng ổn định thì laptop Dell Inspiron 14 5406 là sản phẩm mà bạn không nên bỏ qua.\nThiết kế mỏng nhẹ, màn hình 14 inch full HD\nLaptop Dell Inspiron 14 5406 được thiết kế cực kỳ mỏng nhẹ với kích thước nhỏ gọn giúp cho việc di chuyển được trở nên dễ dàng hơn. Các góc cạnh của máy được thiết kế tỉ mỉ, bo tròn mềm mại. Bản lề được thiết kế vô cùng chắc chắn mang đến độ bền vượt trội.",
+        "img": "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/l/a/laptop-dell-inspiron-5406_2_ksp.jpg"
+      }),
+    }).then(res => res.json())
+    .then(data => console.log(data));
+  })
+</script>
+</html>

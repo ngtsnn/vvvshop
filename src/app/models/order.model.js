@@ -2,10 +2,7 @@
 
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
-const validator = require('validator')
 const { Schema } = mongoose;
-
-mongoose.plugin(slug);
 
 const order = new Schema({
   orderID: { type: String, default: '', trim: true, require: true},
@@ -17,10 +14,9 @@ const order = new Schema({
       }
     }
   },
-  date: { type: String, default: '', trim: true, require: true, },
-  adress: { type: String, default: '', trim: true, require: true, },
-  price: { type: String, require: true },
-  slug: { type: String, slug: "name", unique: true },
+  date: { type: Date, default: Date.now, trim: true, require: true, },
+  address: { type: String, default: '', trim: true, require: true, },
+  price: { type: Number, require: true },
 }, {
   timestamps: true,
 })
