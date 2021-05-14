@@ -1,26 +1,17 @@
 'use strict';
 
 const mongoose = require("mongoose");
-const slug = require("mongoose-slug-generator");
-const validator = require('validator')
 const { Schema } = mongoose;
+const productSchema = require('./product.model')
+const userSchema = require('./user.model')
+const paymentSchema  = require('./payment.model')
 
-mongoose.plugin(slug);
 
 const order = new Schema({
-  orderID: { type: String, default: '', trim: true, require: true},
-  userID: { type: String, default: '', trim: true, require: true},
-  phone: { type: String, unique: true, required: true, trim: true, lowercase: true,
-    validate(value) {
-      if (!validator.isMobilePhone(value)) {
-        throw new Error('Phone is invalid')
-      }
-    }
-  },
-  date: { type: String, default: '', trim: true, require: true, },
-  adress: { type: String, default: '', trim: true, require: true, },
-  price: { type: String, require: true },
-  slug: { type: String, slug: "name", unique: true },
+  product: [productSchema],
+  user: [userSchema],
+  payment: [paymentSchema],
+  price: { type: Number, require: true },
 }, {
   timestamps: true,
 })
