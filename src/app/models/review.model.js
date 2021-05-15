@@ -7,7 +7,7 @@ mongoose.plugin(slug);
 
 const review = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'user', default: null},
-  productID: { type: Schema.Types.ObjectId, ref: 'Product', default: null},
+  productID: { type: Schema.Types.ObjectId, ref: 'product', default: null},
   rate: { type: Number, default: 0 }
 }, {
   timestamps: true,
