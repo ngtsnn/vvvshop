@@ -1,16 +1,14 @@
 'use strict';
 
 const mongoose = require("mongoose");
-const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
 
 mongoose.plugin(slug);
 
 const comment = new Schema({
-  userId: {type: String, default: '', require: true,},
+  userId: { type: Schema.Types.ObjectId, ref: 'user', default: null},
   comment: {type: String, require: true,},
-  reply: {type: String},
-  slug: { type: String, slug: "name", unique: true },
+  reply: { type: String },
 }, {
   timestamps: true,
 })

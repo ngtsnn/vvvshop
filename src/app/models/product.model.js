@@ -10,9 +10,12 @@ const product = new Schema({
   name: {type: String, default: '', require: true,},
   img: {type: String, require: true,},
   description: {type: String, default: '', require: true},
-  slug: { type: String, slug: "name", unique: true },
+  price: {type: Number},
+  rateAverage: {type: Number},
+  slug: { type: String, slug: "name", unique: true, lower: true },
 }, {
   timestamps: true,
 })
 
 module.exports = mongoose.model("product", product); //collection: products
+
