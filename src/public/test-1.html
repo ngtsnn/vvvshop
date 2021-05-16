@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" placeholder="name" id="name">
+  <input type="number" placeholder="price" id="price">
+  <input type="text" placeholder="description" id="description">
+  <input type="text" placeholder="img" id="img">
+  <button id="test">nhấn đi</button>
+</body>
+
+<script>
+  const API = "http://127.0.0.1:8080/api/products"
+  const btn = document.querySelector("#test");
+  btn.addEventListener("click", () => {
+    const name = document.querySelector("#name").value;
+    const price = document.querySelector("#price").value;
+    const description = document.querySelector("#description").value;
+    const img = document.querySelector("#img").value;
+    fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        name, price, description, img
+      }),
+    }).then(res => res.json())
+    .then(data => console.log(data));
+  });
+</script>
+</html>

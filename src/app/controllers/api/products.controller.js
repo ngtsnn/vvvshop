@@ -1,6 +1,7 @@
 "use strict";
 const Product = require("../../models/product.model");
 
+
 const ProductController = function () {
   
 }
@@ -18,7 +19,7 @@ ProductController.prototype.get = async function (req, res, next) {
   }
 }
 
-// [POST] /api/products/:id
+// [POST] /api/products
 ProductController.prototype.post = async function (req, res, next) {
   try {
     const newProduct = new Product(req.body);

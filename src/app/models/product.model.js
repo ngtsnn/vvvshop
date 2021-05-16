@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
+const imageSchema = require("./image.model").schema;
 
 //for slug generater
 mongoose.plugin(slug, {
@@ -13,10 +14,11 @@ mongoose.plugin(slug, {
 });
 
 const product = new Schema({
-  name: {type: String, default: '', trim: true, require: true,},
-  img: {type: String, require: true,},
-  description: {type: String, default: '', trim: true, require: true},
-  price: {type: Number, require: true,},
+  name: {type: String, default: '', trim: true, required: true,},
+  images: [imageSchema],
+  properties: { type: Map, trim: true},
+  description: {type: String, default: '', trim: true, required: true},
+  price: {type: Number, required: true,},
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,

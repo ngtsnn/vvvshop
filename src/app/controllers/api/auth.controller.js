@@ -34,11 +34,12 @@ AuthController.prototype.login = async function(req, res, next){
     ]
   });
   if (!foundUser){
-    errs.push("account or password is not correct!");
+    res.status(400).json({errors: ["account or password is not correct!"]});
+    return;
   }
 
   // check password
-  if (!foundUser.compare(loggedUser.password || "")){
+  if (!foundUser.compare(loggedUser.password)){
     errs.push("account or password is not correct!");
   }
 
@@ -46,6 +47,9 @@ AuthController.prototype.login = async function(req, res, next){
     res.status(400).json({errors: errs});
     return;
   }
+
+  // hide user
+  foundUser.password = "";
 
   // create token
   const token = jwt.sign({
@@ -123,6 +127,9 @@ AuthController.prototype.register = async function(req, res, next){
   // create new user
   try {
     const result = await newUser.save();
+
+    // hide password
+    newUser.password = "";
 
     // create token
     const token = jwt.sign({
