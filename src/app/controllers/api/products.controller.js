@@ -27,6 +27,7 @@ ProductController.prototype.post = async function (req, res, next) {
     res.json(result);
   } catch (error) {
     res.status(400);
+    res.send("lỗi gì đó");
     next(error);
   }
 }

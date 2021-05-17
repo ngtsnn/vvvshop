@@ -13,7 +13,7 @@
 </body>
 
 <script>
-  const API = "https://vvvshop.herokuapp.com/api/auth/login"
+  const API = "http://127.0.0.1:8080/api/auth/login"
   const btn = document.querySelector("#test");
   btn.addEventListener("click", () => {
     const account = document.querySelector("#account").value;
@@ -27,8 +27,8 @@
         account: account,
         password: password,
       }),
-    }).then(res => {
-      localStorage.setItem("auth_token", res.headers.get("auth_token"));
+    }).then(async res => {
+      console.log(res);
       return res.json();
     })
     .then(data => console.log(data))
