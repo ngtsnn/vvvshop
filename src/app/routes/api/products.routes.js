@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const productControllers = require("../../controllers/api/products.controller");
-const {verify} = require("../../../utility/middlewares/app/verify.middleware");
+const { isAdmin } = require("../../../utility/middlewares/app/verify.middleware");
 
 
 
@@ -8,6 +8,6 @@ const {verify} = require("../../../utility/middlewares/app/verify.middleware");
 router.get("/", productControllers.get);
 
 // post
-router.post("/", verify, productControllers.post);
+router.post("/", isAdmin, productControllers.post);
 
 module.exports = router;

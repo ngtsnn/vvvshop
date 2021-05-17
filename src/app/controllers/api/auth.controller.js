@@ -79,7 +79,7 @@ AuthController.prototype.register = async function(req, res, next){
   // check phone
   const VNPhoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
   if (!VNPhoneRegex.test(newUser.phone)){
-    errs.push("phone has wrong format")
+    errs.push("phone has wrong format");
   }
   // check password
   if (newUser.password){
@@ -96,6 +96,16 @@ AuthController.prototype.register = async function(req, res, next){
   // check name
   if(!newUser.name || validator.isEmpty(newUser.name)){
     errs.push("name can not be empty!");
+  }
+  // check url avatar
+  if (newUser.avatar){
+    if (!validator.isURL(newUser.avatar, {
+      require_protocol: true,
+      require_valid_protocol: true,
+      allow_underscores: true,
+    })){
+      errs.push("your avatar is not a valid image");
+    }
   }
   // check role
   if(!validator.isIn(newUser.role, ["user", "admin", "super admin"])){
@@ -117,6 +127,7 @@ AuthController.prototype.register = async function(req, res, next){
   // render errors if it has
   if (errs.length){
     res.status(400).json({errors: errs});
+    return;
   }
   
 
@@ -144,6 +155,46 @@ AuthController.prototype.register = async function(req, res, next){
 
   }
   
+}
+
+// [PATCH] /api/auth/reset/:id
+AuthController.prototype.resetPassword = async function (req, res, next) { 
+  const _id = req.params.id;
+  const newPassword = req.body.password;
+
+
+  // check request has password or not
+  if (!newPassword){
+    res.status(400).send("Somethings go wrong, please try later!");
+    return;
+  }
+
+  // validate password
+  if (!validator.isStrongPassword(newPassword, {
+    minLength: 8, 
+    minLowercase: 0, 
+    minUppercase: 0, 
+    minNumbers: 0, 
+    minSymbols: 0, 
+  })){
+    res.status(400).send("password must be at least 8 characters");
+    return;
+  }
+
+
+  try {
+    const user = await User.findOne({_id});
+    if (!user){
+      res.status(400).send("Somethings go wrong, please try later!");
+    }
+    user.password = newPassword;
+    user.encode();
+    const result = await user.save();
+    user.password = "";
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).send("Somethings go wrong, please try later!");
+  }
 }
 
 

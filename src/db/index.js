@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require("path");
 require('dotenv').config({path: path.join(__dirname, "../env/.env.dev")});
 
-const connectString = /*process.env.DB_CONNECT_STRING || */"mongodb://localhost:27017/vvvshop-live-dev";
+const connectString = process.env.DB_CONNECT_STRING || "mongodb://localhost:27017/vvvshop-live-dev";
 
 const conn = async () => {
   try {

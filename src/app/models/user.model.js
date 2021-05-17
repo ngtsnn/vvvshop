@@ -6,7 +6,11 @@ const mongoose_delete = require("mongoose-delete");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
 
-mongoose.plugin(slug);
+mongoose.plugin(slug, {
+  separator: "-",
+  lang: "en",
+  truncate: 120
+});
 
 const user = new Schema({
   email: { type: String, unique: true, required: true, trim: true, lowercase: true, },
@@ -16,6 +20,7 @@ const user = new Schema({
   address: { type: String, default: '', trim: true, },
   avatar: { type: String, default: '', },
   role: { type: String, default: 'user', enum: ["user", "admin", "super admin"], trim: true, required: true, },
+  slug: {type: String, slug: 'name', unique: true}
 }, {
   timestamps: true,
 });
