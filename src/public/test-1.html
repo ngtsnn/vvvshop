@@ -20,7 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-  const API = "https://vvvshop.herokuapp.com/api/products"
+  const API = "http://127.0.0.1:8080/api/products"
   const btn = document.querySelector("#test");
   btn.addEventListener("click", () => {
     const name = document.querySelector("#name").value;
@@ -31,7 +31,7 @@
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
-        'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGEyMjMyMTY4MTlmNTc0YjlhYzU1MWYiLCJyb2xlIjoic3VwZXIgYWRtaW4iLCJpYXQiOjE2MjEyNjUzNzgsImV4cCI6MTYyMTM1MTc3OH0.tKAFQ2dALZA77T2jP2JjCK9neQlsClJFWvDPa68b3aE',
+        'auth_token': localStorage.getItem("auth_token"),
       },
       body: JSON.stringify({
         "name": "Awesome Cotton Pants",

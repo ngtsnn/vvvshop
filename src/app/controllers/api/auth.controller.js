@@ -48,15 +48,12 @@ AuthController.prototype.login = async function(req, res, next){
     return;
   }
 
-  // hide user
-  foundUser.password = "";
-
   // create token
   const token = jwt.sign({
     _id: foundUser._id,
     role: foundUser.role,
   }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
-  res.header("auth_token", token).status(200).json(foundUser);
+  res.header("auth_token", token).status(200).json({"auth_token": token});
   
 
 }
@@ -139,15 +136,13 @@ AuthController.prototype.register = async function(req, res, next){
   try {
     const result = await newUser.save();
 
-    // hide password
-    newUser.password = "";
-
     // create token
     const token = jwt.sign({
       _id: result._id,
       role: result.role,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
-    res.header("auth_token", token).status(200).json(result);
+
+    res.header("auth_token", token).status(200).json({"auth_token": token});
   } 
   catch(err){
     res.status(400).json(err._message);
@@ -190,8 +185,15 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
     user.password = newPassword;
     user.encode();
     const result = await user.save();
-    user.password = "";
-    res.status(200).json(user);
+    
+    // create token
+    const token = jwt.sign({
+      _id: result._id,
+      role: result.role,
+    }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
+
+    // send new token
+    res.header("auth_token", token).status(200).json({"auth_token": token});
   } catch (error) {
     res.status(400).send("Somethings go wrong, please try later!");
   }

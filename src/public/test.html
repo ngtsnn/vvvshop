@@ -27,11 +27,11 @@
         account: account,
         password: password,
       }),
-    }).then(async res => {
-      console.log(res);
-      return res.json();
+    }).then(res => res.json())
+    .then(({auth_token}) => {
+      console.log(auth_token);
+      localStorage.setItem("auth_token", auth_token);
     })
-    .then(data => console.log(data))
     .catch(err => console.error(err));
   });
 </script>
