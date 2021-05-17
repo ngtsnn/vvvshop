@@ -11,8 +11,7 @@ const ProductController = function () {
 ProductController.prototype.get = async function (req, res, next) {
   try {
     const products = await Product.find({});
-    res.status(200);
-    res.json(products);
+    res.status(200).json(products);
   } catch (error) {
     res.status(400);
     next(error);
