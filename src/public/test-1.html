@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <input type="text" placeholder="name" id="name">
   <input type="number" placeholder="price" id="price">
@@ -13,6 +15,9 @@
   <input type="text" placeholder="img" id="img">
   <button id="test">nhấn đi</button>
 </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
   const API = "http://127.0.0.1:8080/api/products"
@@ -22,16 +27,52 @@
     const price = document.querySelector("#price").value;
     const description = document.querySelector("#description").value;
     const img = document.querySelector("#img").value;
-    fetch(API, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-      body: JSON.stringify({
-        name, price, description, img
-      }),
-    }).then(res => res.json())
-    .then(data => console.log(data));
+    // fetch(API, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //     'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGEyMjMyMTY4MTlmNTc0YjlhYzU1MWYiLCJyb2xlIjoic3VwZXIgYWRtaW4iLCJpYXQiOjE2MjEyNDM0MDYsImV4cCI6MTYyMTMyOTgwNn0.J0V_IvXGV7-1Bj--YCDjvWlMEyEgKn8VIDR-8nSWySk',
+    //   },
+    //   body: JSON.stringify({
+    //     "name": "Awesome Cotton Pants",
+    //     "description": "In esse quis delectus quo molestiae expedita officia consequatur quas. Odit ipsam dignissimos est ea et omnis.",
+    //     "price": 873.95,
+    //     "images": [{
+    //       "url": "http://placeimg.com/640/480/cats",
+    //       "alt": "Specialist Montana Montenegro copy",
+    //     },
+    //     {
+    //       "url": "http://placeimg.com/640/480/cats",
+    //       "alt": "deposit protocol innovative",
+    //     }],
+    //     "properties": { "color": ["lime", "olive", "grey"], "weight": 598 },
+    //     "slug": "awesome-cotton-pants",
+    //   }),
+    // }).then(res => res.json())
+    //   .then(data => console.log(data));
+
+
+    // axios.post(API, {
+    //   "name": "Awesome Cotton Pants",
+    //   "description": "In esse quis delectus quo molestiae expedita officia consequatur quas. Odit ipsam dignissimos est ea et omnis.",
+    //   "price": 873.95,
+    //   "images": [{
+    //     "url": "http://placeimg.com/640/480/cats",
+    //     "alt": "Specialist Montana Montenegro copy",
+    //   },
+    //   {
+    //     "url": "http://placeimg.com/640/480/cats",
+    //     "alt": "deposit protocol innovative",
+    //   }],
+    //   "properties": { "color": ["lime", "olive", "grey"], "weight": 598 },
+    //   "slug": "awesome-cotton-pants",
+    // }, {
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //     'auth_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGEyMjMyMTY4MTlmNTc0YjlhYzU1MWYiLCJyb2xlIjoic3VwZXIgYWRtaW4iLCJpYXQiOjE2MjEyNDM0MDYsImV4cCI6MTYyMTMyOTgwNn0.J0V_IvXGV7-1Bj--YCDjvWlMEyEgKn8VIDR-8nSWySk',
+    //   }
+    // }).then(res => res);
   });
 </script>
+
 </html>

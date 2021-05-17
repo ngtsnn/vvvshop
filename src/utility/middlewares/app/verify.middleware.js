@@ -6,6 +6,7 @@ const verify = async function (req, res, next){
   const token = req.header("auth_token");
   if(!token){
     res.status(401).send("denied action !!!");
+    return;
   }
 
 
@@ -23,6 +24,7 @@ const isAdmin = async function (req, res, next){
   const token = req.header("auth_token");
   if(!token){
     res.status(401).send("action denined !!!");
+    return;
   }
 
   
@@ -45,6 +47,7 @@ const isSuperAdmin = async function (req, res, next){
   const token = req.header("auth_token");
   if(!token){
     res.status(401).send("action denined !!!");
+    return;
   }
 
   
