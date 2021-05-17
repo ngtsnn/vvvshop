@@ -56,7 +56,7 @@ AuthController.prototype.login = async function(req, res, next){
     _id: foundUser._id,
     role: foundUser.role,
   }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
-  res.header("auth_token", token).header('Access-Control-Allow-Headers', "*").header('Access-Control-Allow-Origin', "*").status(200).json(foundUser);
+  res.header("auth_token", token).status(200).json(foundUser);
   
 
 }
@@ -147,7 +147,7 @@ AuthController.prototype.register = async function(req, res, next){
       _id: result._id,
       role: result.role,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
-    res.header("auth_token", token).header('Access-Control-Allow-Headers', "*").header('Access-Control-Allow-Origin', "*").status(200).json(result);
+    res.header("auth_token", token).status(200).json(result);
   } 
   catch(err){
     res.status(400).json(err._message);
