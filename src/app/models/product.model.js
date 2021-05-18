@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
-const imageSchema = require("./image.model").schema;
+
 
 //for slug generater
 mongoose.plugin(slug, {
@@ -13,16 +13,27 @@ mongoose.plugin(slug, {
   truncate: 120
 });
 
+
+const property = new Schema({
+  kind: { type: String, default: 'static', enum: ['static', 'customized'], required: true, },
+  key: { type: String, default: '', required: true, },
+  value: { type: Array, default: [], required: true, },
+  fluctuatedAmount: { type: Number, default: 0 }, // can be negative number
+});
+
 const product = new Schema({
-  name: {type: String, default: '', trim: true, required: true,},
-  images: [imageSchema],
-  properties: { type: Map, trim: true},
-  description: {type: String, default: '', trim: true, required: true},
-  price: {type: Number, required: true,},
+  name: { type: String, default: '', trim: true, required: true, },
+  images: [{ type: String, default: '', }],
+  properties: [property],
+  categories: [{ type: mongoose.Types.ObjectId, ref: 'categorie', }],
+  supplier: { type: mongoose.Types.ObjectId, ref: 'supplier', },
+  description: { type: String, default: '', trim: true, required: true },
+  orginalprice: { type: Number, required: true, min: 0 },
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,
-})
+});
+
 
 //for delete
 product.plugin(mongoose_delete, {

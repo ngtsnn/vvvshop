@@ -1,18 +1,35 @@
 'use strict';
 
 const mongoose = require("mongoose");
+const mongoose_delete = require("mongoose-delete");
 const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
 
-mongoose.plugin(slug);
+
+//for slug generater
+mongoose.plugin(slug, {
+  separator: "-",
+  lang: "en",
+  truncate: 120
+});
+
 
 const blog = new Schema({
-  name: {type: String, default: '', require: true,},
-  img: {type: String, require: true,},
-  content: {type: String, default: '', require: true},
+  author: { type: mongoose.Types.ObjectId, ref: 'user', required: true, },
+  name: { type: String, default: '', trim: true, required: true, },
+  images: [{ type: mongoose.SchemaTypes.Array, default: '', required: true }],
+  paragraph: [{ type: String, default: '', required: true }],
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,
 })
+
+
+//for delete
+product.plugin(mongoose_delete, {
+  deleteAt: true,
+  deleteBy: true,
+  overrideMethods: true,
+});
 
 module.exports = mongoose.model("blog", blog); //collection: blogs

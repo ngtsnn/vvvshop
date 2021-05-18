@@ -1,18 +1,21 @@
 'use strict';
 
 const mongoose = require("mongoose");
-const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
 
-mongoose.plugin(slug);
+
+const rate = new Schema({
+  user: { type: mongoose.Types.ObjectId, ref: 'user', required: true, },
+  rating: { type: Number, default: 0, min: 0, max: 5, required: true, },
+  feeling: { type: String, default: '' },
+});
 
 const review = new Schema({
-  userId: {type: String, default: '', require: true,},
-  reviewID: {type: String, require: true,},
-  productID: {type: String},
-  slug: { type: String, slug: "name", unique: true },
+  reviews: [rate],
+  product: { type: mongoose.Types.ObjectId, ref: 'product', required: true, },
 }, {
   timestamps: true,
-})
+});
+
 
 module.exports = mongoose.model("review", review); //collection: reviews

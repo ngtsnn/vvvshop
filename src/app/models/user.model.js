@@ -6,11 +6,14 @@ const mongoose_delete = require("mongoose-delete");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
 
+
+//for slug generater
 mongoose.plugin(slug, {
   separator: "-",
   lang: "en",
   truncate: 120
 });
+
 
 const user = new Schema({
   email: { type: String, unique: true, required: true, trim: true, lowercase: true, },
@@ -20,10 +23,11 @@ const user = new Schema({
   address: { type: String, default: '', trim: true, },
   avatar: { type: String, default: '', },
   role: { type: String, default: 'user', enum: ["user", "admin", "super admin"], trim: true, required: true, },
-  slug: {type: String, slug: 'name', unique: true}
+  slug: { type: String, slug: 'name', unique: true }
 }, {
   timestamps: true,
 });
+
 
 //for delete
 user.plugin(mongoose_delete, {
@@ -32,12 +36,13 @@ user.plugin(mongoose_delete, {
   overrideMethods: true,
 });
 
+
 // custom functions
-user.methods.encode = function(){
+user.methods.encode = function () {
   this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
 }
 
-user.methods.compare = function(_password){
+user.methods.compare = function (_password) {
   // console.log(bcrypt.compareSync(_password, this.password));
   return bcrypt.compareSync(_password, this.password);
 }
