@@ -2,9 +2,6 @@
 
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const productSchema = require('./product.model')
-const userSchema = require('./user.model')
-const paymentSchema  = require('./payment.model')
 
 
 const detail = new Schema({

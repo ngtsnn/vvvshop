@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 const slug = require("mongoose-slug-generator");
 const { Schema } = mongoose;
-const userSchema = require('./user.model')
 
 
 //for slug generater
