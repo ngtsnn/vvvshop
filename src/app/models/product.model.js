@@ -31,7 +31,7 @@ const product = new Schema({
     orginalprice: { type: Number, required: true, min: 0 },
     slug: { type: String, slug: "name", unique: true },
 }, {
-    timestamps: true,
+  timestamps: true,
 });
 
 
