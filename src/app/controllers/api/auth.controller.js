@@ -34,7 +34,7 @@ AuthController.prototype.login = async function(req, res, next){
     ]
   });
   if (!foundUser){
-    res.status(400).json({errors: ["account or password is not correct!"]});
+    res.status(400).send({errors: ["account or password is not correct!"]});
     return;
   }
 
@@ -44,7 +44,7 @@ AuthController.prototype.login = async function(req, res, next){
   }
 
   if (errs.length){
-    res.status(400).json({errors: errs});
+    res.status(400).send({errors: errs});
     return;
   }
 
@@ -123,7 +123,7 @@ AuthController.prototype.register = async function(req, res, next){
 
   // render errors if it has
   if (errs.length){
-    res.status(400).json({errors: errs});
+    res.status(400).send({errors: errs});
     return;
   }
   
@@ -145,7 +145,7 @@ AuthController.prototype.register = async function(req, res, next){
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } 
   catch(err){
-    res.status(400).json(err._message);
+    res.status(400).send(err._message);
     next(err);
 
   }
