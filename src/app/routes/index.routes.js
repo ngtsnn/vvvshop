@@ -3,7 +3,9 @@
 // import routes
 const dashboardRoutes = require('./dashboard/index.routes');
 const apiRoutes = require('./api/index.routes');
-
+const adminRoutes = require('./admins.routes');
+const statisticRoutes = require('./statistic/index.routes');
+const settingRoutes = require('./settings.routes');
 
 
 module.exports = function (app) {
@@ -19,7 +21,7 @@ module.exports = function (app) {
   // /dashboard
   app.use('/dashboard', dashboardRoutes);
 
-  // /admin
+  // // /admin
   app.use('/admins', adminRoutes);
 
   // /statistic
