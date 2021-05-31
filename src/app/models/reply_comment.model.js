@@ -5,11 +5,9 @@ const mongoose_delete = require("mongoose-delete");
 const { Schema } = mongoose;
 
 
-const comment = new Schema({
+const reply_comment = new Schema({
   user: { type: mongoose.Types.ObjectId, ref: 'user', required: true, },
-  product: { type: mongoose.Types.ObjectId, ref: 'product', required: true, },
   comment: { type: String, required: true, trim: true, },
-  reply: [{ type: mongoose.Types.ObjectId, ref: 'reply_comment', }],
 }, {
   timestamps: true,
 });
@@ -22,4 +20,4 @@ product.plugin(mongoose_delete, {
   overrideMethods: true,
 });
 
-module.exports = mongoose.model("comment", comment); //collection: comments
+module.exports = mongoose.model("reply_comment", reply_comment); //collection: reply-comments

@@ -2,12 +2,15 @@
 
 // import routes
 const dashboardRoutes = require('./dashboard/index.routes');
-const adminRoutes = require('./admins.routes');
-const statisticRoutes = require('./statistic/index.routes');
-const settingRoutes = require('./settings.routes');
+const apiRoutes = require('./api/index.routes');
+
 
 
 module.exports = function (app) {
+
+  // /dashboard
+  app.use('/dashboard', dashboardRoutes);
+  app.use('/api', apiRoutes);
   // home page
   app.get('/', (req, res, next) => {
     return res.render("sites/index");
