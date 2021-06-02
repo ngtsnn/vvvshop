@@ -16,7 +16,7 @@ mongoose.plugin(slug, {
 
 const supplier = new Schema({
   name: { type: String, default: '', trim: true, required: true, unique: true, },
-  images: { type: String, default: '', required: true, },
+  image: { type: String, default: '', required: true, },
   slug: { type: String, slug: "name", unique: true, },
 }, {
   timestamps: true,

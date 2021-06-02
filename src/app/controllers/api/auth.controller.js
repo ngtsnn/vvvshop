@@ -34,17 +34,17 @@ AuthController.prototype.login = async function(req, res, next){
     ]
   });
   if (!foundUser){
-    res.status(400).send({errors: ["account or password is not correct!"]});
+    res.status(400).json({errors: ["tài khoản hoặc mật khẩu không chính xác!"]});
     return;
   }
 
   // check password
   if (!foundUser.compare(loggedUser.password)){
-    errs.push("account or password is not correct!");
+    errs.push("tài khoản hoặc mật khẩu không chính xác!");
   }
 
   if (errs.length){
-    res.status(400).send({errors: errs});
+    res.status(400).json({errors: errs});
     return;
   }
 
@@ -68,15 +68,15 @@ AuthController.prototype.register = async function(req, res, next){
 
   // check is email
   if(!newUser.email || validator.isEmpty(newUser.email)){
-    errs.push("email can not be empty!");
+    errs.push("email là trường bắt buộc!");
   }
   if(!newUser.email || !validator.isEmail(newUser.email)){
-    errs.push("email has wrong format!");
+    errs.push("email có định dạng sai!");
   }
   // check phone
   const VNPhoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
   if (!VNPhoneRegex.test(newUser.phone)){
-    errs.push("phone has wrong format");
+    errs.push("số điện thoại có định dạng sai");
   }
   // check password
   if (newUser.password){
@@ -87,12 +87,12 @@ AuthController.prototype.register = async function(req, res, next){
       minNumbers: 0, 
       minSymbols: 0, 
     })){
-      errs.push("password must be at least 8 characters");
+      errs.push("mật khẩu có ít nhất 8 kí tự");
     }
   }
   // check name
   if(!newUser.name || validator.isEmpty(newUser.name)){
-    errs.push("name can not be empty!");
+    errs.push("tên là trường bắt buộc!");
   }
   // check url avatar
   if (newUser.avatar){
@@ -101,29 +101,29 @@ AuthController.prototype.register = async function(req, res, next){
       require_valid_protocol: true,
       allow_underscores: true,
     })){
-      errs.push("your avatar is not a valid image");
+      errs.push("ảnh đại diện không đúng định dạng");
     }
   }
   // check role
   if(!validator.isIn(newUser.role, ["user", "admin", "super admin"])){
-    errs.push(`there is no role ${newUser.role}`);
+    errs.push(`không tồn tại vai trò "${newUser.role}"`);
   }
   
   // check email and phone number is register or not
   const oldEmailUser = await User.findOne({email: newUser.email});
   const oldTelUser = await User.findOne({phone: newUser.phone});
   if (oldEmailUser){
-    errs.push("this email used to be register!");
+    errs.push("email này đã được đăng kí!");
   }
   if (oldTelUser){
-    errs.push("this phone number used to be register!");
+    errs.push("số điện thoại này đã được đăng kí!");
   }
 
 
 
   // render errors if it has
   if (errs.length){
-    res.status(400).send({errors: errs});
+    res.status(400).json({errors: errs});
     return;
   }
   
@@ -145,7 +145,7 @@ AuthController.prototype.register = async function(req, res, next){
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } 
   catch(err){
-    res.status(400).send(err._message);
+    res.status(400).json(err._message);
     next(err);
 
   }
@@ -160,7 +160,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
 
   // check request has password or not
   if (!newPassword){
-    res.status(400).send("Somethings go wrong, please try later!");
+    res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
     return;
   }
 
@@ -172,7 +172,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
     minNumbers: 0, 
     minSymbols: 0, 
   })){
-    res.status(400).send("password must be at least 8 characters");
+    res.status(400).json({errors: ["mật khẩu phải có ít nhất 8 kí tự"]});
     return;
   }
 
@@ -180,7 +180,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
   try {
     const user = await User.findOne({_id});
     if (!user){
-      res.status(400).send("Somethings go wrong, please try later!");
+      res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
     }
     user.password = newPassword;
     user.encode();
@@ -195,7 +195,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
     // send new token
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } catch (error) {
-    res.status(400).send("Somethings go wrong, please try later!");
+    res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
   }
 }
 

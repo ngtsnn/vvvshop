@@ -15,20 +15,23 @@ mongoose.plugin(slug, {
 
 
 const property = new Schema({
-  kind: { type: String, default: 'static', enum: ['static', 'customized'], required: true, },
+  isMutable: { type: Boolean, default: false, required: true, },
   key: { type: String, default: '', required: true, },
-  value: { type: Array, default: [], required: true, },
-  fluctuatedAmount: { type: Number, default: 0 }, // can be negative number
+  values: [{
+    value: {type: String, default: '', required: true,},
+    image: {type: String, default: '', },
+    mutationPrice: { type: Number, default:0, },
+  }]
 });
 
 const product = new Schema({
   name: { type: String, default: '', trim: true, required: true, },
-  images: [{ type: String, default: '', }],
+  images: [{ type: String, default: '', required: true, }],
   properties: [property],
-  categories: [{ type: mongoose.Types.ObjectId, ref: 'categorie', }],
+  categories: [{ type: mongoose.Types.ObjectId, ref: 'category', }],
   supplier: { type: mongoose.Types.ObjectId, ref: 'supplier', },
   description: { type: String, default: '', trim: true, required: true },
-  orginalprice: { type: Number, required: true, min: 0 },
+  orginalPrice: { type: Number, default: 0, required: true, min: 0 },
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,

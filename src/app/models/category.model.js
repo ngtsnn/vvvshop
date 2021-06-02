@@ -16,10 +16,9 @@ mongoose.plugin(slug, {
 
 const category = new Schema({
   name: { type: String, default: 'uncategoried', required: true, trim: true, lowercase: true },
-  parent: { type: String, default: '', required: true, trim: true },
+  parent: { type: String, default: '', trim: true },
   tree: {
     type: String,
-    default: (this.parent ? this.parent + '/' : "") + this.name,
     required: true,
     trim: true,
     unique: true,
@@ -32,10 +31,15 @@ const category = new Schema({
 
 
 //for delete
-product.plugin(mongoose_delete, {
+category.plugin(mongoose_delete, {
   deleteAt: true,
   deleteBy: true,
   overrideMethods: true,
 })
 
-module.exports = mongoose.model("categorie", category); //collection: categories
+// methods
+category.methods.makeTree = function(){
+  this.tree = (this.parent ? this.parent + '/' : "") + this.name;
+}
+
+module.exports = mongoose.model("category", category); //collection: categories

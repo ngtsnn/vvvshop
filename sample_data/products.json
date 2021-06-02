@@ -1,27 +1,52 @@
 [
   {
-    "name": "Laptop Dell Inspiron 5406 70232602",
-    "description": "Laptop Dell Inspiron 14 5406 nhỏ gọn, tiện nghi, năng động và sành điệu\nDell là một trong số những thương hiệu laptop nổi tiếng được đông đảo người tiêu dùng yêu thích và lựa chọn. Nếu bạn đang tìm kiếm một chiếc laptop vừa đảm bảo được yếu tố thẩm mỹ, vừa có hiệu năng ổn định thì laptop Dell Inspiron 14 5406 là sản phẩm mà bạn không nên bỏ qua.\nThiết kế mỏng nhẹ, màn hình 14 inch full HD\nLaptop Dell Inspiron 14 5406 được thiết kế cực kỳ mỏng nhẹ với kích thước nhỏ gọn giúp cho việc di chuyển được trở nên dễ dàng hơn. Các góc cạnh của máy được thiết kế tỉ mỉ, bo tròn mềm mại. Bản lề được thiết kế vô cùng chắc chắn mang đến độ bền vượt trội.",
-    "price": 20990000,
+    "name": "Sleek Wooden Keyboard",
     "images": [
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats"
+    ],
+    "categories": [
+      "60b7c54717b6eec6de75545a"
+    ],
+    "description": "Sed atque ipsum dolores vitae soluta. Corrupti laudantium porro reprehenderit nam. Sunt ut non dolor natus ipsum. Velit aut occaecati ut suscipit aspernatur laudantium. Ipsa laboriosam quia omnis eligendi eveniet. Inventore et et quae laboriosam sit facilis totam voluptatum pariatur.",
+    "orginalPrice": 0,
+    "properties": [
       {
-        "url": "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/l/a/laptop-dell-inspiron-5406_2_ksp.jpg",
-        "alt": "abcd"
+        "isMutable": false,
+        "key": "ducimus",
+        "values": [
+          {
+            "value": "neque id ipsum",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 0
+          }
+        ]
       },
       {
-        "url": "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/x/i/xiaomi-mi-11-xanhduong-600x600-600x600.jpg",
-        "alt": "abc"
+        "isMutable": true,
+        "key": "RAM",
+        "values": [
+          {
+            "value": "8GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 0
+          },
+          {
+            "value": "12GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 600000
+          },
+          {
+            "value": "16GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 1600000
+          }
+        ]
       }
     ],
-    "properties": {
-      "color": "red",
-      "weight": "20"
-    }
-  },
-  {
-    "name": "Xiaomi Mi 11 5G",
-    "description": "Điện thoại Xiaomi Mi 11 - Màn hình tràn viền ấn tượng cùng hiệu năng cao cấp\nMột trong những chiếc smartphone được các Mi Fan mong chờ nhất năm nay đó chính là Xiaomi Mi 11. Trang bị vi xử lý Snapdragon 888 hỗ trợ 5G với thiết kế màn hình tràn viền ấn tượng, đây sẽ là chiếc flagship nổi bật của Xiaomi trong năm nay. Ngoài ra, bạn cũng có thể tham khảo thêm điện thoại Mi 11 Lite khả năng cao sẽ được bán tại CellphoneS trong thời gian gần nhất.\n\nKhung viền kim loại, màn hình 6.81 inch tần số quét 120Hz\nTính sang trọng chuẩn flagship của Mi 11 được thể hiện đầu tiên qua thiết kế vuông vức bốn góc cạnh đầy lịch lãm. Máy còn có độ cứng cáp nhờ chất liệu kim loại sang trọng cùng kính cường lực phủ đều hai mặt trước & sau. Độ mỏng ấn tượng cũng là một điểm đáng chú ý trên thiết kế thân máy.",
-    "price": 17690000,
-    "images": "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/x/i/xiaomi-mi-11-xanhduong-600x600-600x600.jpg"
+    "supplier": "60b7bc7b3de385c0e453e643"
   }
 ]
