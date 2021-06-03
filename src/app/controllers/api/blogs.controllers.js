@@ -12,16 +12,40 @@ const ProductController = function () {
 
 // [GET] /api/products
 ProductController.prototype.get = async function (req, res, next) {
+  
+  let categories, supplier, hasPagination = false, perPage, page;
+
+  // on pagination
+  if (req.query.hasOwnProperty("_paginate")){
+    hasPagination = true;
+    perPage = req.query["perPage"] || 8;
+    page = req.query["page"] || 1;
+    delete req.query["_paginate"];
+    delete req.query["perPage"];
+    delete req.query["page"];
+  }
+  
+  // on filter
   let objQuery = new Object();
   if (req.query.hasOwnProperty("_filter")){
     objQuery = req.query;
     delete objQuery["_filter"];
+    console.log(objQuery)
   }
 
-  console.log(objQuery);
+  
 
   try {
-    const data = await Product.find(objQuery).populate(["categories", "supplier"]);
+    let data = await Product.find(objQuery).populate(['supplier', 'categories']);
+    if (hasPagination){
+      const totalPage = Math.ceil(data.length / perPage);
+      const newData = await Product.find(objQuery).populate(['supplier', 'categories']).limit(perPage).skip(perPage * (page - 1));
+      data = new Object();
+      data["totalPage"] = totalPage;
+      data["hasNextPage"] = page < totalPage;
+      data["hasPrevPage"] = page > 1;
+      data["data"] = newData;
+    }
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
@@ -38,7 +62,7 @@ ProductController.prototype.getOne = async function (req, res, next) {
   }
 
   try {
-    const data = await Product.findOne({_id: id});
+    const data = await Product.findOne({_id: id}).populate(['supplier', 'categories']);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});

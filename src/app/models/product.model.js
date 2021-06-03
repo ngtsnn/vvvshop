@@ -31,7 +31,7 @@ const product = new Schema({
   categories: [{ type: mongoose.Types.ObjectId, ref: 'category', }],
   supplier: { type: mongoose.Types.ObjectId, ref: 'supplier', },
   description: { type: String, default: '', trim: true, required: true },
-  orginalPrice: { type: Number, default: 0, required: true, min: 0 },
+  originalPrice: { type: Number, default: 0, required: true, min: 0 },
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,

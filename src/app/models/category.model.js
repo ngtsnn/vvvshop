@@ -24,7 +24,7 @@ const category = new Schema({
     unique: true,
   },
   logo: { type: String, default: '', },
-  slug: {type: String, slug: "name", unique: true, }
+  slug: {type: String, slug: "tree", unique: true, }
 }, {
   timestamps: true,
 });
