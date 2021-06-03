@@ -12,8 +12,16 @@ const ProductController = function () {
 
 // [GET] /api/products
 ProductController.prototype.get = async function (req, res, next) {
+  // on filter
+  let objQuery = new Object();
+  let categories, supplier;
+  if (req.query.hasOwnProperty("_filter")){
+    objQuery = req.query;
+    delete objQuery["_filter"];
+  }
+
   try {
-    const data = await Product.find({}).populate(["categories", "supplier"]);
+    const data = await Product.find(objQuery).populate(['supplier', 'categories']);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
