@@ -1,7 +1,7 @@
 "use strict";
 const Product = require("../../models/product.model");
 const Category = require("../../models/category.model");
-const Supplier = require("../../models/supplier.model")
+const Supplier = require("../../models/supplier.model");
 const validator = require("validator");
 
 
@@ -13,13 +13,13 @@ const ProductController = function () {
 // [GET] /api/products
 ProductController.prototype.get = async function (req, res, next) {
   
-  let categories, supplier, hasPagination = false, perPage, page;
+  let hasPagination = false, perPage, page;
 
   // on pagination
   if (req.query.hasOwnProperty("_paginate")){
     hasPagination = true;
-    perPage = req.query["perPage"] || 8;
-    page = req.query["page"] || 1;
+    perPage = parseInt(req.query["perPage"]) || 8;
+    page = parseInt(req.query["page"]) || 1;
     delete req.query["_paginate"];
     delete req.query["perPage"];
     delete req.query["page"];
@@ -30,7 +30,6 @@ ProductController.prototype.get = async function (req, res, next) {
   if (req.query.hasOwnProperty("_filter")){
     objQuery = req.query;
     delete objQuery["_filter"];
-    console.log(objQuery)
   }
 
   
@@ -72,26 +71,57 @@ ProductController.prototype.getOne = async function (req, res, next) {
 // [GET] /api/products/categories/:slug
 ProductController.prototype.getByCate = async function (req, res, next) {
 
-  const slug = req.params[0];  
-  let categories, supplier, hasPagination = false, perPage, page;
+  const slug = req.params[0];
+  let hasPagination = false, perPage, page;
 
   // on pagination
   if (req.query.hasOwnProperty("_paginate")){
     hasPagination = true;
-    perPage = req.query["perPage"] || 8;
-    page = req.query["page"] || 1;
-    delete req.query["_paginate"];
-    delete req.query["perPage"];
-    delete req.query["page"];
+    perPage = parseInt(req.query["perPage"]) || 8;
+    page = parseInt(req.query["page"]) || 1;
   }
 
   
 
   try {
-    let data = await Product.find({}).populate(['supplier', 'categories']);
+    const category = await Category.findOne({slug});
+    let data = await Product.find({categories: category._id}).populate(['supplier', 'categories']);
     if (hasPagination){
       const totalPage = Math.ceil(data.length / perPage);
-      const newData = await Product.find({}).populate(['supplier', 'categories']).limit(perPage).skip(perPage * (page - 1));
+      const newData = await Product.find({categories: category._id}).populate(['supplier', 'categories']).limit(perPage).skip(perPage * (page - 1));
+      data = new Object();
+      data["totalPage"] = totalPage;
+      data["hasNextPage"] = page < totalPage;
+      data["hasPrevPage"] = page > 1;
+      data["data"] = newData;
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
+  }
+}
+
+// [GET] /api/products/supplier/:slug
+ProductController.prototype.getBySupplier = async function (req, res, next) {
+
+  const slug = req.params.slug;
+  let hasPagination = false, perPage, page;
+
+  // on pagination
+  if (req.query.hasOwnProperty("_paginate")){
+    hasPagination = true;
+    perPage = parseInt(req.query["perPage"]) || 8;
+    page = parseInt(req.query["page"]) || 1;
+  }
+
+  
+
+  try {
+    const supplier = await Supplier.findOne({slug});
+    let data = await Product.find({supplier: supplier._id}).populate(['supplier', 'categories']);
+    if (hasPagination){
+      const totalPage = Math.ceil(data.length / perPage);
+      const newData = await Product.find({supplier: supplier._id}).populate(['supplier', 'categories']).limit(perPage).skip(perPage * (page - 1));
       data = new Object();
       data["totalPage"] = totalPage;
       data["hasNextPage"] = page < totalPage;
@@ -201,7 +231,6 @@ ProductController.prototype.post = async function (req, res, next) {
     res.json(result);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
-    next(error)
   }
 }
 

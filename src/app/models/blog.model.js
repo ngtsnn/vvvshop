@@ -17,8 +17,8 @@ mongoose.plugin(slug, {
 const blog = new Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'user', required: true, },
   name: { type: String, default: '', trim: true, required: true, },
-  images: [{ type: mongoose.SchemaTypes.Array, default: '', required: true }],
-  paragraph: [{ type: String, default: '', required: true }],
+  images: [{ type: String, default: '', required: true, }],
+  paragraphs: [{ type: String, default: '', required: true }],
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,
@@ -26,7 +26,7 @@ const blog = new Schema({
 
 
 //for delete
-product.plugin(mongoose_delete, {
+blog.plugin(mongoose_delete, {
   deleteAt: true,
   deleteBy: true,
   overrideMethods: true,

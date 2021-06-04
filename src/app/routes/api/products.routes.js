@@ -3,6 +3,9 @@ const productControllers = require("../../controllers/api/products.controller");
 const { isAdmin } = require("../../../utility/middlewares/app/verify.middleware");
 
 
+// get by supplier
+router.get("/supplier/:slug", productControllers.getBySupplier);
+
 // get by categories
 router.get("/categories/*", productControllers.getByCate);
 

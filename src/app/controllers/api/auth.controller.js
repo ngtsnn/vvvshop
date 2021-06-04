@@ -52,7 +52,10 @@ AuthController.prototype.login = async function(req, res, next){
   const token = jwt.sign({
     _id: foundUser._id,
     role: foundUser.role,
+    name: foundUser.name,
+    avatar: foundUser.avatar,
   }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
+
   res.header("auth_token", token).status(200).json({"auth_token": token});
   
 
@@ -140,6 +143,8 @@ AuthController.prototype.register = async function(req, res, next){
     const token = jwt.sign({
       _id: result._id,
       role: result.role,
+      name: result.name,
+      avatar: result.avatar,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
     res.header("auth_token", token).status(200).json({"auth_token": token});
@@ -180,7 +185,8 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
   try {
     const user = await User.findOne({_id});
     if (!user){
-      res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+      res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+      return;
     }
     user.password = newPassword;
     user.encode();
@@ -190,9 +196,10 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
     const token = jwt.sign({
       _id: result._id,
       role: result.role,
+      name: result.name,
+      avatar: result.avatar,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
-    // send new token
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } catch (error) {
     res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
