@@ -58,9 +58,7 @@ CategoryController.prototype.post = async function (req, res, next) {
   // check parent
   if(newCategory.parent){
     try {
-      console.log(newCategory.parent);
       const parent = await Category.findOne({tree: newCategory.parent});
-      console.log(parent);
       if (!parent){
         errs.push("Danh mục cha không tồn tại");
       }
@@ -79,16 +77,27 @@ CategoryController.prototype.post = async function (req, res, next) {
     errs.push("logo không đúng định dạng");
   }
 
+  await newCategory.makeTree();
+
+  // check duplicated
+  try {
+    const foundCategory = await Category.findOne({tree: newCategory.tree });
+    if (foundCategory){
+      errs.push("Danh mục này đã tồn tại!");
+    }
+  } catch (error) {
+    res.status(500).json({errors: ["đã có lỗi xảy ra, vui lòng thử lại sau!"]});
+    return;
+  }
+
   if (errs.length){
     res.status(400).json({errors: errs});
     return;
   }
 
-  newCategory.makeTree();
 
   // add data
   try {
-    
     const result = await newCategory.save();
     res.status(200).json(result);
   } catch (error) {
