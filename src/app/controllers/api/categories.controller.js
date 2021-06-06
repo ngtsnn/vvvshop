@@ -10,6 +10,19 @@ const CategoryController = function () {
 // [GET] /api/categories
 // [GET] /api/categories?_filter&prop=value
 CategoryController.prototype.get = async function (req, res, next) {
+
+  let hasPagination = false, perPage, page;
+
+  // on pagination
+  if (req.query.hasOwnProperty("_paginate")){
+    hasPagination = true;
+    perPage = parseInt(req.query["perPage"]) || 8;
+    page = parseInt(req.query["page"]) || 1;
+    delete req.query["_paginate"];
+    delete req.query["perPage"];
+    delete req.query["page"];
+  }
+
   // for filter
   let queryObj = new Object();
   if (req.query.hasOwnProperty("_filter")) {
@@ -18,11 +31,19 @@ CategoryController.prototype.get = async function (req, res, next) {
   }
 
   try {
-    const data = await Category.find(queryObj);
+    let data = await Category.find(queryObj);
+    if (hasPagination){
+      const totalPage = Math.ceil(data.length / perPage);
+      const newData = await Category.find(queryObj).limit(perPage).skip(perPage * (page - 1));
+      data = new Object();
+      data["totalPage"] = totalPage;
+      data["hasNextPage"] = page < totalPage;
+      data["hasPrevPage"] = page > 1;
+      data["data"] = newData;
+    }
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({ errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"] });
-    next(error);
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
   }
 }
 
@@ -39,7 +60,7 @@ CategoryController.prototype.getOne = async function (req, res, next) {
     const data = await Category.findOne({_id: id});
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
   }
 }
 
@@ -102,7 +123,6 @@ CategoryController.prototype.post = async function (req, res, next) {
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({errors: ["đã có lỗi xảy ra, vui lòng thử lại sau!"]});
-    next(error);
   }
 
 }

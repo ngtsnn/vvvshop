@@ -17,8 +17,7 @@ mongoose.plugin(slug, {
 const blog = new Schema({
   author: { type: mongoose.Types.ObjectId, ref: 'user', required: true, },
   name: { type: String, default: '', trim: true, required: true, },
-  images: [{ type: String, default: '', required: true, }],
-  paragraphs: [{ type: String, default: '', required: true }],
+  html: { type: String, default: '', required: true },
   slug: { type: String, slug: "name", unique: true },
 }, {
   timestamps: true,

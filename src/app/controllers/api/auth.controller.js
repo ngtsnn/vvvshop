@@ -150,8 +150,7 @@ AuthController.prototype.register = async function(req, res, next){
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } 
   catch(err){
-    res.status(400).json(err._message);
-    next(err);
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
 
   }
   
@@ -165,7 +164,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
 
   // check request has password or not
   if (!newPassword){
-    res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
     return;
   }
 
@@ -185,7 +184,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
   try {
     const user = await User.findOne({_id});
     if (!user){
-      res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+      res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
       return;
     }
     user.password = newPassword;
@@ -202,7 +201,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
 
     res.header("auth_token", token).status(200).json({"auth_token": token});
   } catch (error) {
-    res.status(400).json("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
   }
 }
 

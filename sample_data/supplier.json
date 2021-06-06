@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Bartoletti - Mohr",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc773de385c0e453e642",
+    "createdAt": "2021-06-02T17:14:31.776Z",
+    "updatedAt": "2021-06-02T17:14:31.776Z",
+    "slug": "bartoletti-mohr",
+    "__v": 0
+  },
+  {
+    "name": "Davis Group",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc7b3de385c0e453e643",
+    "createdAt": "2021-06-02T17:14:35.082Z",
+    "updatedAt": "2021-06-02T17:14:35.082Z",
+    "slug": "davis-group",
+    "__v": 0
+  },
+  {
+    "name": "Torp, Bogan and Volkman",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc7c3de385c0e453e644",
+    "createdAt": "2021-06-02T17:14:36.783Z",
+    "updatedAt": "2021-06-02T17:14:36.783Z",
+    "slug": "torp-bogan-and-volkman",
+    "__v": 0
+  },
+  {
+    "name": "Steuber, Christiansen and Price",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc7f3de385c0e453e645",
+    "createdAt": "2021-06-02T17:14:39.387Z",
+    "updatedAt": "2021-06-02T17:14:39.387Z",
+    "slug": "steuber-christiansen-and-price",
+    "__v": 0
+  },
+  {
+    "name": "Simonis - VonRueden",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc873de385c0e453e646",
+    "createdAt": "2021-06-02T17:14:47.455Z",
+    "updatedAt": "2021-06-02T17:14:47.455Z",
+    "slug": "simonis-vonrueden",
+    "__v": 0
+  },
+  {
+    "name": "Gusikowski Inc",
+    "image": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7bc893de385c0e453e647",
+    "createdAt": "2021-06-02T17:14:49.507Z",
+    "updatedAt": "2021-06-02T17:14:49.507Z",
+    "slug": "gusikowski-inc",
+    "__v": 0
+  }
+]

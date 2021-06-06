@@ -13,7 +13,6 @@ const BlogController = function () {
 BlogController.prototype.get = async function (req, res, next) {
   
   let hasPagination = false, perPage, page;
-  console.log(req.query);
 
   // on pagination
   if (req.query.hasOwnProperty("_paginate")){
@@ -82,26 +81,14 @@ BlogController.prototype.post = async function (req, res, next) {
     errs.push("tên bài viết là trường bắt buộc!");
   }
 
-  // check images[]
-  newBlog.images.forEach((img, index) => {
-    if (!validator.isURL(img, {
-      require_protocol: true,
-      require_valid_protocol: true,
-      allow_underscores: true,
-    })){
-      errs.push(`ảnh thứ ${index + 1} không đúng định dạng!`);
-    }
-  });
+  // check html
+  if(!newBlog.html || validator.isEmpty(newBlog.html)){
+    errs.push("nội dung bài viết là trường bắt buộc!");
+  }
 
-  // check properties
-  if (!newBlog.paragraphs || !newBlog.paragraphs.length){
-    errs.push("Bài viết ít nhất phải có 1 đoạn!");
-  } else {
-    newBlog.paragraphs.forEach((para, index) => {
-      if (!para){
-        errs.push(`đoạn thứ ${index + 1} đang bị trống!`);
-      }
-    });
+  if (errs.length){
+    res.status(400).json({errors: errs});
+    return;
   }
 
   // save as author
@@ -113,7 +100,6 @@ BlogController.prototype.post = async function (req, res, next) {
     res.json(result);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
-    next(error)
   }
 }
 

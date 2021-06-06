@@ -11,6 +11,10 @@ const ProductController = function () {
 
 
 // [GET] /api/products
+// [GET] /api/products?_filter&prop=value                     : for only filtering
+// [GET] /api/products?_paginate&page=num&perPage=num         : for only pagination
+// [GET] /api/products?_filter&prop=value&_paginate&page=num&perPage=num         
+// => for both filtering and pagination
 ProductController.prototype.get = async function (req, res, next) {
   
   let hasPagination = false, perPage, page;
@@ -69,6 +73,7 @@ ProductController.prototype.getOne = async function (req, res, next) {
 }
 
 // [GET] /api/products/categories/:slug
+// [GET] /api/products/categories/:slug?_paginate&page=num&perPage=num         : for only pagination
 ProductController.prototype.getByCate = async function (req, res, next) {
 
   const slug = req.params[0];
@@ -102,6 +107,7 @@ ProductController.prototype.getByCate = async function (req, res, next) {
 }
 
 // [GET] /api/products/supplier/:slug
+// [GET] /api/products/supplier/:slug?_paginate&page=num&perPage=num         : for only pagination
 ProductController.prototype.getBySupplier = async function (req, res, next) {
 
   const slug = req.params.slug;
