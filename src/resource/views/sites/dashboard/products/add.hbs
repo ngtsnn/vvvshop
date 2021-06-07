@@ -1,1 +1,38 @@
-test add
+<div class="row">
+<div class="col-md-12">
+  <div class="card card-outline card-info">
+  <div class="card-header">
+    <h3 class="card-title">
+      <h5>
+        Thêm sản phẩm mới
+      </h5>
+    </h3>
+    <ul class="header-dropdown m-r--5" style="display: inline-block; float: right;">
+      <a id="thembaiviet" href="#" class="btn bg-cyan btn-primary waves-effect m-b-15">
+        ĐĂNG SẢN PHẨM
+      </a>
+    </ul>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <textarea id="summernote">
+      <h1>Tên sản phẩm</h1>
+      <br>
+      <p>Mô tả sản phẩm</p>
+    </textarea>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    $(function () {
+      // Summernote
+      $('#summernote').summernote()
+    });
+    $("#thembaiviet").on('click', function(e){
+      e.preventDefault();
+      var html = $('#summernote').summernote('code');
+      console.log(html);
+    });
+  });
+
+</script>

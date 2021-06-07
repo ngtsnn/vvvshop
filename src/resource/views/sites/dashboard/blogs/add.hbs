@@ -3,26 +3,22 @@
   <div class="card card-outline card-info">
   <div class="card-header">
     <h3 class="card-title">
-      Summernote
+      Soạn bài viết
     </h3>
     <ul class="header-dropdown m-r--5" style="display: inline-block; float: right;">
       <a id="thembaiviet" href="#" class="btn bg-cyan btn-primary waves-effect m-b-15">
-        LƯU BÀI VIẾT
+        ĐĂNG BÀI VIẾT
       </a>
     </ul>
   </div>
   <!-- /.card-header -->
   <div class="card-body">
     <textarea id="summernote">
-      Place <em>some</em> <u>text</u> <strong>here</strong>
+      <h1>Tên bài viết</h1>
+      <br>
+      <p>Nội dung bài viết</p>
     </textarea>
   </div>
-  <div class="card-footer">
-    Visit <a href="https://github.com/summernote/summernote/">Summernote</a> documentation for more examples and information about the plugin.
-  </div>
-  </div>
-</div>
-<!-- /.col-->
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function(){
@@ -35,6 +31,6 @@
       var html = $('#summernote').summernote('code');
       console.log(html);
     });
-  })
+  });
 
 </script>

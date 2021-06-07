@@ -19,6 +19,8 @@ const engToVie = {
   "settings": "cài đặt",
   "setting": "cài đặt",
   "trashbin": "thùng rác",
+  "add": "thêm",
+  "edit": "sửa",
 }
 
 const capitalize = function (string) {

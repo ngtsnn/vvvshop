@@ -1,48 +1,41 @@
-[
-  {
-    "name": "Bảng điều khiển",
-    "url": "/dashboard",
-    "lv2": [
-      {
-        "name": "Sản phẩm",
-        "url": "/dashboard/products"
-      },
-      {
-        "name": "Danh mục",
-        "url": "/dashboard/categories"
-      },
-      {
-        "name": "Tin tức",
-        "url": "/dashboard/blogs"
-      }
-    ]
-  },
-  {
-    "name": "Quản trị viên",
-    "url": "/admins",
-    "lv2": []
-  },
-  {
-    "name": "Thống kê",
-    "url": "/statistic",
-    "lv2": [
-      {
-        "name": "Doanh thu",
-        "url": "/statistic/income"
-      },
-      {
-        "name": "Danh mục",
-        "url": "/statistic/categories"
-      },
-      {
-        "name": "Đơn hàng",
-        "url": "/statistic/orders"
-      }
-    ]
-  },
-  {
-    "name": "Cài đặt",
-    "url": "/settings",
-    "lv2": []
-  }
+[{
+        "name": "Bảng điều khiển",
+        "url": "/dashboard",
+        "lv2": [{
+                "name": "Sản phẩm",
+                "url": "/dashboard/products"
+            },
+            {
+                "name": "Danh mục",
+                "url": "/dashboard/categories"
+            },
+            {
+                "name": "Tin tức",
+                "url": "/dashboard/blogs"
+            }
+        ]
+    },
+    {
+        "name": "Quản trị viên",
+        "url": "/admins",
+        "lv2": []
+    },
+    {
+        "name": "Thống kê",
+        "url": "/statistic",
+        "lv2": [{
+                "name": "Doanh thu",
+                "url": "/statistic/income"
+            },
+            {
+                "name": "Đơn hàng",
+                "url": "/statistic/orders"
+            }
+        ]
+    },
+    {
+        "name": "Cài đặt",
+        "url": "/settings",
+        "lv2": []
+    }
 ]
