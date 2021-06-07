@@ -22,7 +22,7 @@ const property = new Schema({
     image: {type: String, default: '', },
     mutationPrice: { type: Number, default:0, },
   }]
-});
+}, { _id : false });
 
 const product = new Schema({
   name: { type: String, default: '', trim: true, required: true, },

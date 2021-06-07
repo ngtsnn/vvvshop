@@ -32,13 +32,16 @@ OrderController.prototype.get = async function (req, res, next) {
     delete objQuery["_filter"];
   }
 
-  
+  // filter with role
+  if (req.user.role !== "admin" && req.user.role !== "super admin"){
+    objQuery.user = req.user._id;
+  }
 
   try {
-    let data = await Order.find(objQuery).populate({path: 'details', select: ['name', 'images']});
+    let data = await Order.find(objQuery).populate({path: 'details.product', select: ['name', 'images']}).populate({path: "user", select: ["name", "avatar"]});
     if (hasPagination){
       const totalPage = Math.ceil(data.length / perPage);
-      const newData = await Order.find(objQuery).populate({path: 'details', select: ['name', 'images']}).limit(perPage).skip(perPage * (page - 1));
+      const newData = await Order.find(objQuery).populate({path: 'details.product', select: ['name', 'images']}).populate({path: "user", select: ["name", "avatar"]}).limit(perPage).skip(perPage * (page - 1));
       data = new Object();
       data["totalPage"] = totalPage;
       data["hasNextPage"] = page < totalPage;
@@ -60,8 +63,17 @@ OrderController.prototype.getOne = async function (req, res, next) {
     return;
   }
 
+  const query = {
+    _id: id,
+  }
+  // filter with role
+  if (req.user.role !== "admin" && req.user.role !== "super admin"){
+    query.user = req.user._id;
+  } 
+  console.log(query)
+
   try {
-    const data = await Order.findOne({_id: id}).populate({path: 'details', select: ['name', 'avatar']});
+    const data = await Order.findOne(query).populate({path: 'details.product', select: ['name', 'images']}).populate({path: "user", select: ["name", "avatar"]});
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
