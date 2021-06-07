@@ -183,7 +183,7 @@ AuthController.prototype.forgot = async function (req, res, next) {
     const token = jwt.sign({
       _id: user._id,
       email: user.email,
-    }, process.env.RESET_KEY || "DevResetKey", { expiresIn: '15m' });
+    }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '15m' });
 
 
 
@@ -231,16 +231,10 @@ AuthController.prototype.forgot = async function (req, res, next) {
 // [PATCH] /api/auth/reset/:id
 AuthController.prototype.resetPassword = async function (req, res, next) {
   const _id = req.params.id;
-  const reset_token = req.header("reset_token");
   const newPassword = req.body.password;
 
 
-  try {
-    const reqUser = await jwt.verify(reset_token, process.env.RESET_KEY || "DevResetKey");
-    if (_id !== reqUser._id){
-      res.status(401).send({ errors: ["Lỗi xác thực!!"] });
-    }
-  } catch (err) {
+  if (_id !== req.user._id){
     res.status(401).send({ errors: ["Lỗi xác thực!!"] });
   }
 

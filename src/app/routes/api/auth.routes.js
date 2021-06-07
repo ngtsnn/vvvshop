@@ -1,5 +1,8 @@
 const router = require("express").Router();
+const { verify } = require("../../../utility/middlewares/app/verify.middleware");
 const authController = require("../../controllers/api/auth.controller");
+
+
 
 
 
@@ -13,6 +16,6 @@ router.post("/register", authController.register);
 router.get("/forgot/:email", authController.forgot);
 
 // reset password
-router.patch("/reset/:id", authController.resetPassword);
+router.patch("/reset/:id", verify, authController.resetPassword);
 
 module.exports = router;
