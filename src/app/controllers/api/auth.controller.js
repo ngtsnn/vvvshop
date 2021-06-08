@@ -99,16 +99,6 @@ AuthController.prototype.register = async function (req, res, next) {
   if (!newUser.name || validator.isEmpty(newUser.name)) {
     errs.push("tên là trường bắt buộc!");
   }
-  // check url avatar
-  if (newUser.avatar) {
-    if (!validator.isURL(newUser.avatar, {
-      require_protocol: true,
-      require_valid_protocol: true,
-      allow_underscores: true,
-    })) {
-      errs.push("ảnh đại diện không đúng định dạng");
-    }
-  }
   // force role is user
   newUser.role = "user";
 

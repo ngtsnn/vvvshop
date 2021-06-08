@@ -154,17 +154,6 @@ ProductController.prototype.post = async function (req, res, next) {
     errs.push("tên sản phẩm là trường bắt buộc!");
   }
 
-  // check images[]
-  newProduct.images.forEach((img, index) => {
-    if (!validator.isURL(img, {
-      require_protocol: true,
-      require_valid_protocol: true,
-      allow_underscores: true,
-    })){
-      errs.push(`ảnh thứ ${index + 1} không đúng định dạng`);
-    }
-  });
-
   // check properties
   if (newProduct.properties && newProduct.properties.length){
     newProduct.properties.forEach((property, index) => {
@@ -179,16 +168,6 @@ ProductController.prototype.post = async function (req, res, next) {
         property.values.forEach((val, i) => {
           if(!val.value || validator.isEmpty(val.value)){
             errs.push("vui lòng nhập giá trị cho thuộc tính!");
-          }
-
-          if(val.image){
-            if (!validator.isURL(val.image, {
-              require_protocol: true,
-              require_valid_protocol: true,
-              allow_underscores: true,
-            })){
-              errs.push(`ảnh của thuộc tính không đúng định dạng`);
-            }
           }
         });
       }

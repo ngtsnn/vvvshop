@@ -75,14 +75,6 @@ SupplierController.prototype.post = async function (req, res, next) {
     errs.push("Tên nhà cung cấp là trường bắt buộc");
   }
 
-  // check avatar
-  if (!newSupplier.image || validator.isEmpty(newSupplier.image) ||!validator.isURL(newSupplier.image, {
-    require_protocol: true,
-    require_valid_protocol: true,
-    allow_underscores: true,
-  })){
-    errs.push("logo không đúng định dạng");
-  }
 
   try {
     const foundSupplier = await Supplier.findOne({name: newSupplier.name});

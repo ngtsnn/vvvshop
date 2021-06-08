@@ -89,15 +89,6 @@ CategoryController.prototype.post = async function (req, res, next) {
     }
   }
 
-  // check logo
-  if (!newCategory.logo || validator.isEmpty(newCategory.logo) ||!validator.isURL(newCategory.logo, {
-    require_protocol: true,
-    require_valid_protocol: true,
-    allow_underscores: true,
-  })){
-    errs.push("logo không đúng định dạng");
-  }
-
   await newCategory.makeTree();
 
   // check duplicated
