@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Sleek Wooden Keyboard",
+    "images": [
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats",
+      "http://placeimg.com/640/480/cats"
+    ],
+    "categories": [
+      "60b7c54717b6eec6de75545a"
+    ],
+    "description": "Sed atque ipsum dolores vitae soluta. Corrupti laudantium porro reprehenderit nam. Sunt ut non dolor natus ipsum. Velit aut occaecati ut suscipit aspernatur laudantium. Ipsa laboriosam quia omnis eligendi eveniet. Inventore et et quae laboriosam sit facilis totam voluptatum pariatur.",
+    "orginalPrice": 0,
+    "properties": [
+      {
+        "isMutable": false,
+        "key": "ducimus",
+        "values": [
+          {
+            "value": "neque id ipsum",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 0
+          }
+        ]
+      },
+      {
+        "isMutable": true,
+        "key": "RAM",
+        "values": [
+          {
+            "value": "8GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 0
+          },
+          {
+            "value": "12GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 600000
+          },
+          {
+            "value": "16GB",
+            "image": "http://placeimg.com/640/480/cats",
+            "mutationPrice": 1600000
+          }
+        ]
+      }
+    ],
+    "supplier": "60b7bc7b3de385c0e453e643"
+  }
+]

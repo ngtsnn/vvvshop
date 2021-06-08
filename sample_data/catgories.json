@@ -1,0 +1,50 @@
+[
+  {
+    "name": "máy tính",
+    "parent": "",
+    "logo": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7c0b7dacf17c3c09f3f80",
+    "tree": "máy tính",
+    "createdAt": "2021-06-02T17:32:39.723Z",
+    "updatedAt": "2021-06-02T17:32:39.723Z",
+    "slug": "may-tinh",
+    "__v": 0
+  },
+  {
+    "name": "laptop",
+    "parent": "máy tính",
+    "logo": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7c54717b6eec6de75545a",
+    "tree": "máy tính/laptop",
+    "createdAt": "2021-06-02T17:52:07.458Z",
+    "updatedAt": "2021-06-02T17:52:07.458Z",
+    "slug": "may-tinh/laptop",
+    "__v": 0
+  },
+  {
+    "name": "gaming",
+    "parent": "máy tính/laptop",
+    "logo": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7c57c17b6eec6de75545c",
+    "tree": "máy tính/laptop/gaming",
+    "createdAt": "2021-06-02T17:53:00.826Z",
+    "updatedAt": "2021-06-02T17:53:00.826Z",
+    "slug": "may-tinh/laptop/gaming",
+    "__v": 0
+  },
+  {
+    "name": "đồng hồ",
+    "parent": "",
+    "logo": "http://placeimg.com/640/480/cats",
+    "deleted": false,
+    "_id": "60b7c779aed342c7ec7588d1",
+    "tree": "đồng hồ",
+    "createdAt": "2021-06-02T18:01:29.346Z",
+    "updatedAt": "2021-06-02T18:01:29.346Z",
+    "slug": "dong-ho",
+    "__v": 0
+  }
+]

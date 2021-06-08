@@ -1,0 +1,130 @@
+<div class="login-page" style="min-height: 466px;">
+
+  <div id="error-box">
+
+  </div>
+
+  <div class="login-box">
+
+    {{!-- /.login-logo --}}
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="/" class="h1"><b>VVV</b>Shop</a>
+      </div>
+      <div class="card-body">
+        <p class="login-box-msg">Vui lòng đăng nhập để tiếp tục</p>
+
+        <form method="post" id="login-form">
+          <div class="input-group mb-3">
+            <input name="password" type="password" class="form-control" placeholder="mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="refill-password" type="password" class="form-control" placeholder="nhập lại mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock text-main"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Lưu mật khẩu
+                </label>
+              </div>
+            </div>
+            {{!-- /.col --}}
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-primary btn-block">Xác nhận</button>
+            </div>
+            {{!-- /.col --}}
+          </div>
+        </form>
+      </div>
+      {{!-- /.card-body --}}
+    </div>
+    {{!-- /.card --}}
+  </div>
+  {{!-- /.login-box --}}
+
+
+  <div class="d-none">
+    <span id="token" value="{{token}}">
+
+    </span>
+    <span id="_id" value="{{_id}}">
+    </span>
+  </div>
+</div>
+
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    $(document).ready(function () {
+
+      // functions here
+      $("#login-form").on("submit", function (e) {
+        e.preventDefault();
+      });
+      $("#login-form").on("submit", async function () {
+        const password = $(this).find('input[name="password"]').val();
+        const refilfPassword = $(this).find('input[name="refill-password"]').val();
+
+        if (password !== refilfPassword) {
+          const errorHTML = `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> Mật khẩu chưa trùng khớp </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `
+          $("#error-box").html(errorHTML);
+          return;
+        }
+
+        const id = $("#_id").attr("value");
+        const token = $("#token").attr("value");
+        const API_URL = `/api/auth/reset/${id}`;
+        try {
+          const btn = $(this).find('button[type="submit"]');
+          btn.html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+          const { data } = await axios.patch(API_URL, {
+            password,
+          }, {
+            headers: {
+              auth_token: token,
+            }
+          });
+          localStorage.setItem("auth_token", data);
+          btn.html(` xác nhận `);
+          window.location.href = "/";
+        } catch ({ response }) {
+          const errorHTML = response.data.errors.map((current) => {
+            return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+          });
+          $("#error-box").html(errorHTML);
+          $(this).find('button[type="submit"]').html(` xác nhận `);
+        }
+      })
+    });
+  })
+</script>

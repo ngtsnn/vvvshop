@@ -1,0 +1,93 @@
+<section class="wrap-nav-container bg-main overflow-x-hiden overflow-y-auto" id="nav-bar">
+  
+  <div class="wrap-user d-flex align-items-center">
+    <div class="wrap-avatar">
+      <img src="/images/profiles/me.jpg" alt="">
+    </div>
+    <div class="wrap-name">
+      <span class="d-block fs-lg">VVVAdmin</span>
+    </div>
+  </div>
+  <div class="gap-xs"></div>
+
+
+  <div class="cross-bar">
+    <hr width="100%" class="bg-grey m-0 p-0">
+    <div class="gap-xs"></div>
+  </div>
+
+  <nav class="wrap-nav overflow-y-auto">
+    <div class="gap-xs"></div>
+    <ul class="wrap-nav-lv1">
+      {{#each navs}}
+      <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12 {{#if (isSelected ../baseURL this.url)}}active{{/if}}"}>          
+          <a href={{this.url}} class="d-block nav-link-lv1 text-bold">{{this.name}}</a>
+          {{#if this.lv2}}
+          <button class="bg-transparent tg-icon my-collapse-1 {{#if (isSelected ../baseURL this.url)}}rotate-z-90{{/if}}" tg-target="#nav-lv2-{{@index}}">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          {{/if}}
+        </div>
+        {{#if this.lv2}}
+        <ul class="wrap-nav-lv2 {{#if (isSelected ../baseURL this.url)}}{{else}}hidden{{/if}}" id="nav-lv2-{{@index}}">
+          {{#each this.lv2}}
+          <li>
+            <a href={{this.url}} class="nav-link-lv2 rounded-12 {{#if (isSelected ../../baseURL this.url)}}active{{/if}}">{{this.name}}</a>
+          </li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </li>
+      {{/each}}
+      {{!-- <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12 active">
+          <a href="/dashboard/products" class="d-block nav-link-lv1 text-bold">Bảng điều khiển</a>
+          <button class="bg-transparent tg-icon my-collapse-1 rotate-z-90" tg-target="#nav-lv2-1">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        <ul class="wrap-nav-lv2" id="nav-lv2-1">
+          <li>
+            <a href="/dashboard/products" class="nav-link-lv2 rounded-12 active">Sản Phẩm</a>
+          </li>
+          <li>
+            <a href="/dashboard/categories" class="nav-link-lv2 rounded-12">Danh mục</a>
+          </li>
+          <li>
+            <a href="/dashboard/blogs" class="nav-link-lv2 rounded-12">Tin tức</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12">
+          <a href="/admins" class="d-block nav-link-lv1 text-bold">Quản trị viên</a>
+        </div>
+      </li>
+      <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12">
+          <a href="/statistic/income" class="d-block nav-link-lv1 text-bold">Thống kê</a>
+          <button class="bg-transparent tg-icon my-collapse-1" tg-target="#nav-lv2-3">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        <ul class="wrap-nav-lv2 hidden" id="nav-lv2-3">
+          <li>
+            <a href="/statistic/income" class="nav-link-lv2 rounded-12">Doanh thu</a>
+          </li>
+          <li>
+            <a href="/statistic/categories" class="nav-link-lv2 rounded-12">Danh mục</a>
+          </li>
+          <li>
+            <a href="/statistic/orders" class="nav-link-lv2 rounded-12">Đơn hàng</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-lv1-container">
+        <div class="nav-lv1 d-flex rounded-12">
+          <a href="/settings" class="d-block nav-link-lv1 text-bold w-full">Cài đặt</a>
+        </div>
+      </li> --}}
+    </ul>
+  </nav>
+</section>

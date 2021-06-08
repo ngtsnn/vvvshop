@@ -1,3 +1,35 @@
-<header>
-  <h1>this is header</h1>
+<header class="header">
+  <div class="wrap-header d-flex justify-content-between align-items-center">
+    <button class="d-lg-none d-block nav-toggler" tg-target="#nav-bar, #dark-layer" id="nav-toggler">
+      <img src="/images/icons/menu.svg" style="width: 100%;" alt="">
+    </button>
+    <div class="wrap-breadcrumb d-lg-block d-none">
+      <ul class="my-breadcrumb">
+        {{#each routeArr}}
+        <li class="my-breadcrumb-item">
+          <a href={{{this.url}}} class="my-breadcrumb-link">{{this.breadcrumbTitle}}</a>
+        </li>
+        {{else}}
+        {{/each}}
+      </ul>
+    </div>
+    <div class="wrap-logo">
+      <a href="/" class="brand-logo d-block">
+        <img src="/images/logo/logoVVV_text-01.png" alt="">
+      </a>
+      <div class="gap-xs"></div>
+    </div>
+  </div>
 </header>
+
+<div class="gap-md d-lg-none"></div>
+<div class="wrap-breadcrumb d-lg-none">
+  <ul class="my-breadcrumb flex-wrap">
+    {{#each routeArr}}
+    <li class="my-breadcrumb-item">
+      <a href={{{this.url}}} class="my-breadcrumb-link">{{this.breadcrumbTitle}}</a>
+    </li>
+    {{else}}
+    {{/each}}
+  </ul>
+</div>

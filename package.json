@@ -9,7 +9,8 @@
     "dev": "nodemon src/app",
     "edit-assets": "sass --no-source-map --watch src/resource/sass/assets:src/public/css/assets",
     "watch": "sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
-    "live-dev": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites"
+    "live-dev": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites",
+    "live-dev-assets": "nodemon src/app & sass --no-source-map --watch src/resource/sass/components:src/public/css/components src/resource/sass/sites:src/public/css/sites src/resource/sass/assets:src/public/css/assets"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,19 @@
   },
   "homepage": "https://github.com/ngtsnn/vvvshop#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
+    "googleapis": "^75.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.3",
-    "sass": "^1.32.8"
+    "mongoose-delete": "^0.5.3",
+    "mongoose-slug-generator": "^1.0.4",
+    "nodemailer": "^6.6.1",
+    "sass": "^1.32.8",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

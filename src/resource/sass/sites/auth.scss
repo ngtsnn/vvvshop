@@ -1,0 +1,121 @@
+//
+// Pages: Login & Register
+//
+@import "../components/variables.scss";
+
+.login-logo,
+.register-logo {
+  font-size: 2.1rem;
+  font-weight: 300;
+  margin-bottom: .9rem;
+  text-align: center;
+
+  a {
+    color: #343a40;
+  }
+}
+
+.login-page,
+.register-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.login-box,
+.register-box {
+  width: 360px;
+  box-shadow: #343a40 0 0 10px;
+  border-radius: 12px;
+  overflow: hidden;
+
+  @media screen and (max-width: $tablet) {
+    margin-top: .5rem;
+    width: 90%;
+  }
+
+  .card {
+    margin-bottom: 0;
+  }
+}
+
+.login-card-body,
+.register-card-body {
+  background-color: #fff;
+  border-top: 0;
+  color: #666;
+  padding: 20px;
+
+  .input-group {
+    .form-control {
+      border-right: 0;
+
+      &:focus {
+        box-shadow: none;
+
+        ~ .input-group-prepend .input-group-text,
+        ~ .input-group-append .input-group-text {
+          border-color: $main-color;
+        }
+      }
+
+      &.is-valid {
+        &:focus {
+          box-shadow: none;
+        }
+
+        ~ .input-group-prepend .input-group-text,
+        ~ .input-group-append .input-group-text {
+          border-color: $success;
+        }
+      }
+
+      &.is-invalid {
+        &:focus {
+          box-shadow: none;
+        }
+
+        ~ .input-group-append .input-group-text {
+          border-color: $danger;
+        }
+      }
+    }
+
+    .input-group-text {
+      background-color: transparent;
+      border-bottom-right-radius: 8px;
+      border-left: 0;
+      border-top-right-radius: 8px;
+      color: #777;
+      transition: .4s all ease-in-out;
+    }
+  }
+}
+
+.login-box-msg,
+.register-box-msg {
+  margin: 0;
+  padding: 0 20px 20px;
+  text-align: center;
+}
+
+.social-auth-links {
+  margin: 10px 0;
+}
+
+.dark-mode {
+  .login-card-body,
+  .register-card-body {
+    background-color: $dark;
+    border-color: #343a40;
+    color: $white;
+  }
+  .login-logo,
+  .register-logo {
+    a {
+      color: $white;
+    }
+  }
+}

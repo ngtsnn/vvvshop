@@ -1,9 +1,35 @@
-.wrap-header{
-  width: 100%;
-}
+@import "./variables.scss";
 
-.test{
-  height: 20px;
-  width: 100%;
-  background-color: red;
+.wrap-header{
+  border-bottom: 1px #e5e5e5 solid;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .wrap-logo{
+    width: 120px;
+    height: 60px;
+
+    .brand-logo{
+      width: 120px;
+      height: 60px;
+      margin: auto;
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @media screen and (max-width: $tablet){
+    .nav-toggler{
+      width: 40px;
+      height: 40px;
+      background: none;
+      outline: none;
+      border: none;
+    }
+  }
 }

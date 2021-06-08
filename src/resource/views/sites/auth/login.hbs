@@ -1,0 +1,106 @@
+<div class="login-page" style="min-height: 466px;">
+
+  <div id="error-box">
+
+  </div>
+
+  <div class="login-box">
+
+    {{!-- /.login-logo --}}
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="/" class="h1"><b>VVV</b>Shop</a>
+      </div>
+      <div class="card-body">
+        <p class="login-box-msg">Vui lòng đăng nhập để tiếp tục</p>
+
+        <form method="post" id="login-form">
+          <div class="input-group mb-3">
+            <input name="account" type="text" class="form-control" placeholder="Email hoặc số điện thoại">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="password" type="password" class="form-control" placeholder="mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Lưu mật khẩu
+                </label>
+              </div>
+            </div>
+            {{!-- /.col --}}
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div>
+            {{!-- /.col --}}
+          </div>
+        </form>
+
+        <p class="mb-1">
+          <a href="/auth/forgot">Quên mật khẩu</a>
+        </p>
+      </div>
+      {{!-- /.card-body --}}
+    </div>
+    {{!-- /.card --}}
+  </div>
+  {{!-- /.login-box --}}
+</div>
+
+
+<script>
+  const API_URL = "/api/auth/login";
+  
+  document.addEventListener("DOMContentLoaded", async function () {
+    $(document).ready(function () {
+      
+      // functions here
+      $("#login-form").on("submit", function (e) {
+        e.preventDefault();
+      });
+      $("#login-form").on("submit", async function () {
+        const account = $(this).find('input[name="account"]').val();
+        const password = $(this).find('input[name="password"]').val();
+  
+        try {
+          const btn = $(this).find('button[type="submit"]');
+          btn.html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+          const { data } = await axios.post(API_URL, {
+            account,
+            password,
+          });
+          localStorage.setItem("auth_token", data);
+          window.location.href = "/";
+        } catch ({ response }) {
+          const errorHTML = response.data.errors.map((current) => {
+            return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+          });
+          $("#error-box").html(errorHTML);
+          $(this).find('button[type="submit"]').html(`Đăng nhập`);
+        }
+      })
+    });
+  })
+</script>

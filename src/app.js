@@ -4,11 +4,13 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
+const cookieParser = require('cookie-parser');
 
 
 //import internal files
 const route = require('./app/routes/index.routes');
 const db = require('./db');
+const customMiddlewares = require('./utility/middlewares/app/');
 
 
 
@@ -23,9 +25,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //setting middleware
 app.use(express.urlencoded({
+  limit: '50mb',
   extended: true,
 }));
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(cookieParser());
+
+
+
+// custom middlewares
+app.use(customMiddlewares);
 
 
 
@@ -34,7 +43,7 @@ app.engine('hbs', exphbs({
   extname      :'hbs',
   layoutsDir   : path.join(__dirname, 'resource/views/layouts'),
   defaultLayout: 'main',
-  helpers      : path.join(__dirname, 'resource/views/helpers'),
+  helpers      : require("./utility/helpers"),
   partialsDir  : [
     path.join(__dirname, 'resource/views/components'),
   ]
@@ -49,7 +58,7 @@ db.conn();
 
 
 //configure port
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 
 
@@ -60,4 +69,5 @@ route(app);
 
 
 //listening
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!
+App is running at http://127.0.0.1:${port}`));

@@ -1,0 +1,19 @@
+[
+  {
+    "email": "18521586@gm.uit.edu.vn",
+    "phone": "0328473083",
+    "password": "anhtuday",
+    "name": "Phạm Anh Tú",
+    "address": "188 Hoàng Hữu Nam, Quận 9, TPHCM",
+    "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6",
+    "role": "super admin"
+  },
+  {
+    "email": "tusocnau@gmail.com",
+    "phone": "0322333444",
+    "password": "anhtuday",
+    "name": "Nguyễn Văn A",
+    "address": "188 Hoàng Hữu Nam, Quận 9, TPHCM",
+    "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6"
+  }
+]

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" placeholder="email or phone number" id="account">
+  <input type="password" placeholder="password" id="password">
+  <button id="test">nhấn đi</button>
+</body>
+
+<script>
+  const API = "http://127.0.0.1:8080/api/auth/login"
+  const btn = document.querySelector("#test");
+  btn.addEventListener("click", () => {
+    const account = document.querySelector("#account").value;
+    const password = document.querySelector("#password").value;
+    fetch(API, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        account: account,
+        password: password,
+      }),
+    }).then(res => res.json())
+    .then(({auth_token}) => {
+      console.log(auth_token);
+      localStorage.setItem("auth_token", auth_token);
+    })
+    .catch(err => console.error(err));
+  });
+</script>
+</html>

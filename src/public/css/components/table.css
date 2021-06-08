@@ -1,0 +1,32 @@
+.min-width-700 {
+  min-width: 700px;
+}
+
+.tick-col {
+  width: 20px;
+}
+
+.product-name-col {
+  width: calc(100% - 470px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-col {
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price-col {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-col {
+  width: 200px;
+}
