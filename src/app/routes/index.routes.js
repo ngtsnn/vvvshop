@@ -32,7 +32,7 @@ module.exports = function (app) {
 
   // not found
   app.get('*', (req, res, next) => {
-    return res.render("404");
+    return res.render("sites/404");
   });
   
 }

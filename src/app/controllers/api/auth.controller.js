@@ -109,10 +109,8 @@ AuthController.prototype.register = async function (req, res, next) {
       errs.push("ảnh đại diện không đúng định dạng");
     }
   }
-  // check role
-  if (!validator.isIn(newUser.role, ["user", "admin", "super admin"])) {
-    errs.push(`không tồn tại vai trò "${newUser.role}"`);
-  }
+  // force role is user
+  newUser.role = "user";
 
   // check email and phone number is register or not
   const oldEmailUser = await User.findOne({ email: newUser.email });
