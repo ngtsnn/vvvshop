@@ -58,7 +58,7 @@ AuthController.prototype.login = async function (req, res, next) {
     avatar: foundUser.avatar,
   }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
-  res.header("auth_token", token).status(200).json({ "auth_token": token });
+  res.header("auth_token", token).cookie('auth_token', token, { expires: new Date(Date.now() + 86400000), }).status(200).json({ "auth_token": token });
 
 
 }
@@ -137,7 +137,7 @@ AuthController.prototype.register = async function (req, res, next) {
       avatar: result.avatar,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
-    res.header("auth_token", token).status(200).json({ "auth_token": token });
+    res.header("auth_token", token).cookie('auth_token', token, { expires: new Date(Date.now() + 86400000), }).status(200).json({ "auth_token": token });
   }
   catch (err) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
@@ -263,7 +263,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
       avatar: result.avatar,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
-    res.header("auth_token", token).status(200).json({ "auth_token": token });
+    res.header("auth_token", token).cookie('auth_token', token, { expires: new Date(Date.now() + 86400000), }).status(200).json({ "auth_token": token });
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
   }

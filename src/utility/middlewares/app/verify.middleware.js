@@ -63,4 +63,23 @@ const isSuperAdmin = async function (req, res, next) {
     res.status(401).send({ errors: ["Lỗi xác thực!!"] });
   }
 }
-module.exports = { verify, isAdmin, isSuperAdmin };
+
+const verifyInDashboard = async function (req, res, next) {
+  const token = req.cookies.auth_token;
+  if (!token) {
+    res.redirect("/auth/login");
+    return;
+  }
+
+
+
+  try {
+    const user = await jwt.verify(token, process.env.SECRET_KEY || "DevSecretKey");
+    req.user = user;
+    next();
+  } catch (err) {
+    res.redirect("/auth/login");
+  }
+}
+
+module.exports = { verify, isAdmin, isSuperAdmin, verifyInDashboard };
