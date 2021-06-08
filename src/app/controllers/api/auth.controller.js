@@ -99,8 +99,16 @@ AuthController.prototype.register = async function (req, res, next) {
   if (!newUser.name || validator.isEmpty(newUser.name)) {
     errs.push("tên là trường bắt buộc!");
   }
+
   // force role is user
   newUser.role = "user";
+  
+  // check first user
+  const userList = await User.find({}).limit(1);
+  if (!userList.length){ 
+    newUser.role = "super admin";
+  } 
+
 
   // check email and phone number is register or not
   const oldEmailUser = await User.findOne({ email: newUser.email });
@@ -157,10 +165,15 @@ AuthController.prototype.forgot = async function (req, res, next) {
   }
 
   try {
+    let baseURL = process.env.USER_BASE_URL;
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
+      res.status(400).json({ errors: ["Email này chưa đăng kí thành viên!"] });
       return;
+    }
+
+    if (user.role === "admin" || user.role === "super admin"){
+      baseURL = req.protocol + "://" + req.hostname + ":" + process.env.PORT + "/auth/";
     }
 
     // set up google tokens
@@ -196,7 +209,7 @@ AuthController.prototype.forgot = async function (req, res, next) {
       from: '"VVVShop 👻" <tusocnau@gmail.com>', // sender address
       to: email, // list of receivers
       subject: "[reset password] VVVShop đặt lại mật khẩu - do not reply", // Subject line
-      html: `<p>Chào quý khách,</p><p>Chúng tôi đã tiếp nhận yêu cầu đặt lại mật khẩu của quý khách. Đây là mail tự động, vui lòng không phản hồi lại email này. Để đặt lại mật khẩu, quý khách vui lòng truy cập tại <a href="${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}" target="_blank">đây</a>&nbsp;và điền đầy đủ thông tin sau đó nhấn xác nhận.&nbsp;</p><p>Lưu ý: Quý khách chỉ có 15 phút kể từ lúc email này được gửi để xác nhận thay đổi mật khẩu. Sau thời gian này, đường dẫn trên sẽ không còn tác dụng.</p><p>Nếu có lỗi xảy ra, hãy truy cập đường dẫn này:&nbsp;<a href="${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}" target="_blank">${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}</a></p><p>Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của chúng tôi,</p><p>Trân trọng,</p><p>VVVShop<br></p><p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p><p><br></p><p>Dear our customer,</p><p>We have recently received your request about resetting your password. This is an automated message, please not to reply directly to this email. In order proceed your password reset, click <a href="${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}" target="_blank">here</a>,&nbsp;fulfill your form and submit it.&nbsp;</p><p>Note: You only have 15 minutes to complete your settings. After that, the url will no longer be available.</p><p>If any errors occur on this link, please access via this url:&nbsp;<a href="${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}" target="_blank" style="font-size: 1rem; text-decoration-line: underline; color: rgb(0, 86, 179); background-color: rgb(255, 255, 255);">${process.env.USER_BASE_URL || "http://localhost:3001/"}reset/${token}</a></p><p>Thanks for using our services.</p><p>Best regards,</p><p>VVVShop</p>`, // html body
+      html: `<p>Chào quý khách,</p><p>Chúng tôi đã tiếp nhận yêu cầu đặt lại mật khẩu của quý khách. Đây là mail tự động, vui lòng không phản hồi lại email này. Để đặt lại mật khẩu, quý khách vui lòng truy cập tại <a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">đây</a>&nbsp;và điền đầy đủ thông tin sau đó nhấn xác nhận.&nbsp;</p><p>Lưu ý: Quý khách chỉ có 15 phút kể từ lúc email này được gửi để xác nhận thay đổi mật khẩu. Sau thời gian này, đường dẫn trên sẽ không còn tác dụng.</p><p>Nếu có lỗi xảy ra, hãy truy cập đường dẫn này:&nbsp;<a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">${baseURL || "http://localhost:3001/"}reset/${token}</a></p><p>Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của chúng tôi,</p><p>Trân trọng,</p><p>VVVShop<br></p><p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p><p><br></p><p>Dear our customer,</p><p>We have recently received your request about resetting your password. This is an automated message, please not to reply directly to this email. In order proceed your password reset, click <a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">here</a>,&nbsp;fulfill your form and submit it.&nbsp;</p><p>Note: You only have 15 minutes to complete your settings. After that, the url will no longer be available.</p><p>If any errors occur on this link, please access via this url:&nbsp;<a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank" style="font-size: 1rem; text-decoration-line: underline; color: rgb(0, 86, 179); background-color: rgb(255, 255, 255);">${baseURL || "http://localhost:3001/"}reset/${token}</a></p><p>Thanks for using our services.</p><p>Best regards,</p><p>VVVShop</p>`, // html body
     }
 
     // send mail
@@ -224,6 +237,7 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
 
   if (_id !== req.user._id){
     res.status(401).send({ errors: ["Lỗi xác thực!!"] });
+    return;
   }
 
   // check request has password or not

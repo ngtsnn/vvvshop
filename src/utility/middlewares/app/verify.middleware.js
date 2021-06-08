@@ -75,6 +75,10 @@ const verifyInDashboard = async function (req, res, next) {
 
   try {
     const user = await jwt.verify(token, process.env.SECRET_KEY || "DevSecretKey");
+    if (user.role != "admin" && user.role != "super admin") {
+      res.status(401).send({ errors: ["Tài khoản của bạn không có quyền truy cập trang web này!!"] });
+      res.redirect("/auth/login");
+    }
     req.user = user;
     next();
   } catch (err) {
@@ -82,4 +86,9 @@ const verifyInDashboard = async function (req, res, next) {
   }
 }
 
-module.exports = { verify, isAdmin, isSuperAdmin, verifyInDashboard };
+const logout = function (req, res, next) {
+  res.clearCookie('auth_token');
+  next();
+}
+
+module.exports = { verify, isAdmin, isSuperAdmin, verifyInDashboard, logout };

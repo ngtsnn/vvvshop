@@ -35,7 +35,7 @@ const URLToRoutes = (prev, curr) => { // prev = dashboard; curr = blogs
 }
 
 const sliceURL = function (req, res, next){
-  const path = req.originalUrl;
+  const path = req.path;
   let tokens = path.substring(1).split("/");
 
   let routeArr = tokens.reduce(URLToRoutes, [{

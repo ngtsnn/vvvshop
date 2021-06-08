@@ -16,18 +16,18 @@
 
         <form method="post" id="login-form">
           <div class="input-group mb-3">
-            <input name="account" type="text" class="form-control" placeholder="Email hoặc số điện thoại">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
             <input name="password" type="password" class="form-control" placeholder="mật khẩu">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input name="refill-password" type="password" class="form-control" placeholder="nhập lại mật khẩu">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock text-main"></span>
               </div>
             </div>
           </div>
@@ -42,49 +42,73 @@
             </div>
             {{!-- /.col --}}
             <div class="col-sm-6">
-              <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+              <button type="submit" class="btn btn-primary btn-block">Xác nhận</button>
             </div>
             {{!-- /.col --}}
           </div>
         </form>
-
-        <p class="mb-1">
-          <a href="/auth/forgot">Quên mật khẩu</a>
-        </p>
       </div>
       {{!-- /.card-body --}}
     </div>
     {{!-- /.card --}}
   </div>
   {{!-- /.login-box --}}
+
+
+  <div class="d-none">
+    <span id="token" value="{{token}}">
+
+    </span>
+    <span id="_id" value="{{_id}}">
+    </span>
+  </div>
 </div>
 
 
 <script>
-  const API_URL = "/api/auth/login";
-  
+
   document.addEventListener("DOMContentLoaded", async function () {
     $(document).ready(function () {
-      
+
       // functions here
       $("#login-form").on("submit", function (e) {
         e.preventDefault();
       });
       $("#login-form").on("submit", async function () {
-        const account = $(this).find('input[name="account"]').val();
         const password = $(this).find('input[name="password"]').val();
-  
+        const refilfPassword = $(this).find('input[name="refill-password"]').val();
+
+        if (password !== refilfPassword) {
+          const errorHTML = `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> Mật khẩu chưa trùng khớp </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `
+          $("#error-box").html(errorHTML);
+          return;
+        }
+
+        const id = $("#_id").attr("value");
+        const token = $("#token").attr("value");
+        const API_URL = `/api/auth/reset/${id}`;
         try {
           const btn = $(this).find('button[type="submit"]');
           btn.html(`
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Loading...
           `);
-          const { data } = await axios.post(API_URL, {
-            account,
+          const { data } = await axios.patch(API_URL, {
             password,
+          }, {
+            headers: {
+              auth_token: token,
+            }
           });
           localStorage.setItem("auth_token", data);
+          btn.html(` xác nhận `);
           window.location.href = "/";
         } catch ({ response }) {
           const errorHTML = response.data.errors.map((current) => {
@@ -98,7 +122,7 @@
             `;
           });
           $("#error-box").html(errorHTML);
-          $(this).find('button[type="submit"]').html(`Đăng nhập`);
+          $(this).find('button[type="submit"]').html(` xác nhận `);
         }
       })
     });

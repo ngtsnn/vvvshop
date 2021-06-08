@@ -1,7 +1,7 @@
 'use strict';
 
 // middlewares
-const { verifyInDashboard } = require('../../utility/middlewares/app/verify.middleware');
+const { verifyInDashboard, logout } = require('../../utility/middlewares/app/verify.middleware');
 
 // import routes
 const dashboardRoutes = require('./dashboard/index.routes');
@@ -17,7 +17,7 @@ const authRoutes = require('./auth/index.routes');
 module.exports = function (app) {
 
   // /auth
-  app.use('/auth', authRoutes);
+  app.use('/auth', logout, authRoutes);
 
   // /api
   app.use('/api', apiRoutes);
@@ -33,6 +33,11 @@ module.exports = function (app) {
 
   // /setting
   app.use('/settings', verifyInDashboard, settingRoutes);
+
+  // 500 page
+  app.get('/500', verifyInDashboard, (req, res, next) => {
+    return res.render("sites/500");
+  });
 
   // home page
   app.get('/', verifyInDashboard, (req, res, next) => {
