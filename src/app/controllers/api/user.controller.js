@@ -124,11 +124,7 @@ UserController.prototype.put = async function (req, res, next) {
 
   try {
     let user = await User.findOne({ _id: id });
-    user.name = updatedUser.name;
-    user.address = updatedUser.address;
-    user.avatar = updatedUser.avatar;
-    user.email = updatedUser.email;
-    user.phone = updatedUser.phone;
+    user.overwrite(req.body);
     const result = await user.save();
 
     res.status(200).json({

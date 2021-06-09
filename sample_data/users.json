@@ -1,19 +1,212 @@
 [
   {
-    "email": "18521586@gm.uit.edu.vn",
-    "phone": "0328473083",
-    "password": "anhtuday",
+    "_id": {
+      "$oid": "60a223216819f574b9ac551f"
+    },
     "name": "Phạm Anh Tú",
     "address": "188 Hoàng Hữu Nam, Quận 9, TPHCM",
     "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6",
-    "role": "super admin"
+    "role": "super admin",
+    "deleted": false,
+    "email": "18521586@gm.uit.edu.vn",
+    "phone": "0328473083",
+    "password": "$2a$10$r7panFfj6IXPqfTtiK/F5.tpL/WxLlYdJU7alImdqxVwEAMsFoQpy",
+    "createdAt": {
+      "$date": "2021-05-17T08:02:42.157Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-09T12:36:00.519Z"
+    },
+    "slug": "pham-anh-tu",
+    "__v": 0
   },
   {
+    "_id": {
+      "$oid": "60a2279ff528ac77bf65191a"
+    },
+    "name": "Nguyễn Văn B",
+    "address": "188 Hoàng Hữu Nam, Quận 9, TPHCM",
+    "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6",
+    "role": "user",
+    "deleted": false,
     "email": "tusocnau@gmail.com",
     "phone": "0322333444",
-    "password": "anhtuday",
+    "password": "$2a$10$CowHtRPzu17njwgNAGNLPuRVnHweBQnRj5t1m3tcOe/D.43u32ouK",
+    "createdAt": {
+      "$date": "2021-05-17T08:21:52.094Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-07T04:25:32.150Z"
+    },
+    "slug": "nguyen-van-b",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60b8e3dfaba12324209c1dff"
+    },
+    "name": "Nguyễn Thành Tuấn",
+    "address": "91, Nguyễn Thị Bảy, thị trấn Cần Giuộc, huyện Cần Giuộc, tỉnh Long An",
+    "avatar": "",
+    "role": "user",
+    "deleted": false,
+    "email": "18521605@gm.uit.edu.vn",
+    "phone": "0868056658",
+    "password": "$2a$10$KXxGGU1/WSoTNmJZ.ir6C.6uoButamognHuEmlGN0fboS.CPV0tJC",
+    "createdAt": {
+      "$date": "2021-06-03T14:14:56.046Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-07T17:47:00.355Z"
+    },
+    "slug": "nguyen-thanh-tuan",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60be58cd673e3731a06d1e53"
+    },
+    "name": "Trần Văn B",
+    "address": "91, đường Nguyễn Thị Bảy, thị trấn Cần Giuộc, huyện Cần Giuộc, tỉnh Long An",
+    "avatar": null,
+    "role": "user",
+    "deleted": false,
+    "email": "thanhtuan22122000@gmail.com",
+    "phone": "0912345678",
+    "password": "$2a$10$Yp8jZlG2dosuQvsbtpQbH.4A9Z8Iuig30sgS74eibsNMLeL0Adxby",
+    "createdAt": {
+      "$date": "2021-06-07T17:35:09.715Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-09T11:28:29.773Z"
+    },
+    "slug": "tran-van-b",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60bf6a1795a6df26fccdf616"
+    },
+    "name": "trung",
+    "address": "389/4, Ấp Tân Yên, Xã Gia Tân 3, Huyện Thống Nhất",
+    "avatar": "",
+    "role": "user",
+    "deleted": false,
+    "email": "trungdegea30032000@gmail.com",
+    "phone": "0396203007",
+    "password": "$2a$10$Em0LWfD3/i/zx183LTreFe6Qs0IcX.Iy0L.TZ8A8l6x/jV7yuSJmK",
+    "createdAt": {
+      "$date": "2021-06-08T13:01:12.185Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-08T13:01:58.018Z"
+    },
+    "slug": "trung",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60bf6a1795a6df26fccdf616"
+    },
+    "name": "trung",
+    "address": "389/4, Ấp Tân Yên, Xã Gia Tân 3, Huyện Thống Nhất",
+    "avatar": "",
+    "role": "user",
+    "deleted": false,
+    "email": "trungdegea30032000@gmail.com",
+    "phone": "0396203007",
+    "password": "$2a$10$Em0LWfD3/i/zx183LTreFe6Qs0IcX.Iy0L.TZ8A8l6x/jV7yuSJmK",
+    "createdAt": {
+      "$date": "2021-06-08T13:01:12.185Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-08T13:01:58.018Z"
+    },
+    "slug": "trung",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60bfac4b84acd1a4f77042fe"
+    },
     "name": "Nguyễn Văn A",
     "address": "188 Hoàng Hữu Nam, Quận 9, TPHCM",
-    "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6"
+    "avatar": "https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/151501712_3498892610336734_1010329088783911700_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=aP4NuYU74qEAX8gowea&_nc_ht=scontent-xsp1-1.xx&oh=733ba7d1c6aaea1de6281b1d30af2100&oe=60C2ABC6",
+    "role": "user",
+    "deleted": false,
+    "email": "tusocnau11@gmail.com",
+    "phone": "0322333445",
+    "password": "$2a$10$qaUdpifRf6J0SL.QQzmwRuYoyatMUyszifv6PxyqHZAJYV9N7C/.i",
+    "createdAt": {
+      "$date": "2021-06-08T17:43:39.908Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-08T17:43:39.908Z"
+    },
+    "slug": "nguyen-van-a",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60c0685f74819401cc6515ac"
+    },
+    "name": "Nguyễn Tuấn Cảnh",
+    "address": "123 Nơi Nào Đó, tp Thủ Đức, TPHCM",
+    "avatar": "https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/84736174_2452963904965146_8772766440643100672_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=EEGVYt2s2r4AX84h1hm&_nc_ht=scontent-sin6-2.xx&oh=df4f44f829359ca1b8251da32679b3ce&oe=60E6265D",
+    "role": "admin",
+    "deleted": false,
+    "email": "18520513@gm.uit.edu.vn",
+    "phone": "0397726445",
+    "password": "$2a$10$AiR7rY1hLCkyPKGDIHhas.h6Ub4uui8ZBYZ4XFbZF4cB9fZR62uze",
+    "createdAt": {
+      "$date": "2021-06-09T07:06:07.856Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-09T07:06:07.856Z"
+    },
+    "slug": "nguyen-tuan-canh",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60c0b1abf03bec00150d8c84"
+    },
+    "name": "Nguyễn Mai Đức Trung",
+    "address": "389/4, Ấp Tân Yên, Xã Gia Tân 3, Huyện Thống Nhất",
+    "avatar": "https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-9/41155324_908320482696807_3486678665918414848_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=vhKhi8C8qyIAX8ORshu&_nc_ht=scontent-sin6-1.xx&oh=3533da448cde8cd54437c0475083fb3b&oe=60E63640",
+    "role": "admin",
+    "deleted": false,
+    "email": "18521551@gm.uit.edu.vn",
+    "phone": "0396203008",
+    "password": "$2a$10$FNO2XEZdYhyURT2m/0cDHeNu6/tG8PrLpNJJVyFssdY5sr4HaezN.",
+    "createdAt": {
+      "$date": "2021-06-09T12:18:51.793Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-09T12:18:51.793Z"
+    },
+    "slug": "nguyen-mai-duc-trung",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "60c0ccf04de5540015fde821"
+    },
+    "name": "Huỳnh Thanh Liêm",
+    "address": "389/4, Ấp Tân Yên, Xã Gia Tân 3, Huyện Thống Nhất",
+    "avatar": "https://scontent-sin6-1.xx.fbcdn.net/v/t1.6435-9/187597017_1504984459841114_1784785437810884047_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=TYUBP8X3c5kAX8mrV3M&_nc_ht=scontent-sin6-1.xx&oh=a5f0a713d3546d12f0e11b3659abb27d&oe=60E69C20",
+    "role": "admin",
+    "deleted": false,
+    "email": "18520982@gm.uit.edu.vn",
+    "phone": "0375577127",
+    "password": "$2a$10$2i8B5Q6J4G9L3aiqqRN9Tei2.PkgxnpSxeZM6Eax0tJCgiVLsENmK",
+    "createdAt": {
+      "$date": "2021-06-09T14:15:13.106Z"
+    },
+    "updatedAt": {
+      "$date": "2021-06-09T14:15:13.106Z"
+    },
+    "slug": "huynh-thanh-liem",
+    "__v": 0
   }
 ]
