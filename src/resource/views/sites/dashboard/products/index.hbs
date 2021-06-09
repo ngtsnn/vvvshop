@@ -4,7 +4,7 @@
       <div class="d-flex">
         <a href="/dashboard/products/add" class="d-block py-2 mr-lg-4 mr-2">Thêm sản phẩm<i
             class="bi bi-plus-circle-fill text-primary"></i> </a>
-        <a href="/dashboard/products/trashbin" class="d-block py-2">Thùng rác (2)</a>
+        <a href="/dashboard/products/trashbin" class="d-block py-2">Thùng rác ({{trashbinCount}})</a>
       </div>
     </h3>
   </div>
@@ -26,186 +26,76 @@
         </tr>
       </thead>
       <tbody id="tbody">
+        {{#each products as |product|}}
         <tr>
           <td scope="row" class="tick-col">
             <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
           </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
+          <td class="product-name-col">{{product.name}}</td>
+          <td class="category-col">
+            {{#with (lookup product.categories 0) as |cate|}}
+            {{cate.tree}}
+            {{/with}}
+          </td>
+          <td class="price-col">{{product.originalPrice}}</td>
           <td class="action-col">
             <div class="d-flex">
-              <a href="/dashboard/products/edit" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
+              <a href="/dashboard/products/edit/{{product.slug}}" class="btn-outline-main ml-auto mr-2">Sửa</a>
+              <a href="javascript:void(0)" class="btn btn-outline-danger delete" id="{{product._id}}">Thùng rác</a>
             </div>
           </td>
         </tr>
+        {{else}}
         <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-2">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
+          <td scope="row" class="bg-white text-center text-main" colspan="5">
+            Chưa có sản phẩm nào
           </td>
         </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-3">
-          </td>
-          <td class="product-name-col">Dell inspiration L6456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
-          </td>
-          <td class="product-name-col">Dell inspiration L129999456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-2">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-3">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-2">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-3">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-2">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="tick-col">
-            <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-3">
-          </td>
-          <td class="product-name-col">Dell inspiration L123456</td>
-          <td class="category-col">Máy tính / Laptop </td>
-          <td class="price-col">15000000 </td>
-          <td class="action-col">
-            <div class="d-flex">
-              <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a class="btn btn-outline-danger">Thùng rác</a>
-            </div>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
       <tfoot>
         <tr>
           <th>Check</th>
-          <th>Tên bài viết</th>
-          <th>Tác giả</th>
-          <th>Ngày tạo</th>
+          <th>Tên sản phẩm</th>
+          <th>Danh mục</th>
+          <th>Đơn giá</th>
           <th> </th>
         </tr>
       </tfoot>
     </table>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $(document).ready(function () {
+      $(".delete").on("click", async function (e) {
+        const id = $(this).attr("id");
+        const API_URL = '/api/products/' + id;
+        const token = localStorage.getItem("auth_token");
+
+        try {
+          // for loading animation
+          $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+          
+          const {data} = await axios.delete(API_URL, {
+            headers: {
+              auth_token: token,
+            }
+          });
+          alert(data.message);
+          location.href = "/dashboard/products/trashbin";
+        } catch ({response}) {
+          alert(response.data.errors[0]);
+          // end animation when error
+          $(this).html(`Thùng rác`);
+        }
+      });
+    });
+  });
+</script>
 
 <div class="gap-md"></div>

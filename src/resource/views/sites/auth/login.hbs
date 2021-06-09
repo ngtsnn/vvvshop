@@ -84,7 +84,7 @@
             account,
             password,
           });
-          localStorage.setItem("auth_token", data);
+          localStorage.setItem("auth_token", data.auth_token);
           window.location.href = "/";
         } catch ({ response }) {
           const errorHTML = response.data.errors.map((current) => {

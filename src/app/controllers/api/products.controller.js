@@ -219,6 +219,59 @@ ProductController.prototype.post = async function (req, res, next) {
   }
 }
 
+// [PATCH] /api/products/:id
+ProductController.prototype.restore = async function (req, res, next) {
+  const id = req.params.id;
+
+  if (!id){
+    res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+    return;
+  }
+
+  try {
+    const data = await Product.findOneDeleted({_id: id});
+    const result = await data.restore();
+    res.status(200).json({message: "Khôi phục thành công"});
+  } catch (error) {
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
+  }
+}
+
+// [DELETE] /api/products/:id
+ProductController.prototype.delete = async function (req, res, next) {
+  const id = req.params.id;
+
+  if (!id){
+    res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+    return;
+  }
+
+  try {
+    const data = await Product.findOne({_id: id});
+    const result = await data.delete();
+    res.status(200).json({message: "Xóa vĩnh viễn thành công, bạn không thể hoàn tác"});
+  } catch (error) {
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
+  }
+}
+
+// [DELETE] /api/products/:id/force
+ProductController.prototype.deleteForce = async function (req, res, next) {
+  const id = req.params.id;
+
+  if (!id){
+    res.status(400).json({errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"]});
+    return;
+  }
+
+  try {
+    const data = await Product.findOneDeleted({_id: id});
+    const result = await data.deleteOne();
+    res.status(200).json({message: "Xóa thành công"});
+  } catch (error) {
+    res.status(500).json({errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"]});
+  }
+}
 
 
 module.exports = new ProductController();

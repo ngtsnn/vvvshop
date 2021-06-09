@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const productControllers = require("../../controllers/api/products.controller");
-const { isAdmin } = require("../../../utility/middlewares/app/verify.middleware");
+const { isAdmin, isSuperAdmin } = require("../../../utility/middlewares/app/verify.middleware");
 
 
 // get by supplier
@@ -17,5 +17,14 @@ router.get("/", productControllers.get);
 
 // post
 router.post("/", isAdmin, productControllers.post);
+
+// restore
+router.patch("/restore/:id", isAdmin, productControllers.restore);
+
+// delete
+router.delete("/:id", isAdmin, productControllers.delete);
+
+// delete
+router.delete("/:id/force", isSuperAdmin, productControllers.deleteForce);
 
 module.exports = router;

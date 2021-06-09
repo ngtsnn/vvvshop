@@ -80,6 +80,7 @@ const verifyInDashboard = async function (req, res, next) {
       res.redirect("/auth/login");
     }
     req.user = user;
+    res.locals.user = user;
     next();
   } catch (err) {
     res.redirect("/auth/login");
