@@ -173,7 +173,7 @@ AuthController.prototype.forgot = async function (req, res, next) {
     }
 
     if (user.role === "admin" || user.role === "super admin"){
-      baseURL = req.protocol + "://" + req.hostname + ":" + process.env.PORT + "/auth/";
+      baseURL = process.env.HOST_BASE_URL + "auth/"
     }
 
     // set up google tokens
