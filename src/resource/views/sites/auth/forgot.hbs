@@ -14,7 +14,7 @@
       <div class="card-body">
         <p class="login-box-msg">Vui lòng điền thông tin để xác thực</p>
 
-        <form method="post" id="login-form">
+        <form method="post" id="login-form" onsubmit="event.preventDefault();">
           <div class="input-group mb-3">
             <input name="email" type="text" class="form-control" placeholder="Email">
             <div class="input-group-append">
