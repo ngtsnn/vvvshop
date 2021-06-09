@@ -5,6 +5,7 @@ const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
+const cors = require("cors");
 
 
 //import internal files
@@ -30,6 +31,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json({limit: '50mb'}));
 app.use(cookieParser());
+app.use(cors());
 
 
 

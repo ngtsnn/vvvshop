@@ -6,12 +6,8 @@ router.get("/", productController.index);
 
 router.get("/trashbin", productController.trashbin);
 
-router.get("/add", (req, res, next) => {
-  res.render("sites/dashboard/products/add");
-})
+router.get("/add", productController.add)
 
-router.get("/edit", (req, res, next) => {
-  res.render("sites/dashboard/products/edit");
-})
+router.get("/edit/:slug", productController.edit)
 
 module.exports = router;

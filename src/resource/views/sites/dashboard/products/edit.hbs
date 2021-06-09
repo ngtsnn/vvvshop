@@ -1,1 +1,179 @@
-test edit
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-outline card-info">
+      <div class="card-header">
+        <a id="add" href="javascript:void(0)" class="btn bg-cyan btn-primary waves-effect m-b-15">
+          LƯU THAY ĐỔI
+        </a>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div id="error-box">
+
+        </div>
+        <form method="POST" onsubmit="event.preventDefault();">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="d-block" for="images">Hình ảnh</label>
+                <div class="preview-images mb-2" id="preview-images">
+                  {{#each product.images as |src|}}
+                    <div class="preview-image">
+                    <div class="img-box">
+                      <div class="close-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                          viewBox="0 0 16 16">
+                          <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                      </div>
+                      <img src="{{src}}" alt="vvvimg" />
+                    </div>
+                  </div>
+                  {{/each}}
+                </div>
+                <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn">
+                  <label for="images" class="d-inline-block">Tải ảnh lên</label>
+                </a>
+                <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
+              </div>
+              <div class="form-group">
+                <label for="categories">Danh mục</label>
+                <select class="select2bs4 select2-hidden-accessible select3" multiple=""
+                  data-placeholder="Chọn danh mục (nhiều)" style="width: 100%;" data-select2-id="23" tabindex="-1"
+                  aria-hidden="true" id="categories">
+                  <option>Chọn danh mục</option>
+                  {{#each categories as |cate|}}
+                  <option value="{{cate._id}}" {{#if (in cate._id ../product.categories)}} selected {{/if}}>{{cate.tree}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="form-group" data-select2-id="29">
+                <label for="supplier">Nhà cung cấp</label>
+                <select class="form-control select2bs4 select2-hidden-accessible select3" style="width: 100%;"
+                  data-select2-id="17" tabindex="-1" aria-hidden="true" id="supplier">
+                  <option>Chọn nhà cung cấp</option>
+                  {{#each suppliers as |supplier|}}
+                  <option value="{{supplier._id}}" {{#if (compare supplier._id ../product.supplier)}} selected {{/if}}>{{supplier.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="name">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm" value="{{product.name}}">
+              </div>
+              <div class="form-group">
+                <label for="price">Giá sản phẩm</label>
+                <input type="number" class="form-control" id="price" placeholder="Giá sản phẩm" min="0" required="required" oninput="validity.valid||(value=0);" value="{{product.originalPrice}}">
+              </div>
+              <div class="form-group">
+                <label for="description">Mô tả sản phẩm</label>
+                <textarea class="form-control" id="description" rows="7" placeholder="Mô tả sản phẩm">{{product.description}}</textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $(document).ready(function () {
+      $('.select3').select2({theme: 'bootstrap4'});
+
+      const readImg = function (event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          const src = reader.result;
+          const html = `
+            <div class="preview-image">
+              <div class="img-box">
+                <div class="close-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+                <img src="${src}" alt="vvvimg" />
+              </div>
+            </div>
+          `;
+
+          $("#preview-images").append(html);
+
+          $(".close-btn").on("click", function () {
+            const parents = $(this).parents(".preview-image");
+            parents.slideUp(400);
+            setTimeout(() => {
+              parents.remove();
+            }, 400)
+          });
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        $("#images").val("");
+      };
+
+      $("#images").on("input", function (event) {
+        readImg(event);
+      });
+
+      $("#add").on("click", async function () {
+
+        // get data
+        let images = [];
+        $(".preview-image img").each((i, ele) => {
+          images.push($(ele).attr("src"));
+        });
+        const categories = $("#categories").val();
+        const supplier = $("#supplier").val();
+        const name = $("#name").val();
+        const originalPrice = $("#price").val();
+        const description = $("#description").val();
+
+        const body = { name, images, categories, supplier, originalPrice, description };
+
+
+        // post data
+        const API_URL = '/api/products/';
+        const token = localStorage.getItem("auth_token");
+        
+
+        try {
+          // for loading animation
+          $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+
+          const { data } = await axios.post(API_URL, body, {
+            headers: {
+              auth_token: token,
+            }
+          });
+
+          alert("Thêm sản phẩm thành công");
+          location.href = "/dashboard/products";
+        } catch ({ response }) {
+          const errorHTML = response.data.errors.map((current) => {
+            return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+          });
+          $("#error-box").html(errorHTML);
+          // end animation when error
+          $(this).html(`Thêm sản phẩm`);
+        }
+      });
+    });
+  });
+
+</script>

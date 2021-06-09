@@ -14,7 +14,7 @@
       <div class="card-body">
         <p class="login-box-msg">Vui lòng đăng nhập để tiếp tục</p>
 
-        <form method="post" id="login-form">
+        <form method="post" id="login-form" onsubmit="event.preventDefault();">
           <div class="input-group mb-3">
             <input name="password" type="password" class="form-control" placeholder="mật khẩu">
             <div class="input-group-append">
