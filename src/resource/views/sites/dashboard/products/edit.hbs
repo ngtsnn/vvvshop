@@ -84,6 +84,14 @@
     $(document).ready(function () {
       $('.select3').select2({theme: 'bootstrap4'});
 
+      $(".close-btn").on("click", function () {
+        const parents = $(this).parents(".preview-image");
+        parents.slideUp(400);
+        setTimeout(() => {
+          parents.remove();
+        }, 400)
+      });
+
       const readImg = function (event) {
         const reader = new FileReader();
         reader.onload = function () {
