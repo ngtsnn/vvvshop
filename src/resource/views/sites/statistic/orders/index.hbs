@@ -1,0 +1,51 @@
+<main class="overflow-x-hiden overflow-y-auto">
+  <div class="gap-md"></div>
+  <div class="container-fluid">
+    <div class="card card-outline card-info">
+      <div class="card-header">
+        Thông tin đơn hàng
+      </div>
+      <div class="card-body">
+        <table id="example1" class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="tick-col">
+                #
+              </th>
+              <th scope="col" class="product-name-col hide-on-checked">Mã đơn hàng</th>
+              <th scope="col" class="category-col hide-on-checked">Trạng thái</th>
+              <th scope="col" class="price-col hide-on-checked">Thời gian</th>
+              <th scope="col" class="action-col hide-on-checked">  </th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            {{#each orders as |order|}}
+            <tr>
+              <td scope="row" class="tick-col">
+                {{add @index 1}}
+              </td>
+              <td class="product-name-col">{{order._id}}</td>
+              <td class="category-col">{{order.deliver.status}}</td>
+              <td class="price-col">{{convertDate order.createdAt}} </td>
+              <td class="action-col">
+                <div class="d-flex"> 
+                  <a href="/statistic/orders/{{order._id}}" class="btn-outline-main ml-auto mr-2">xem chi tiết</a>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+          <tfoot>
+          <tr>
+            <th>#</th>
+            <th>Mã đơn hàng</th>
+            <th>Trạng thái</th>
+            <th>Thời gian</th>
+            <th> </th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

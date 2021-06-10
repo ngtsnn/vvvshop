@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const ordersController = require('../../../app/controllers/statistic/orders.controller');
 
-router.get("/", (req, res, next) => {
-  res.render("sites/statistic/orders");
-});
+// index
+router.get("/", ordersController.index);
+
+// detail
+router.get("/:id", ordersController.detail);
 
 module.exports = router;
