@@ -3,6 +3,7 @@
 
   <!-- Default box -->
   <div class="card card-info card-outline">
+    {{#if (compare user.role "super admin")}}
     <div class="card-header">
       <div class="card-title">
         <a href="admins/add">
@@ -10,79 +11,121 @@
         </a>
       </div>
     </div>
+    {{/if}}
 
     <div class="card-body pb-0">
       <div class="row">
+        {{#each admins as |admin|}}
         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-          <div class="card card-danger card-outline bg-light d-flex flex-fill">
+          <div
+            class="card {{#if (compare admin.role 'super admin')}}card-info card-outline{{else}}card-danger{{/if}} card-outline bg-light d-flex flex-fill">
             <div class="card-header text-muted border-bottom-0">
-              Quản trị viên
+              {{admin.role}}
             </div>
             <div class="card-body pt-0">
               <div class="row">
                 <div class="col-7">
-                  <h2 class="lead"><b>Nguyễn Tuấn Cảnh</b></h2>
+                  <h2 class="lead"><b>{{admin.name}}</b></h2>
                   <ul class="ml-4 mb-0 fa-ul text-muted">
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Địa chỉ: Demo
-                      Street 123, Demo City 04312, NJ</li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Điện thoại: + 800 -
-                      12 12 23 52</li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> Email:
-                      canh@example.com</li>
+                    <li class="small">
+                      <span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
+                      Địa chỉ: {{admin.address}}
+                    </li>
+                    <li class="small">
+                      <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
+                      Điện thoại: {{admin.phone}}
+                    </li>
+                    <li class="small">
+                      <span class="fa-li"><i class="fas fa-lg fa-user"></i></span>
+                      Email: {{admin.email}}
+                    </li>
                   </ul>
                 </div>
                 <div class="col-5 text-center">
-                  <img src="https://i.pinimg.com/564x/4e/7f/4f/4e7f4f594ef6331a0f7b0082d7bdb349.jpg" alt="user-avatar"
-                    class="img-circle img-fluid">
+                  <div class="avatar-box">
+                    <img src="{{admin.avatar}}" alt="user-avatar" class="img-circle img-fluid">
+                  </div>
                 </div>
               </div>
             </div>
             <div class="card-footer">
               <div class="text-right">
-                <a href="admins/edit" class="btn btn-sm btn-primary">
-                  <i class="fas fa-user"></i> View Profile
+                {{#if (compare ../user.role "super admin")}}
+                {{#if (compare admin.role "super admin")}}
+                {{else}}
+                <a href="javascript:void(0)" id="{{admin._id}}" class="btn btn-sm btn-danger mr-2 to-user">
+                  <i class="fas fa-user-times text-light"></i> Hủy quyền
+                </a>
+                {{/if}}
+                {{/if}}
+                <a href="/admins/profile/{{admin._id}}" class="btn btn-sm btn-primary">
+                  <i class="fas fa-user text-light"></i> Xem chi tiết
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-          <div class="card card-success card-outline bg-light d-flex flex-fill">
-            <div class="card-header text-muted border-bottom-0">
-              Quản trị viên
-            </div>
-            <div class="card-body pt-0">
-              <div class="row">
-                <div class="col-7">
-                  <h2 class="lead"><b>Phạm Anh Tú</b></h2>
-                  <ul class="ml-4 mb-0 fa-ul text-muted">
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Địa chỉ: Demo
-                      Street 123, Demo City 04312, NJ</li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Điện thoại: + 800 -
-                      12 12 23 52</li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> Email:
-                      canh@example.com</li>
-                  </ul>
-                </div>
-                <div class="col-5 text-center">
-                  <img src="https://i.pinimg.com/564x/4e/7f/4f/4e7f4f594ef6331a0f7b0082d7bdb349.jpg" alt="user-avatar"
-                    class="img-circle img-fluid">
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="text-right">
-                <a href="#" class="btn btn-sm btn-primary">
-                  <i class="fas fa-user"></i> View Profile
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        {{else}}
+        <div class="gap-md"></div>
+        <div class="gap-md"></div>
+        <h2 class="text-center d-block m-auto">
+          Hiện tại chưa có admin nào
+        </h2>
+        <div class="gap-md"></div>
+        <div class="gap-md"></div>
+        {{/each}}
       </div>
     </div>
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+
+  {{#if (compare user.role "super admin")}}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      $(document).ready(function () {
+        $(".to-user").on("click", async function () {
+
+          // post data
+          const id = $(this).attr("id");
+          const API_URL = '/api/users/to-user/' + id;
+          const token = localStorage.getItem("auth_token");
+
+
+          try {
+            // for loading animation
+            $(this).html(`
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            `);
+
+            const { data } = await axios.patch(API_URL, {}, {
+              headers: {
+                auth_token: token,
+              }
+            });
+
+            alert("Hủy quyền thành công");
+            location.reload();
+          } catch ({ response }) {
+            const errorHTML = response.data.errors.map((current) => {
+              return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+            });
+            $("#error-box").html(errorHTML);
+            // end animation when error
+            $(this).html(`<i class="fas fa-user-times text-light"></i> Hủy quyền`);
+          }
+        });
+      })
+    })
+  </script>
+  {{/if}}
 
 </section>

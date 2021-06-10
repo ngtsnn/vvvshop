@@ -12,11 +12,29 @@
         <div class="row">
           <div class="col-lg-3">
             <div class="preview-image lg has-bg mx-auto mb-2" id="preview-image">
+              {{#if admin.avatar}}
+              <div class="img-box">
+                {{#if (compare admin._id user._id)}}
+                <div class="close-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+                {{/if}}
+                <img src="{{admin.avatar}}" alt="vvvimg" />
+              </div>
+              {{/if}}
             </div>
+            {{#if (compare admin._id user._id)}}
             <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn d-block mx-auto mb-2">
               <label for="images" class="d-inline-block">Tải ảnh lên</label>
             </a>
             <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
+            {{/if}}
+
+            <p class="text-muted text-center">{{admin.role}}</p>
           </div>
 
           <div class="col-lg-9">
@@ -24,36 +42,42 @@
               <div class="active tab-pane" id="activity">
 
                 <div class="tab-pane" id="settings">
-                  <form class="form-horizontal" id="add" onsubmit="event.preventDefault()">
+                  <form class="form-horizontal" id="add" admin-id="{{admin._id}}" onsubmit="event.preventDefault()">
                     <div class="form-group row">
                       <label for="name" class="col-sm-2 col-form-label">Họ tên</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="Họ và tên">
+                        <input type="text" class="form-control" id="name" placeholder="Họ và tên"
+                          value="{{admin.name}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="email" class="col-sm-2 col-form-label">Email</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <input type="email" class="form-control" id="email" placeholder="Email" value="{{admin.email}}"
+                          {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại">
+                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại"
+                          value="{{admin.phone}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
+                          value="{{admin.address}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
                       </div>
                     </div>
+                    {{#if (compare admin._id user._id)}}
                     <div class="form-group row">
                       <div class="offset-sm-2 col-sm-10">
-                        <button type="submit" id="submit-btn" class="btn btn-info">Tạo admin</button>
+                        <button type="submit" id="submit-btn" class="btn btn-info">Thay đổi</button>
                       </div>
                     </div>
+                    {{/if}}
                   </form>
                 </div>
                 <!-- /.tab-pane -->
@@ -69,6 +93,7 @@
   </div><!-- /.container-fluid -->
   <div class="gap-md"></div>
 
+  {{#if (compare admin._id user._id)}}
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       $(document).ready(function () {
@@ -126,9 +151,9 @@
 
 
           // post data
-          const API_URL = '/api/users/admin';
+          const id = $(this).attr("admin-id");
+          const API_URL = '/api/users/' + id;
           const token = localStorage.getItem("auth_token");
-
 
           try {
             // for loading animation
@@ -137,14 +162,14 @@
           Loading...
           `);
 
-            const { data } = await axios.post(API_URL, body, {
+            const { data } = await axios.put(API_URL, body, {
               headers: {
                 auth_token: token,
               }
             });
 
-            alert("Thêm quản trị viên thành công");
-            location.href = '/admins';
+            alert("Chỉnh sửa thông tin thành công");
+            location.reload();
           } catch ({ response }) {
             const errorHTML = response.data.errors.map((current) => {
               return `
@@ -158,11 +183,12 @@
             });
             $("#error-box").html(errorHTML);
             // end animation when error
-            $("#submit-btn").html(`Tạo admin`);
+            $("#submit-btn").html(`Thay đổi`);
           }
         });
       });
     });
   </script>
+  {{/if}}
 
 </section>
