@@ -102,12 +102,6 @@ AuthController.prototype.register = async function (req, res, next) {
 
   // force role is user
   newUser.role = "user";
-  
-  // check first user
-  const userList = await User.find({}).limit(1);
-  if (!userList.length){ 
-    newUser.role = "super admin";
-  } 
 
 
   // check email and phone number is register or not

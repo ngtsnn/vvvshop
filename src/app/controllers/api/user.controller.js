@@ -1,6 +1,10 @@
 "use strict";
-const User = require("../../models/user.model");
+
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+const User = require("../../models/user.model");
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 
 
 const UserController = function () {
@@ -76,6 +80,92 @@ UserController.prototype.getOne = async function (req, res, next) {
   }
 }
 
+
+// [POST] /api/users/admin
+UserController.prototype.addAdmin = async function (req, res, next) {
+
+  const newUser = new User(req.body);
+
+  // validate
+  let errs = [];
+
+  // check is email
+  if (!newUser.email || validator.isEmpty(newUser.email)) {
+    errs.push("email là trường bắt buộc!");
+  }
+  if (!newUser.email || !validator.isEmail(newUser.email)) {
+    errs.push("email có định dạng sai!");
+  }
+  // check phone
+  const VNPhoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+  if (!VNPhoneRegex.test(newUser.phone)) {
+    errs.push("số điện thoại có định dạng sai");
+  }
+  // add default password
+  newUser.password = process.env.DEFAULT_PASSWORD || "adminvvvshop";
+  // check name
+  if (!newUser.name || validator.isEmpty(newUser.name)) {
+    errs.push("tên là trường bắt buộc!");
+  }
+
+  // force role is admin
+  newUser.role = "admin";
+
+  // check first user
+  try {
+    const firstSuperAdmin = await User.findOne({ role: "super admin" });
+    if (!firstSuperAdmin) {
+      newUser.role = "super admin";
+    }
+  } catch (error) {
+    newUser.role = "admin";
+  }
+
+
+  // check email and phone number is register or not
+  const oldEmailUser = await User.findOne({ email: newUser.email });
+  const oldTelUser = await User.findOne({ phone: newUser.phone });
+  if (oldEmailUser) {
+    errs.push("email này đã được đăng kí!");
+  }
+  if (oldTelUser) {
+    errs.push("số điện thoại này đã được đăng kí!");
+  }
+
+
+
+  // render errors if it has
+  if (errs.length) {
+    res.status(400).json({ errors: errs });
+    return;
+  }
+
+
+  // hash password
+  newUser.encode();
+
+
+  // create new user
+  try {
+    const result = await newUser.save();
+
+    // create token
+    const token = jwt.sign({
+      _id: result._id,
+      role: result.role,
+      name: result.name,
+      avatar: result.avatar,
+    }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
+
+    res.header("auth_token", token).status(200).json({ "auth_token": token });
+  }
+  catch (err) {
+    res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
+
+  }
+
+}
+
 // [PUT] /api/users/:id
 UserController.prototype.put = async function (req, res, next) {
   const updatedUser = new User(req.body);
@@ -138,6 +228,38 @@ UserController.prototype.put = async function (req, res, next) {
       name: result.name,
       phone: result.phone,
     });
+  } catch (error) {
+    res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
+  }
+}
+
+// [PATCH] /api/users/to-user/:id
+UserController.prototype.toUser = async function (req, res, next) {
+  const _id = req.params.id;
+
+
+  if (!_id) {
+    res.status(401).send({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!!"] });
+    return;
+  }
+
+
+  try {
+    const user = await User.findOne({ _id });
+
+    if (user.role === "super admin") {
+      res.status(401).send({ errors: ["super admin không thể bị hủy quyền"] });
+      return;
+    }
+
+    if (!user) {
+      res.status(400).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
+      return;
+    }
+    user.role = "user";
+    const result = await user.save();
+
+    res.status(200).json({ message: "Hủy quyền admin thành công!"});
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
   }

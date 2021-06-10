@@ -44,5 +44,10 @@
     "name": "Cài đặt",
     "url": "/settings",
     "lv2": []
+  },
+  {
+    "name": "Đăng xuất",
+    "url": "/auth/login",
+    "lv2": []
   }
 ]

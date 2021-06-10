@@ -3,6 +3,7 @@
 
   <!-- Default box -->
   <div class="card card-info card-outline">
+    {{#if (compare user.role "super admin")}}
     <div class="card-header">
       <div class="card-title">
         <a href="admins/add">
@@ -10,12 +11,14 @@
         </a>
       </div>
     </div>
+    {{/if}}
 
     <div class="card-body pb-0">
       <div class="row">
         {{#each admins as |admin|}}
         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-          <div class="card {{#if (compare admin.role 'super admin')}}card-info card-outline{{else}}card-danger{{/if}} card-outline bg-light d-flex flex-fill">
+          <div
+            class="card {{#if (compare admin.role 'super admin')}}card-info card-outline{{else}}card-danger{{/if}} card-outline bg-light d-flex flex-fill">
             <div class="card-header text-muted border-bottom-0">
               {{admin.role}}
             </div>
@@ -25,15 +28,15 @@
                   <h2 class="lead"><b>{{admin.name}}</b></h2>
                   <ul class="ml-4 mb-0 fa-ul text-muted">
                     <li class="small">
-                      <span class="fa-li"><i class="fas fa-lg fa-building"></i></span> 
+                      <span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
                       Địa chỉ: {{admin.address}}
                     </li>
                     <li class="small">
-                      <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> 
+                      <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>
                       Điện thoại: {{admin.phone}}
                     </li>
                     <li class="small">
-                      <span class="fa-li"><i class="fas fa-lg fa-user"></i></span> 
+                      <span class="fa-li"><i class="fas fa-lg fa-user"></i></span>
                       Email: {{admin.email}}
                     </li>
                   </ul>
@@ -47,6 +50,14 @@
             </div>
             <div class="card-footer">
               <div class="text-right">
+                {{#if (compare ../user.role "super admin")}}
+                {{#if (compare admin.role "super admin")}}
+                {{else}}
+                <a href="javascript:void(0)" id="{{admin._id}}" class="btn btn-sm btn-danger mr-2 to-user">
+                  <i class="fas fa-user-times text-light"></i> Hủy quyền
+                </a>
+                {{/if}}
+                {{/if}}
                 <a href="/admins/profile/{{admin._id}}" class="btn btn-sm btn-primary">
                   <i class="fas fa-user text-light"></i> Xem chi tiết
                 </a>
@@ -68,5 +79,53 @@
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+
+  {{#if (compare user.role "super admin")}}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      $(document).ready(function () {
+        $(".to-user").on("click", async function () {
+
+          // post data
+          const id = $(this).attr("id");
+          const API_URL = '/api/users/to-user/' + id;
+          const token = localStorage.getItem("auth_token");
+
+
+          try {
+            // for loading animation
+            $(this).html(`
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            `);
+
+            const { data } = await axios.patch(API_URL, {}, {
+              headers: {
+                auth_token: token,
+              }
+            });
+
+            alert("Hủy quyền thành công");
+            location.reload();
+          } catch ({ response }) {
+            const errorHTML = response.data.errors.map((current) => {
+              return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+            });
+            $("#error-box").html(errorHTML);
+            // end animation when error
+            $(this).html(`<i class="fas fa-user-times text-light"></i> Hủy quyền`);
+          }
+        });
+      })
+    })
+  </script>
+  {{/if}}
 
 </section>
