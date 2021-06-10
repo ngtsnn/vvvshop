@@ -331,7 +331,12 @@ ProductController.prototype.put = async function (req, res, next) {
 
   try {
     let oldProduct = await Product.findOne({_id: id});
-    oldProduct.overwrite(req.body);
+    oldProduct.name = newProduct.name;
+    oldProduct.images = newProduct.images;
+    oldProduct.description = newProduct.description;
+    oldProduct.properties = newProduct.properties;
+    oldProduct.categories = newProduct.categories;
+    oldProduct.supplier = newProduct.supplier;
     
     const result = await oldProduct.save();
     res.status(200);

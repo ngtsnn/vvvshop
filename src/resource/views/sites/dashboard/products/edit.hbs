@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card card-outline card-info">
       <div class="card-header">
-        <a id="add" href="javascript:void(0)" class="btn bg-cyan btn-primary waves-effect m-b-15">
+        <a id="add" href="javascript:void(0)" product-id="{{product._id}}" class="btn bg-cyan btn-primary waves-effect m-b-15">
           LƯU THAY ĐỔI
         </a>
       </div>
@@ -84,7 +84,7 @@
     $(document).ready(function () {
       $('.select3').select2({theme: 'bootstrap4'});
 
-      $(".close-btn").on("click", function () {
+      $(document).on("click", ".preview-image .close-btn", function () {
         const parents = $(this).parents(".preview-image");
         parents.slideUp(400);
         setTimeout(() => {
@@ -112,14 +112,6 @@
           `;
 
           $("#preview-images").append(html);
-
-          $(".close-btn").on("click", function () {
-            const parents = $(this).parents(".preview-image");
-            parents.slideUp(400);
-            setTimeout(() => {
-              parents.remove();
-            }, 400)
-          });
         }
         reader.readAsDataURL(event.target.files[0]);
         $("#images").val("");
@@ -146,7 +138,8 @@
 
 
         // post data
-        const API_URL = '/api/products/';
+        const id = $(this).attr("product-id");
+        const API_URL = '/api/products/' + id;
         const token = localStorage.getItem("auth_token");
         
 
@@ -157,13 +150,13 @@
           Loading...
           `);
 
-          const { data } = await axios.post(API_URL, body, {
+          const { data } = await axios.put(API_URL, body, {
             headers: {
               auth_token: token,
             }
           });
 
-          alert("Thêm sản phẩm thành công");
+          alert("Chỉnh sửa sản phẩm thành công");
           location.href = "/dashboard/products";
         } catch ({ response }) {
           const errorHTML = response.data.errors.map((current) => {

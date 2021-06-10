@@ -71,6 +71,14 @@
     $(document).ready(function () {
       $('.select3').select2({theme: 'bootstrap4'});
 
+      $(document).on("click", ".preview-image .close-btn", function () {
+        const parents = $(this).parents(".preview-image");
+        parents.slideUp(400);
+        setTimeout(() => {
+          parents.remove();
+        }, 400)
+      });
+
       const readImg = function (event) {
         const reader = new FileReader();
         reader.onload = function () {
@@ -91,14 +99,6 @@
           `;
 
           $("#preview-images").append(html);
-
-          $(".close-btn").on("click", function () {
-            const parents = $(this).parents(".preview-image");
-            parents.slideUp(400);
-            setTimeout(() => {
-              parents.remove();
-            }, 400)
-          });
         }
         reader.readAsDataURL(event.target.files[0]);
         $("#images").val("");

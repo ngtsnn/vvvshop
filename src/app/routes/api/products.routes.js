@@ -18,6 +18,9 @@ router.get("/", productControllers.get);
 // post
 router.post("/", isAdmin, productControllers.post);
 
+// post
+router.put("/:id", isAdmin, productControllers.put);
+
 // restore
 router.patch("/restore/:id", isAdmin, productControllers.restore);
 

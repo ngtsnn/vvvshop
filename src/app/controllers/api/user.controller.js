@@ -124,7 +124,11 @@ UserController.prototype.put = async function (req, res, next) {
 
   try {
     let user = await User.findOne({ _id: id });
-    user.overwrite(req.body);
+    user.name = updatedUser.name;
+    user.avatar = updatedUser.avatar;
+    user.email = updatedUser.email;
+    user.phone = updatedUser.phone;
+    user.address = updatedUser.address;
     const result = await user.save();
 
     res.status(200).json({
@@ -136,7 +140,6 @@ UserController.prototype.put = async function (req, res, next) {
     });
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
-    next(error);
   }
 }
 
