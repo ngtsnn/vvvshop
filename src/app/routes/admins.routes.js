@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const adminsController = require("../controllers/admins.controller");
 
-router.get("/", (req, res, next) => {
-  res.render("sites/admin/index");
-});
+router.get("/", adminsController.index);
 
-router.get("/edit", (req, res, next) => {
-  res.render("sites/admin/edit");
-});
+router.get("/profile/:id", adminsController.profile);
 
 router.get("/add", (req, res, next) => {
   res.render("sites/admin/add");

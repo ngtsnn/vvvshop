@@ -1,0 +1,194 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- Profile Image -->
+    <div class="card card-info card-outline">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a class="nav-link" href="javascript:void(0)" data-toggle="tab">Thông tin quản trị
+              viên</a></li>
+        </ul>
+      </div><!-- /.card-header -->
+      <div class="card-body box-profile">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="preview-image lg has-bg mx-auto mb-2" id="preview-image">
+              {{#if admin.avatar}}
+              <div class="img-box">
+                {{#if (compare admin._id user._id)}}
+                <div class="close-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+                {{/if}}
+                <img src="{{admin.avatar}}" alt="vvvimg" />
+              </div>
+              {{/if}}
+            </div>
+            {{#if (compare admin._id user._id)}}
+            <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn d-block mx-auto mb-2">
+              <label for="images" class="d-inline-block">Tải ảnh lên</label>
+            </a>
+            <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
+            {{/if}}
+
+            <p class="text-muted text-center">{{admin.role}}</p>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+
+                <div class="tab-pane" id="settings">
+                  <form class="form-horizontal" id="add" admin-id="{{admin._id}}" onsubmit="event.preventDefault()">
+                    <div class="form-group row">
+                      <label for="name" class="col-sm-2 col-form-label">Họ tên</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" placeholder="Họ và tên"
+                          value="{{admin.name}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="email" class="col-sm-2 col-form-label">Email</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" placeholder="Email" value="{{admin.email}}"
+                          {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone" placeholder="Số điện thoại"
+                          value="{{admin.phone}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ"
+                          value="{{admin.address}}" {{#if (compare admin._id user._id)}}{{else}} disabled {{/if}}>
+                      </div>
+                    </div>
+                    {{#if (compare admin._id user._id)}}
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" id="submit-btn" class="btn btn-info">Thay đổi</button>
+                      </div>
+                    </div>
+                    {{/if}}
+                  </form>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div><!-- /.container-fluid -->
+  <div class="gap-md"></div>
+
+  {{#if (compare admin._id user._id)}}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      $(document).ready(function () {
+        $(document).on("click", ".preview-image .close-btn", function () {
+          const parents = $(this).parents(".img-box");
+          parents.slideUp(400);
+          setTimeout(() => {
+            parents.remove();
+          }, 400);
+        });
+
+        const readImg = function (event) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            const src = reader.result;
+            const html = `
+              <div class="img-box">
+                <div class="close-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+                <img src="${src}" alt="vvvimg" />
+              </div>
+            `;
+
+            $("#preview-image").html(html);
+          }
+          reader.readAsDataURL(event.target.files[0]);
+          $("#images").val("");
+        };
+
+        $("#images").on("input", function (event) {
+          readImg(event);
+        });
+
+        $("#add").on("submit", async function () {
+
+          // get data
+          const imgContain = $(".preview-image img");
+          let avatar;
+          if (imgContain.length) {
+            avatar = imgContain.attr("src");
+          } else {
+            avatar = "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-3&_nc_sid=7206a8&_nc_ohc=kD8TgOu1pzYAX8JAzIl&_nc_ht=scontent.fsgn5-6.fna&oh=81482383c01711bdee6a54cf816d5d9c&oe=60E7F2F8";
+          }
+          const name = $("#name").val();
+          const email = $("#email").val();
+          const phone = $("#phone").val();
+          const address = $("#address").val();
+
+          const body = { name, email, phone, avatar, address };
+
+
+          // post data
+          const id = $(this).attr("admin-id");
+          const API_URL = '/api/users/' + id;
+          const token = localStorage.getItem("auth_token");
+
+          try {
+            // for loading animation
+            $("#submit-btn").html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+
+            const { data } = await axios.put(API_URL, body, {
+              headers: {
+                auth_token: token,
+              }
+            });
+
+            alert("Chỉnh sửa thông tin thành công");
+            location.reload();
+          } catch ({ response }) {
+            const errorHTML = response.data.errors.map((current) => {
+              return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+            });
+            $("#error-box").html(errorHTML);
+            // end animation when error
+            $("#submit-btn").html(`Thay đổi`);
+          }
+        });
+      });
+    });
+  </script>
+  {{/if}}
+
+</section>
