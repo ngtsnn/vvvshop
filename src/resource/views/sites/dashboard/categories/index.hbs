@@ -1,117 +1,48 @@
 <div class="row">
   <div class="col-md-4">
-    <!-- general form elements -->
     <div class="card card-outline card-info">
       <div class="card-header">
-        <h3 class="card-title">Thêm danh mục</h3>
+        <a id="add" href="javascript:void(0)" class="btn bg-cyan btn-primary waves-effect m-b-15">
+          THÊM DANH MỤC
+        </a>
       </div>
       <!-- /.card-header -->
-      <!-- form start -->
-      <form>
-        <div class="card-body">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Tên danh mục</label>
-            <input type="email" class="form-control" id="exampleInputEmail1">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Danh mục cha</label>
-            <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                    <option selected="selected" data-select2-id="19">Alabama</option>
-                    <option data-select2-id="39">Alaska</option>
-                    <option data-select2-id="40">California</option>
-                    <option data-select2-id="41">Delaware</option>
-                    <option data-select2-id="42">Tennessee</option>
-                    <option data-select2-id="43">Texas</option>
-                    <option data-select2-id="44">Washington</option>
-                  </select>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputFile">Ảnh đại diện</label>
-            <div class="input-group">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="exampleInputFile">
-                <label class="custom-file-label" for="exampleInputFile">Chọn ảnh</label>
-              </div>
-              <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-              </div>
-            </div>
-          </div>
+      <div class="card-body">
+        <div id="error-box">
         </div>
-        <!-- /.card-body -->
+        <form method="POST" onsubmit="event.preventDefault();">
+          <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Tên danh mục</label>
+                <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm">
+              </div>
+              <div class="form-group">
+                <label class="d-block" for="images">Logo</label>
+                <div class="preview-images mb-2" id="preview-images">
 
-        <div class="card-footer">
-          <button type="submit" class="btn btn-primary">Thêm danh mục mới</button>
-        </div>
-      </form>
+                </div>
+                <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn">
+                  <label for="images" class="d-inline-block">Tải ảnh lên</label>
+                </a>
+                <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
+              </div>
+              <div class="form-group">
+                <label for="categories">Danh mục cha</label>
+                <select class="select2bs4 select2-hidden-accessible select3" multiple=""
+                  data-placeholder="Chọn danh mục" style="width: 100%;" data-select2-id="23" tabindex="-1"
+                  aria-hidden="true" id="categories">
+                  <option>Chọn danh mục</option>
+                  {{#each categories as |cate|}}
+                  <option value="{{cate._id}}">{{cate.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <div class="col-md-8">
-    {{!-- <div class="card">
-      <div class="table-responsive">
-      <table class="table table-hover table-striped min-width-700">
-        <thead class="thead-check-all">
-          <tr>
-            <th scope="col" class="tick-col">
-              <input type="checkbox" name="check-all" id="check-all" body-target="#tbody">
-            </th>
-            <th scope="col" class="product-name-col hide-on-checked">Ảnh</th>
-            <th scope="col" class="category-col hide-on-checked">Tên</th>
-            <th scope="col" class="price-col hide-on-checked">Đường dẫn</th>
-            <th scope="col" class="action-col hide-on-checked"></th>
-            <th scope="col" class="amount-col show-on-checked d-none" colspan="2"></th>
-            <th scope="col" class="actions-col text-right show-on-checked d-none" colspan="2">
-              <a href="#" class="text-main">Di chuyển vào thùng rác</a>
-            </th>
-          </tr>
-        </thead>
-        <tbody id="tbody">
-          <tr>
-            <td scope="row" class="tick-col">
-              <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
-            </td>
-            <td class="product-name-col">Dell inspiration L123456</td>
-            <td class="category-col">Máy tính / Laptop </td>
-            <td class="price-col">15000000 </td>
-            <td class="action-col">
-              <div class="d-flex">
-                <a href="/dashboard/products/edit/" class="btn-outline-main ml-auto mr-2">Sửa</a>
-                <a class="btn btn-outline-danger">Thùng rác</a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td scope="row" class="tick-col">
-              <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-2">
-            </td>
-            <td class="product-name-col">Dell inspiration L123456</td>
-            <td class="category-col">Máy tính / Laptop </td>
-            <td class="price-col">15000000 </td>
-            <td class="action-col">
-              <div class="d-flex">
-                <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-                <a class="btn btn-outline-danger">Thùng rác</a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td scope="row" class="tick-col">
-              <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-3">
-            </td>
-            <td class="product-name-col">Dell inspiration L123456</td>
-            <td class="category-col">Máy tính / Laptop </td>
-            <td class="price-col">15000000 </td>
-            <td class="action-col">
-              <div class="d-flex">
-                <a href="/dashboard/products/edit/:slug" class="btn-outline-main ml-auto mr-2">Sửa</a>
-                <a class="btn btn-outline-danger">Thùng rác</a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </div> --}}
     <div class="card card-outline card-info">
       <table id="example1" class="table table-hover table-striped">
         <thead class="thead-check-all">
@@ -119,7 +50,7 @@
             <th scope="col" class="tick-col">
               <input type="checkbox" name="check-all" id="check-all" body-target="#tbody">
             </th>
-            <th scope="col" class="product-name-col hide-on-checked">Ảnh</th>
+            <th scope="col" class="product-name-col hide-on-checked">Logo</th>
             <th scope="col" class="category-col hide-on-checked">Tên danh mục</th>
             <th scope="col" class="price-col hide-on-checked">Đường dẫn</th>
             <th scope="col" class="action-col hide-on-checked">  </th>
@@ -302,7 +233,7 @@
         <tfoot>
         <tr>
           <th>Check</th>
-          <th>Ảnh</th>
+          <th>Logo</th>
           <th>Tên danh mục</th>
           <th>Đường dẫn</th>
           <th> </th>
@@ -315,3 +246,102 @@
   </div>
 </div>
 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $(document).ready(function () {
+      $('.select3').select2({theme: 'bootstrap4'});
+
+      const readImg = function (event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          const src = reader.result;
+          const html = `
+            <div class="preview-image">
+              <div class="img-box">
+                <div class="close-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                </div>
+                <img src="${src}" alt="vvvimg" />
+              </div>
+            </div>
+          `;
+
+          $("#preview-images").append(html);
+
+          $(".close-btn").on("click", function () {
+            const parents = $(this).parents(".preview-image");
+            parents.slideUp(400);
+            setTimeout(() => {
+              parents.remove();
+            }, 400)
+          });
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        $("#images").val("");
+      };
+
+      $("#images").on("input", function (event) {
+        readImg(event);
+      });
+
+      $("#add").on("click", async function () {
+
+        // get data
+        let images = [];
+        $(".preview-image img").each((i, ele) => {
+          images.push($(ele).attr("src"));
+        });
+        const categories = $("#categories").val();
+        const supplier = $("#supplier").val();
+        const name = $("#name").val();
+        const originalPrice = $("#price").val();
+        const description = $("#description").val();
+
+        const body = { name, images, categories, supplier, originalPrice, description };
+
+
+        // post data
+        const API_URL = '/api/products/';
+        const token = localStorage.getItem("auth_token");
+        
+
+        try {
+          // for loading animation
+          $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+
+          const { data } = await axios.post(API_URL, body, {
+            headers: {
+              auth_token: token,
+            }
+          });
+
+          alert("Thêm sản phẩm thành công");
+          location.href = "/dashboard/products";
+        } catch ({ response }) {
+          const errorHTML = response.data.errors.map((current) => {
+            return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+          });
+          $("#error-box").html(errorHTML);
+          // end animation when error
+          $(this).html(`Thêm sản phẩm`);
+        }
+      });
+    });
+  });
+
+</script>
