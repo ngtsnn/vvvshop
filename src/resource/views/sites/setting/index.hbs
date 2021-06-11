@@ -1,1 +1,125 @@
-setting
+<section class="content">
+  <div class="container-fluid">
+    <div id="error-box">
+
+    </div>
+    <!-- Profile Image -->
+    <div class="card card-info card-outline">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a class="nav-link" href="javascript:void(0)" data-toggle="tab">Thông tin quản trị
+              viên</a></li>
+        </ul>
+      </div><!-- /.card-header -->
+      <div class="card-body box-profile">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="preview-image lg has-bg mx-auto mb-2" id="preview-image">
+              {{#if admin.avatar}}
+              <div class="img-box">
+                <img src="{{admin.avatar}}" alt="vvvimg" />
+              </div>
+              {{/if}}
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+
+                <div class="tab-pane" id="settings">
+                  <form class="form-horizontal" id="reset-form" admin-id="{{admin._id}}" onsubmit="event.preventDefault()">
+                    <div class="form-group row">
+                      <label for="password" class="col-sm-3 col-form-label">Mật khẩu</label>
+                      <div class="col-sm-9">
+                        <input name="password" type="password" class="form-control" placeholder="Mật khẩu">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="password" class="col-sm-3 col-form-label">Nhập lại mật khẩu</label>
+                      <div class="col-sm-9">
+                        <input name="refill-password" type="password" class="form-control"
+                          placeholder="Nhập lại mật khẩu">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-9">
+                        <button type="submit" id="submit-btn" class="btn btn-info">Thay đổi</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div><!-- /.container-fluid -->
+  <div class="gap-md"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      $(document).ready(function () {
+
+        // functions here
+        $("#reset-form").on("submit", async function () {
+          const password = $(this).find('input[name="password"]').val();
+          const refillfPassword = $(this).find('input[name="refill-password"]').val();
+
+          if (password !== refillfPassword) {
+            const errorHTML = `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> Mật khẩu chưa trùng khớp </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `
+            $("#error-box").html(errorHTML);
+            return;
+          }
+
+          const id = $(this).attr("admin-id");
+          const token = localStorage.getItem("auth_token");
+          const API_URL = `/api/auth/reset/${id}`;
+          try {
+            const btn = $(this).find('button[type="submit"]');
+            btn.html(`
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            `);
+            const { data } = await axios.patch(API_URL, {
+              password,
+            }, {
+              headers: {
+                auth_token: token,
+              }
+            });
+            localStorage.setItem("auth_token", data);
+            btn.html(` xác nhận `);
+            window.location.href = "/";
+          } catch ({ response }) {
+            const errorHTML = response.data.errors.map((current) => {
+              return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+            });
+            $("#error-box").html(errorHTML);
+            $(this).find('button[type="submit"]').html(` xác nhận `);
+          }
+        })
+      });
+    });
+  </script>
+
+</section>
