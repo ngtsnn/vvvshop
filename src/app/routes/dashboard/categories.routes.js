@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.render("sites/dashboard/categories/index");
-});
+const CategoryController = require('../../controllers/dashboard/categories.controller');
 
-router.get("/add", (req, res, next) => {
-  res.render("sites/dashboard/categories/add");
-});
+router.get("/", CategoryController.index);
 
-router.get("/edit", (req, res, next) => {
-  res.render("sites/dashboard/categories/edit");
-})
+// router.get("/trashbin", CategoryController.trashbin);
 
+// router.get("/add", CategoryController.add)
+
+// router.get("/edit/:slug", CategoryController.edit)
 
 module.exports = router;

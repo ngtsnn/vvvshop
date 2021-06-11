@@ -3,7 +3,7 @@
     <div class="card card-outline card-info">
       <div class="card-header">
         <a id="add" href="javascript:void(0)" class="btn bg-cyan btn-primary waves-effect m-b-15">
-          THÊM DANH MỤC
+          THÊM NHÀ CUNG CẤP
         </a>
       </div>
       <!-- /.card-header -->
@@ -13,8 +13,8 @@
         <form method="POST" onsubmit="event.preventDefault();">
           <div class="col-md-12">
               <div class="form-group">
-                <label for="name">Tên danh mục</label>
-                <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm">
+                <label for="name">Tên nhà cung cấp</label>
+                <input type="text" class="form-control" id="name" placeholder="Tên nhà cung cấp">
               </div>
               <div class="form-group">
                 <label class="d-block" for="images">Logo</label>
@@ -25,17 +25,6 @@
                   <label for="images" class="d-inline-block">Tải ảnh lên</label>
                 </a>
                 <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
-              </div>
-              <div class="form-group">
-                <label for="categories">Danh mục cha</label>
-                <select class="select2bs4 select2-hidden-accessible select3" multiple=""
-                  data-placeholder="Chọn danh mục" style="width: 100%;" data-select2-id="23" tabindex="-1"
-                  aria-hidden="true" id="categories">
-                  <option>Chọn danh mục</option>
-                  {{#each categories as |cate|}}
-                  <option value="{{cate._id}}">{{cate.name}}</option>
-                  {{/each}}
-                </select>
               </div>
           </div>
         </form>
@@ -51,8 +40,8 @@
               <input type="checkbox" name="check-all" id="check-all" body-target="#tbody">
             </th>
             <th scope="col" class="product-name-col hide-on-checked">Logo</th>
-            <th scope="col" class="category-col hide-on-checked">Tên danh mục</th>
-            <th scope="col" class="price-col hide-on-checked">Đường dẫn</th>
+            <th scope="col" class="supplier-col hide-on-checked">Tên</th>
+            <th scope="col" class="price-col hide-on-checked">Ngày thêm</th>
             <th scope="col" class="action-col hide-on-checked">  </th>
             <th scope="col" class="amount-col show-on-checked d-none" colspan="2">  </th>
             <th scope="col" class="actions-col text-right show-on-checked d-none" colspan="2">
@@ -61,20 +50,20 @@
           </tr>
         </thead>
         <tbody id="tbody">
-        {{#each categories as |category|}}
+          {{#each suppliers as |supplier|}}
           <tr>
             <td scope="row" class="tick-col">
               <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
             </td>
             <td class="product-name-col">
-              <img style = "width:45px;" src="{{category.logo}}" alt="logo">
+              <img style = "width:45px;" src="{{supplier.image}}" alt="logo">
               </td>
-            <td class="category-col">{{category.name}}</td>
-            <td class="price-col">{{category.parent}} </td>
+            <td class="supplier-col">{{supplier.name}}</td>
+            <td class="price-col">{{convertDate supplier.createdAt}} </td>
             <td class="action-col">
               <div class="d-flex">
-                <a href="/dashboard/categorys/edit/{{category.slug}}" class="btn-outline-main ml-auto mr-2">Sửa</a>
-                <a href="javascript:void(0)" class="btn btn-outline-danger" id="{{category._id}}">Thùng rác</a>
+                <a href="/dashboard/suppliers/edit/{{supplier.slug}}" class="btn-outline-main ml-auto mr-2">Sửa</a>
+                <a href="javascript:void(0)" class="btn btn-outline-danger" id="{{supplier._id}}">Thùng rác</a>
               </div>
             </td>
           </tr>
@@ -84,8 +73,8 @@
         <tr>
           <th>Check</th>
           <th>Logo</th>
-          <th>Tên danh mục</th>
-          <th>Đường dẫn</th>
+          <th>Tên</th>
+          <th>Ngày thêm</th>
           <th> </th>
         </tr>
         </tfoot>
@@ -147,7 +136,7 @@
           images.push($(ele).attr("src"));
         });
         const categories = $("#categories").val();
-        const category = $("#supplier").val();
+        const supplier = $("#supplier").val();
         const name = $("#name").val();
         const originalPrice = $("#price").val();
         const description = $("#description").val();
@@ -156,7 +145,7 @@
 
 
         // post data
-        const API_URL = '/api/categories/';
+        const API_URL = '/api/suppliers/';
         const token = localStorage.getItem("auth_token");
         
 
@@ -174,7 +163,7 @@
           });
 
           alert("Thêm danh mục thành công");
-          location.href = "/dashboard/categories";
+          location.href = "/dashboard/suppliers";
         } catch ({ response }) {
           const errorHTML = response.data.errors.map((current) => {
             return `

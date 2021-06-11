@@ -2,13 +2,11 @@
   <div class="card-header">
     <h3 class="card-title">
       <div class="d-flex">
-        <a href="/dashboard/blogs/add" class="d-block py-2 mr-lg-4 mr-2">Bài viết mới<i
-            class="bi bi-plus-circle-fill text-primary"></i> </a>
-        <a href="/dashboard/blogs/trashbin" class="d-block py-2">Thùng rác ({{trashbinCount}})</a>
+        <a href="/dashboard/blogs/" class="d-block py-2">Đã xuất bản ({{publishesCount}})</a>
       </div>
     </h3>
   </div>
-  <div class="card-body">
+  <div class="card-body table-responsive">
     <table id="example1" class="table table-hover table-striped">
       <thead class="thead-check-all">
         <tr>
@@ -17,7 +15,7 @@
           </th>
           <th scope="col" class="product-name-col hide-on-checked">Tên bài viết</th>
           <th scope="col" class="category-col hide-on-checked">Tác giả</th>
-          <th scope="col" class="price-col hide-on-checked">Ngày tạo</th>
+          <th scope="col" class="price-col hide-on-checked">Ngày tạo </th>
           <th scope="col" class="action-col hide-on-checked"> </th>
           <th scope="col" class="amount-col show-on-checked d-none" colspan="2"> </th>
           <th scope="col" class="actions-col text-right show-on-checked d-none" colspan="2">
@@ -33,16 +31,23 @@
           </td>
           <td class="product-name-col">{{blog.name}}</td>
           <td class="category-col">
-            {{#with (lookup blog.users 0) as |user|}}
-            {{user.name}} 
+            {{#with (lookup blog.users 0) as |author|}}
+            {{author.name}}
             {{/with}}
           </td>
-          <td class="price-col">{{convertDate blog.createdAt}} </td>
+          <td class="price-col">{{convertDate blog.createdAt}}</td>
           <td class="action-col">
             <div class="d-flex">
-              <a href="/dashboard/blogs/edit/{{blog.slug}}" class="btn-outline-main ml-auto mr-2">Sửa</a>
-              <a href="javascript:void(0)" class="btn btn-outline-danger" id="{{blog._id}}">Thùng rác</a>
+              <a href="javascript:void(0)" class="btn-outline-main ml-auto mr-2 restore" id="{{blog._id}}">Khôi
+                phục</a>
+              <a href="javascript:void(0)" class="btn btn-outline-danger delete" id="{{blog._id}}">Xóa</a>
             </div>
+          </td>
+        </tr>
+        {{else}}
+        <tr>
+          <td scope="row" class="bg-white text-center text-main" colspan="5">
+            Chưa có sản phẩm nào
           </td>
         </tr>
         {{/each}}
@@ -50,21 +55,51 @@
       <tfoot>
         <tr>
           <th>Check</th>
-          <th>Tên bài viết</th>
-          <th>Tác giả</th>
-          <th>Ngày tạo</th>
+          <th>Tên sản phẩm</th>
+          <th>Danh mục</th>
+          <th>Đơn giá</th>
           <th> </th>
         </tr>
       </tfoot>
     </table>
   </div>
 </div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     $(document).ready(function () {
       $(".delete").on("click", async function (e) {
         const id = $(this).attr("id");
-        const API_URL = '/api/blogs/' + id;
+        const API_URL = '/api/blogs/' + id + "/force";
+        const token = localStorage.getItem("auth_token");
+
+        console.log(API_URL);
+
+        try {
+          // for loading animation
+          $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+          `);
+
+          const { data } = await axios.delete(API_URL, {
+            headers: {
+              auth_token: token,
+            }
+          });
+
+          alert(data.message);
+          location.href = "/dashboard/blogs/trashbin";
+        } catch ({ response }) {
+          alert(response.data.errors[0]);
+          // end animation when error
+          $(this).html(`Xoá`);
+        }
+      });
+
+      $(".restore").on("click", async function (e) {
+        const id = $(this).attr("id");
+        const API_URL = '/api/blogs/restore/' + id;
         const token = localStorage.getItem("auth_token");
 
         try {
@@ -73,22 +108,23 @@
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Loading...
           `);
-          
-          const {data} = await axios.delete(API_URL, {
+
+          const { data } = await axios.patch(API_URL, {}, {
             headers: {
               auth_token: token,
             }
           });
+
           alert(data.message);
-          location.href = "/dashboard/blogs/trashbin";
-        } catch ({response}) {
+          location.href = "/dashboard/blogs";
+        } catch ({ response }) {
           alert(response.data.errors[0]);
           // end animation when error
-          $(this).html(`Thùng rác`);
+          $(this).html(`Khôi phục`);
         }
       });
     });
   });
 </script>
 
-<div class="gap-lg"></div>
+<div class="gap-md"></div>

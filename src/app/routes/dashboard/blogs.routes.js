@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.render("sites/dashboard/blogs/index");
-});
+const blogController = require('../../controllers/dashboard/blogs.controller');
 
-router.get("/add", (req, res, next) => {
-  res.render("sites/dashboard/blogs/add");
-});
+router.get("/", blogController.index);
 
-router.get("/edit", (req, res, next) => {
-  res.render("sites/dashboard/blogs/edit");
-})
+router.get("/trashbin", blogController.trashbin);
+
+router.get("/add", blogController.add)
+
+router.get("/edit/:slug", blogController.edit)
 
 module.exports = router;

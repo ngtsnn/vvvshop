@@ -3,23 +3,23 @@
     <div class="card card-outline card-info">
       <div class="card-header">
         <h3 class="card-title">
-          Summernote
+          Trang soạn thảo
         </h3>
         <ul class="header-dropdown m-r--5" style="display: inline-block; float: right;">
-          <a id="thembaiviet" href="#" class="btn bg-cyan btn-primary waves-effect m-b-15">
-            ĐĂNG BÀI VIẾT
+          <a id="thembaiviet" href="javascript:void(0)" blog-id="{{blog._id}}" class="btn bg-cyan btn-primary waves-effect m-b-15">
+            LƯU THAY ĐỔI
           </a>
         </ul>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
+        <div class="form-group">
+          <label for="name">Tên bài viết</label>
+          <input type="text" class="form-control" id="name" placeholder="Tên bài viết" value="{{blog.name}}">
+        </div>
         <textarea id="summernote">
           {{!-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
         </textarea>
-      </div>
-      <div class="card-footer">
-        Visit <a href="https://github.com/summernote/summernote/">Summernote</a> documentation for more examples and
-        information about the plugin.
       </div>
     </div>
   </div>
@@ -33,9 +33,19 @@
     });
     $("#thembaiviet").on('click', function (e) {
       e.preventDefault();
-      var html = $('#summernote').summernote('code');
-      console.log(html);
+      const html = $('#summernote').summernote('code');
+      const name = $('#name').val();
+      const body = {name, html}
+      
+      //post data
+      const id = $(this).attr("blog-id");
+      const API_URL = '/api/blogs' + id;
+      const token = localStorage.getItem('auth_token');
+      
+      
+
     });
+
   });
 
 </script>
