@@ -34,12 +34,11 @@ BlogController.prototype.index = async function (req, res, next) {
 BlogController.prototype.trashbin = async function (req, res, next) {
 
   try {
-    let data = await Blog.find({}).select(['name', 'author', 'updatedAt', 'slug']).populate({
-      path: "users",
-      select: "name",
+    let data = await Blog.findDeleted({}).populate({
+      path: 'author',
+      select: 'name',
     });
     const publishes = await Blog.find({});
-    console.log(data)
 
 
     data = ConvertObjects(data);

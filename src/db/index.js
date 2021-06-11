@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const path = require("path");
-require('dotenv').config({path: path.join(__dirname, "../env/.env.dev")});
+require('dotenv').config({path: path.join(__dirname, "../env/.env.staging")});
 
 const connectString = process.env.DB_CONNECT_STRING || "mongodb://localhost:27017/vvvshop-live-dev";
 // const connectString = process.env.DB_CONNECT_STRING || "mongodb+srv://admin:1234@cluster0.eo1f9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
