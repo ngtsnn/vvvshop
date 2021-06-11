@@ -14,6 +14,6 @@ router.get("/", verify, orderController.get);
 router.post("/", verify, orderController.post);
 
 // set deliver status
-router.post("/deliver/:id", isAdmin, orderController.deliver);
+router.patch("/deliver/:id", isAdmin, orderController.deliver);
 
 module.exports = router;
