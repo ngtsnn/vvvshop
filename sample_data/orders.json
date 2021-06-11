@@ -1,0 +1,17 @@
+{
+  "details": [
+    {
+      "product": "60b90d5d2984dcfe9a89cfb5",
+      "quantity": 2
+    }
+  ],
+  "deliver": {
+    "phone": "0328473083",
+    "address": "$89777 Daugherty Center",
+    "note": "khong bat buoc"
+  },
+  "payment": {
+    "transaction_id": "khong bat buoc",
+    "method": "cash"
+  }
+}

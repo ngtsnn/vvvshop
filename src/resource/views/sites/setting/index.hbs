@@ -101,7 +101,7 @@
               }
             });
             localStorage.setItem("auth_token", data);
-            btn.html(` xác nhận `);
+            alert("Thay đổi mật khẩu thành công!!!");
             window.location.href = "/";
           } catch ({ response }) {
             const errorHTML = response.data.errors.map((current) => {

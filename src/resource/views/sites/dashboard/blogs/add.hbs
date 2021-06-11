@@ -6,7 +6,7 @@
           Trang soạn thảo
         </h3>
         <ul class="header-dropdown m-r--5" style="display: inline-block; float: right;">
-          <a id="thembaiviet" href="#" class="btn bg-cyan btn-primary waves-effect m-b-15">
+          <a id="add" href="javascript:void(0)" class="btn bg-cyan btn-primary waves-effect m-b-15">
             ĐĂNG BÀI VIẾT
           </a>
         </ul>
@@ -31,17 +31,47 @@
       // Summernote
       $('#summernote').summernote()
     });
-    $("#thembaiviet").on('click', function (e) {
+    $("#add").on('click',async function (e) {
       e.preventDefault();
       const html = $('#summernote').summernote('code');
       const name = $('#name').val();
-      const body = {name, html}
-      
+      const body = { name, html }
+
       //post data
       const API_URL = '/api/blogs';
       const token = localStorage.getItem('auth_token');
-      
-      
+
+      try {
+        // for loading animation
+        $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        `);
+
+        const { data } = await axios.post(API_URL, body, {
+          headers: {
+            auth_token: token,
+          }
+        });
+
+        alert("Thêm bài viết thành công");
+        location.href = "/dashboard/suppliers";
+      } catch ({ response }) {
+        const errorHTML = response.data.errors.map((current) => {
+          return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+        });
+        $("#error-box").html(errorHTML);
+        // end animation when error
+        $(this).html(`Thêm bài viết`);
+      }
+
 
     });
 

@@ -12,31 +12,30 @@
         </div>
         <form method="POST" onsubmit="event.preventDefault();">
           <div class="col-md-12">
-              <div class="form-group">
-                <label for="name">Tên danh mục</label>
-                <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm">
-              </div>
-              <div class="form-group">
-                <label class="d-block" for="images">Logo</label>
-                <div class="preview-images mb-2" id="preview-images">
+            <div class="form-group">
+              <label for="name">Tên danh mục</label>
+              <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm">
+            </div>
+            <div class="form-group">
+              <label class="d-block" for="images">Logo</label>
+              <div class="preview-image lg has-bg mb-2 ml-0" id="preview-image">
 
-                </div>
-                <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn">
-                  <label for="images" class="d-inline-block">Tải ảnh lên</label>
-                </a>
-                <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
               </div>
-              <div class="form-group">
-                <label for="categories">Danh mục cha</label>
-                <select class="select2bs4 select2-hidden-accessible select3" multiple=""
-                  data-placeholder="Chọn danh mục" style="width: 100%;" data-select2-id="23" tabindex="-1"
-                  aria-hidden="true" id="categories">
-                  <option>Chọn danh mục</option>
-                  {{#each categories as |cate|}}
-                  <option value="{{cate._id}}">{{cate.name}}</option>
-                  {{/each}}
-                </select>
-              </div>
+              <a id="imgs-uploader" href="javascript:void(0)" class="img-upload-btn">
+                <label for="images" class="d-inline-block">Tải ảnh lên</label>
+              </a>
+              <input type="file" name="images[]" id="images" class="d-none" accept="image/*">
+            </div>
+            <div class="form-group">
+              <label for="categories">Danh mục cha</label>
+              <select class="select2bs4 select2-hidden-accessible select3" data-placeholder="Chọn danh mục"
+                style="width: 100%;" data-select2-id="23" tabindex="-1" aria-hidden="true" id="parent">
+                <option value="">Chọn danh mục</option>
+                {{#each parents as |cate|}}
+                <option value="{{cate.tree}}">{{cate.name}}</option>
+                {{/each}}
+              </select>
+            </div>
           </div>
         </form>
       </div>
@@ -53,24 +52,24 @@
             <th scope="col" class="product-name-col hide-on-checked">Logo</th>
             <th scope="col" class="category-col hide-on-checked">Tên danh mục</th>
             <th scope="col" class="price-col hide-on-checked">Đường dẫn</th>
-            <th scope="col" class="action-col hide-on-checked">  </th>
-            <th scope="col" class="amount-col show-on-checked d-none" colspan="2">  </th>
+            <th scope="col" class="action-col hide-on-checked"> </th>
+            <th scope="col" class="amount-col show-on-checked d-none" colspan="2"> </th>
             <th scope="col" class="actions-col text-right show-on-checked d-none" colspan="2">
               <a href="#" class="text-main">Di chuyển vào thùng rác</a>
             </th>
           </tr>
         </thead>
         <tbody id="tbody">
-        {{#each categories as |category|}}
+          {{#each categories as |category|}}
           <tr>
             <td scope="row" class="tick-col">
               <input type="checkbox" name="check-arr[]" class="check-ele" id="check-ele-1">
             </td>
             <td class="product-name-col">
-              <img style = "width:45px;" src="{{category.logo}}" alt="logo">
-              </td>
+              <img style="width:45px;" src="{{category.logo}}" alt="logo">
+            </td>
             <td class="category-col">{{category.name}}</td>
-            <td class="price-col">{{category.parent}} </td>
+            <td class="price-col">{{category.tree}} </td>
             <td class="action-col">
               <div class="d-flex">
                 <a href="/dashboard/categorys/edit/{{category.slug}}" class="btn-outline-main ml-auto mr-2">Sửa</a>
@@ -81,17 +80,17 @@
           {{/each}}
         </tbody>
         <tfoot>
-        <tr>
-          <th>Check</th>
-          <th>Logo</th>
-          <th>Tên danh mục</th>
-          <th>Đường dẫn</th>
-          <th> </th>
-        </tr>
+          <tr>
+            <th>Check</th>
+            <th>Logo</th>
+            <th>Tên danh mục</th>
+            <th>Đường dẫn</th>
+            <th> </th>
+          </tr>
         </tfoot>
       </table>
 
-        
+
     </div>
   </div>
 </div>
@@ -100,10 +99,10 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     $(document).ready(function () {
-      $('.select3').select2({theme: 'bootstrap4'});
+      $('.select3').select2({ theme: 'bootstrap4' });
 
       $(document).on("click", ".preview-image .close-btn", function () {
-        const parents = $(this).parents(".preview-image");
+        const parents = $(this).parents(".img-box");
         parents.slideUp(400);
         setTimeout(() => {
           parents.remove();
@@ -115,21 +114,19 @@
         reader.onload = function () {
           const src = reader.result;
           const html = `
-            <div class="preview-image">
-              <div class="img-box">
-                <div class="close-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
-                    viewBox="0 0 16 16">
-                    <path
-                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                  </svg>
-                </div>
-                <img src="${src}" alt="vvvimg" />
+            <div class="img-box">
+              <div class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
               </div>
+              <img src="${src}" alt="vvvimg" />
             </div>
           `;
-
-          $("#preview-images").append(html);
+          
+          $("#preview-image").html(html);
         }
         reader.readAsDataURL(event.target.files[0]);
         $("#images").val("");
@@ -142,23 +139,23 @@
       $("#add").on("click", async function () {
 
         // get data
-        let images = [];
-        $(".preview-image img").each((i, ele) => {
-          images.push($(ele).attr("src"));
-        });
-        const categories = $("#categories").val();
-        const category = $("#supplier").val();
+        let logo;
+        if ($("#preview-image img").length){
+          logo = $("#preview-image img").attr("src");
+        } else {
+          logo = "http://placeimg.com/640/480/cats";
+        }
         const name = $("#name").val();
-        const originalPrice = $("#price").val();
-        const description = $("#description").val();
+        const parent = $("#parent").val();
 
-        const body = { name, images, categories, supplier, originalPrice, description };
+        const body = { name, logo, parent };
+        console.log(body);
 
 
         // post data
         const API_URL = '/api/categories/';
         const token = localStorage.getItem("auth_token");
-        
+
 
         try {
           // for loading animation
@@ -188,7 +185,7 @@
           });
           $("#error-box").html(errorHTML);
           // end animation when error
-          $(this).html(`Thêm sản phẩm`);
+          $(this).html(`Thêm danh mục`);
         }
       });
     });

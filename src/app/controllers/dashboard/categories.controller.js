@@ -14,13 +14,15 @@ const CategoryController = function () {
 CategoryController.prototype.index = async function (req, res, next) {
 
   try {
-    let data = await Category.find({}).select(['name', 'logo', 'parent', 'slug']);
+    let data = await Category.find({}).select(['name', 'logo', 'parent', 'slug', 'tree']);
     const deletes = await Category.findDeleted({});
     
     data = ConvertObjects(data);
+    const parents = data.filter(d => d.parent === "");
     
     res.status(200).render("sites/dashboard/categories/index", {
       categories: data,
+      parents,
       trashbinCount: deletes.length,
     });
   } catch (error) {

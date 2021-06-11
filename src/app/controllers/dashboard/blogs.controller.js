@@ -15,7 +15,7 @@ const BlogController = function () {
 BlogController.prototype.index = async function (req, res, next) {
   try {
     let data = await Blog.find({}).populate({
-      path: 'users',
+      path: 'author',
       select: 'name',
     });
     const deletes = await Blog.findDeleted({});

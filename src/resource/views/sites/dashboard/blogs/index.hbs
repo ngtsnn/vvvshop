@@ -33,9 +33,7 @@
           </td>
           <td class="product-name-col">{{blog.name}}</td>
           <td class="category-col">
-            {{#with (lookup blog.users 0) as |user|}}
-            {{user.name}} 
-            {{/with}}
+            {{blog.author.name}}
           </td>
           <td class="price-col">{{convertDate blog.createdAt}} </td>
           <td class="action-col">
