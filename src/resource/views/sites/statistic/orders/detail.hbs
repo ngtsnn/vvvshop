@@ -1,0 +1,170 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- Profile Image -->
+    <div class="card card-info card-outline">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills d-flex justify-content-between flex-wrap px-3">
+          <li class="nav-item">
+            Trạng thái đơn hàng:
+          </li>
+          <li class="nav-item text-main">
+            {{order.deliver.status}}
+          </li>
+        </ul>
+      </div><!-- /.card-header -->
+      <div class="card-body box-profile">
+        <div class="row">
+          <div class="col-lg-3 mb-2">
+            <div class="preview-image lg has-bg circle mx-auto mb-2" id="preview-image">
+              <div class="img-box">
+                <img src="{{order.user.avatar}}" alt="vvvimg" />
+              </div>
+            </div>
+            <div class="text-center mb-2">
+              {{order.user.name}}
+            </div>
+            {{#if (compare order.deliver.status "delivering")}}
+            <div class="d-flex justify-content-around flex-wrap">
+              <a href="javascript:void(0)" class="btn btn-outline-danger" order-id="{{order._id}}" id="cancel">Hủy</a>
+              <a href="javascript:void(0)" class="btn-outline-main" order-id="{{order._id}}" id="delivered">Đã chuyển</a>
+            </div>
+            {{else}}
+            <div class="text-center">
+              {{order.deliver.status}}
+            </div>
+            {{/if}}
+          </div>
+
+          <div class="col-lg-9">
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <div class="tab-pane" id="settings">
+                  <table id="example1" class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="tick-col">
+                          #
+                        </th>
+                        <th scope="col" class="product-name-col hide-on-checked">Tên sản phẩm</th>
+                        <th scope="col" class="category-col hide-on-checked">Hình ảnh </th>
+                        <th scope="col" class="price-col hide-on-checked">Số lượng</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody">
+                      {{#each order.details as |detail|}}
+                      <tr>
+                        <td scope="row" class="tick-col">
+                          {{add @index 1}}
+                        </td>
+                        <td class="product-name-col">{{detail.product.name}}</td>
+                        <td class="category-col">
+                          {{#with (lookup detail.product.images 0) as |src|}}
+                          <div class="preview-image">
+                            <div class="img-box">
+                              <img src="{{src}}" alt="vvvimg"/>
+                            </div>
+                          </div>
+                          {{/with}}
+                        </td>
+                        <td class="price-col"> {{detail.quantity}} </td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+            </div>
+            <!-- /.tab-content -->
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div><!-- /.container-fluid -->
+  <div class="gap-md"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      $(document).ready(function () {
+
+        $("#cancel").on("click", async function () {
+
+
+          // post data
+          const id = $(this).attr("order-id");
+          const API_URL = '/api/orders/deliver/' + id;
+          const token = localStorage.getItem("auth_token");
+          console.log(API_URL);
+
+
+          try {
+            // for loading animation
+            $(this).html(`
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            `);
+
+            const { data } = await axios.patch(API_URL, {
+              status: "canceled",
+            }, {
+              headers: {
+                auth_token: token,
+              }
+            });
+
+            alert("Hủy đơn hàng thành công");
+            location.href = '/statistic/orders';
+          } catch ({ response }) {
+            alert("Hủy đơn hàng thất bại");
+            // end animation when error
+            $(this).html(`Hủy`);
+          }
+        });
+
+        $("#delivered").on("click", async function () {
+
+
+          // post data
+          const id = $(this).attr("order-id");
+          const API_URL = '/api/orders/deliver/' + id;
+          const token = localStorage.getItem("auth_token");
+          console.log(API_URL);
+
+
+          try {
+            // for loading animation
+            $(this).html(`
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            `);
+
+            const { data } = await axios.patch(API_URL, {
+              status: "delivered",
+            }, {
+              headers: {
+                auth_token: token,
+              }
+            });
+
+            alert("Thay đổi trạng thái đơn hàng thành công");
+            location.href = '/statistic/orders';
+          } catch ({ response }) {
+            alert("Thay đổi trạng thái đơn hàng thất bại");
+            // end animation when error
+            $(this).html(`Đã chuyển`);
+          }
+        });
+      });
+    });
+  </script>
+</section>
