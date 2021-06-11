@@ -55,7 +55,7 @@
         });
 
         alert("Thêm bài viết thành công");
-        location.href = "/dashboard/suppliers";
+        location.href = "/dashboard/blogs";
       } catch ({ response }) {
         const errorHTML = response.data.errors.map((current) => {
           return `

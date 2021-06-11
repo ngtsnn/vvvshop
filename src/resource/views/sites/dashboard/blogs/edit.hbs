@@ -6,7 +6,8 @@
           Trang soạn thảo
         </h3>
         <ul class="header-dropdown m-r--5" style="display: inline-block; float: right;">
-          <a id="thembaiviet" href="javascript:void(0)" blog-id="{{blog._id}}" class="btn bg-cyan btn-primary waves-effect m-b-15">
+          <a id="thembaiviet" href="javascript:void(0)" blog-id="{{blog._id}}"
+            class="btn bg-cyan btn-primary waves-effect m-b-15">
             LƯU THAY ĐỔI
           </a>
         </ul>
@@ -18,7 +19,7 @@
           <input type="text" class="form-control" id="name" placeholder="Tên bài viết" value="{{blog.name}}">
         </div>
         <textarea id="summernote">
-          {{!-- Place <em>some</em> <u>text</u> <strong>here</strong> --}}
+          {{{blog.html}}}
         </textarea>
       </div>
     </div>
@@ -31,18 +32,49 @@
       // Summernote
       $('#summernote').summernote()
     });
-    $("#thembaiviet").on('click', function (e) {
+    $("#thembaiviet").on('click', async function (e) {
       e.preventDefault();
       const html = $('#summernote').summernote('code');
       const name = $('#name').val();
-      const body = {name, html}
-      
+      const body = { name, html }
+
       //post data
       const id = $(this).attr("blog-id");
-      const API_URL = '/api/blogs' + id;
+      const API_URL = '/api/blogs/' + id;
       const token = localStorage.getItem('auth_token');
-      
-      
+
+
+      try {
+        // for loading animation
+        $(this).html(`
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        `);
+
+        const { data } = await axios.put(API_URL, body, {
+          headers: {
+            auth_token: token,
+          }
+        });
+
+        alert("Chỉnh sửa bài viết thành công");
+        location.href = "/dashboard/blogs";
+      } catch ({ response }) {
+        const errorHTML = response.data.errors.map((current) => {
+          return `
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ${current} </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            `;
+        });
+        $("#error-box").html(errorHTML);
+        // end animation when error
+        $(this).html(`Lưu thay đổi`);
+      }
+
 
     });
 

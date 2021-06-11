@@ -265,10 +265,10 @@ AuthController.prototype.resetPassword = async function (req, res, next) {
 
     // create token
     const token = jwt.sign({
-      _id: result._id,
-      role: result.role,
-      name: result.name,
-      avatar: result.avatar,
+      _id: user._id,
+      role: user.role,
+      name: user.name,
+      avatar: user.avatar,
     }, process.env.SECRET_KEY || "DevSecretKey", { expiresIn: '1d' });
 
     res.header("auth_token", token).cookie('auth_token', token, { expires: new Date(Date.now() + 86400000), }).status(200).json({ "auth_token": token });

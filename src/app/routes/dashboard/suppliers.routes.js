@@ -9,6 +9,6 @@ router.get("/", supplierController.index);
 
 // router.get("/add", supplierController.add)
 
-// router.get("/edit/:slug", supplierController.edit);
+router.get("/:slug", supplierController.edit);
 
 module.exports = router;

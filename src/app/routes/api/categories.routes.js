@@ -7,10 +7,14 @@ const { isAdmin } = require("../../../utility/middlewares/app/verify.middleware"
 
 // get
 router.get("/", categoryController.get);
+
 // get
 router.get("/:id", categoryController.getOne);
 
 // post
 router.post("/", isAdmin, categoryController.post);
+
+// put
+router.put("/:id", categoryController.put);
 
 module.exports = router;

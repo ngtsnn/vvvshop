@@ -101,4 +101,46 @@ SupplierController.prototype.post = async function (req, res, next) {
 
 }
 
+// [PUT] /api/suppliers/:id
+SupplierController.prototype.put = async function (req, res, next) {
+  const newSupplier = new Supplier(req.body);
+  const {id} = req.params;
+
+  // validate
+  let errs = [];
+
+  // check name
+  if(!newSupplier.name || validator.isEmpty(newSupplier.name)){
+    errs.push("Tên nhà cung cấp là trường bắt buộc");
+  }
+
+
+  try {
+    const foundSupplier = await Supplier.findOne({name: newSupplier.name});
+    if (foundSupplier){
+      errs.push("nhà cung cấp đã tồn tại!");
+    }
+  } catch (error) {
+    res.status(500).json({errors: ["đã có lỗi xảy ra, vui lòng thử lại sau!"]});
+  }
+
+  if (errs.length){
+    res.status(400).json({errors: errs});
+    return;
+  }
+
+
+  // add data
+  try {
+    const supplier = await Supplier.findOne({_id: id});
+    supplier.name = newSupplier.name;
+    supplier.image = newSupplier.image;
+    const result = await supplier.save();
+    res.status(200).json({message: "Chỉnh sửa nhà cung cấp thành công!!"});
+  } catch (error) {
+    res.status(500).json({errors: ["đã có lỗi xảy ra, vui lòng thử lại sau!"]});
+  }
+
+}
+
 module.exports = new SupplierController();

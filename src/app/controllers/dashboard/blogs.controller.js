@@ -75,15 +75,13 @@ BlogController.prototype.edit = async function (req, res, next) {
   const {slug} = req.params;
 
   try {
-    let blogs = await Blog.findOne({slug});
-    let users = await User.find({}).select(['name']);
+    let blog = await Blog.findOne({slug});
     
-    users = ConvertObjects(users);
-    blogs = ConvertObject(blogs);
+    blog = ConvertObject(blog);
+
     
     res.status(200).render("sites/dashboard/blogs/edit", {
-      users,
-      blogs,
+      blog,
     });
   } catch (error) {
     res.status(500).redirect('/500');

@@ -377,7 +377,7 @@ ProductController.prototype.delete = async function (req, res, next) {
   try {
     const data = await Product.findOne({ _id: id });
     const result = await data.delete();
-    res.status(200).json({ message: "Xóa vĩnh viễn thành công, bạn không thể hoàn tác" });
+    res.status(200).json({ message: "Di chuyển vào thùng rác thành công" });
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
   }
@@ -395,7 +395,7 @@ ProductController.prototype.deleteForce = async function (req, res, next) {
   try {
     const data = await Product.findOneDeleted({ _id: id });
     const result = await data.deleteOne();
-    res.status(200).json({ message: "Xóa thành công" });
+    res.status(200).json({ message: "Xóa vĩnh viễn thành công, bạn không thể hoàn tác" });
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
   }

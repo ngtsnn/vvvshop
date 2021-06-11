@@ -29,7 +29,7 @@ const capitalize = function (string) {
 
 const URLToRoutes = (prev, curr) => { // prev = dashboard; curr = blogs
   return [...prev, {
-    breadcrumbTitle: capitalize(engToVie[curr.toLowerCase()] || ""), // Tin tức
+    breadcrumbTitle: capitalize(engToVie[curr.toLowerCase()] || curr), // Tin tức
     url: (prev[prev.length - 1].url === "/" ? "" : prev[prev.length - 1].url) + "/" + curr, // /dashboard/blogs
   }]
 }
@@ -43,8 +43,8 @@ const sliceURL = function (req, res, next){
     url: "/",
   }]);
 
-  const result = routeArr.map((ele) => {
-    if (ele.breadcrumbTitle === "")
+  const result = routeArr.map((ele, index) => {
+    if (ele.breadcrumbTitle === "" && index === 1)
       routeArr = [];
   })
 

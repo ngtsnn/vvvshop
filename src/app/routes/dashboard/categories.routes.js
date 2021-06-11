@@ -9,6 +9,6 @@ router.get("/", CategoryController.index);
 
 // router.get("/add", CategoryController.add)
 
-// router.get("/edit/:slug", CategoryController.edit)
+router.get("/*", CategoryController.edit)
 
 module.exports = router;
