@@ -19,12 +19,7 @@ module.exports = {
   add: (a, b) => a + b,
   convertDate: date => {
     const newDate = new Date(date);
-    const hour = to2digit(newDate.getHours());
-    const minute = to2digit(newDate.getMinutes());
-    const day = to2digit(newDate.getDay());
-    const month = to2digit(newDate.getMonth());
-    const year = newDate.getFullYear();
-    return `${hour}:${minute} ${day}/${month}/${year}`;
+    return `${newDate.toLocaleDateString()}`;
   }
   // show: (ele, arr) => {
   //   console.log(arr);
