@@ -187,8 +187,8 @@ ProductController.prototype.post = async function (req, res, next) {
     errs.push("Sản phẩm phải có ít nhất 1 danh mục");
   }
 
-  if (errs.length){
-    res.status(400).json({errors: errs});
+  if (errs.length) {
+    res.status(400).json({ errors: errs });
   }
 
   // check categories
@@ -213,7 +213,7 @@ ProductController.prototype.post = async function (req, res, next) {
     } catch (error) {
       res.status(500).json({ errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau!"] });
     }
-  } else{
+  } else {
     errs.push("Sản phẩm phải có nhà cung cấp")
   }
 
@@ -285,8 +285,8 @@ ProductController.prototype.put = async function (req, res, next) {
     errs.push("Sản phẩm phải có ít nhất 1 danh mục");
   }
 
-  if (errs.length){
-    res.status(400).json({errors: errs});
+  if (errs.length) {
+    res.status(400).json({ errors: errs });
   }
 
   // check categories
@@ -311,7 +311,7 @@ ProductController.prototype.put = async function (req, res, next) {
     } catch (error) {
       res.status(500).json({ errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau!"] });
     }
-  } else{
+  } else {
     errs.push("Sản phẩm phải có nhà cung cấp")
   }
 
@@ -330,17 +330,17 @@ ProductController.prototype.put = async function (req, res, next) {
 
 
   try {
-    let oldProduct = await Product.findOne({_id: id});
+    let oldProduct = await Product.findOne({ _id: id });
     oldProduct.name = newProduct.name;
     oldProduct.images = newProduct.images;
     oldProduct.description = newProduct.description;
     oldProduct.properties = newProduct.properties;
     oldProduct.categories = newProduct.categories;
     oldProduct.supplier = newProduct.supplier;
-    
+
     const result = await oldProduct.save();
     res.status(200);
-    res.json({message: "Chỉnh sửa thông tin sản phẩm thành công"});
+    res.json({ message: "Chỉnh sửa thông tin sản phẩm thành công" });
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
     next(error)
@@ -399,6 +399,24 @@ ProductController.prototype.deleteForce = async function (req, res, next) {
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
   }
+}
+
+// [POST] /api/products/cart
+ProductController.prototype.findByCart = async function (req, res, next) {
+  const {ids} = req.body;
+
+  if (!ids.length) {
+    res.status(400).json({ errors: ["Đã có lỗi xảy ra, vui lòng thử lại sau"] });
+    return;
+  }
+
+  try {
+    const data = await Product.findOne({ _id: { $in: ids } });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });
+  }
+
 }
 
 

@@ -18,7 +18,7 @@ router.get("/", productControllers.get);
 // post
 router.post("/", isAdmin, productControllers.post);
 
-// post
+// put
 router.put("/:id", isAdmin, productControllers.put);
 
 // restore
@@ -29,5 +29,8 @@ router.delete("/:id", isAdmin, productControllers.delete);
 
 // delete
 router.delete("/:id/force", isSuperAdmin, productControllers.deleteForce);
+
+// post
+router.post("/cart", productControllers.findByCart);
 
 module.exports = router;
