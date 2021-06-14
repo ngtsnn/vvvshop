@@ -10,6 +10,7 @@ const adminRoutes = require('./admins.routes');
 const statisticRoutes = require('./statistic/index.routes');
 const settingRoutes = require('./settings.routes');
 const authRoutes = require('./auth/index.routes');
+const uploadRoutes = require('./upload.routes');
 
 
 
@@ -38,6 +39,9 @@ module.exports = function (app) {
   app.get('/500', verifyInDashboard, (req, res, next) => {
     return res.render("sites/500");
   });
+
+  // /setting
+  app.use('/upload', verifyInDashboard, uploadRoutes);
 
   // home page
   app.get('/', verifyInDashboard, (req, res, next) => {

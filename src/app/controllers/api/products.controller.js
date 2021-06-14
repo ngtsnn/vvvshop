@@ -411,7 +411,7 @@ ProductController.prototype.findByCart = async function (req, res, next) {
   }
 
   try {
-    const data = await Product.findOne({ _id: { $in: ids } });
+    const data = await Product.find({ _id: { $in: ids } });
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ errors: ["Đã có lỗi xảy ra vui lòng thử lại sau!"] });

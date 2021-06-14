@@ -6,6 +6,16 @@ const User = require("../../models/user.model");
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 
+// for cloudinary
+const cloudinary = require("cloudinary").v2;
+// all these sample key and secret apis are not existed.
+// please create accout and put your owns to env file;
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_NAME || 'sample', 
+  api_key: process.env.CLOUDINARY_API_KEY || '874837483274837', 
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'a676b67565c6767a6767d6767f676fe1',
+});
+
 
 const UserController = function () {
 
@@ -119,6 +129,24 @@ UserController.prototype.addAdmin = async function (req, res, next) {
     }
   } catch (error) {
     newUser.role = "admin";
+  }
+
+  if (newUser.avatar){
+    // cloudinary.uploader.upload(newUser.avatar, (error, result) => {
+    //   if (error) {
+    //     newUser.avatar = "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-3&_nc_sid=7206a8&_nc_ohc=kD8TgOu1pzYAX8JAzIl&_nc_ht=scontent.fsgn5-6.fna&oh=81482383c01711bdee6a54cf816d5d9c&oe=60E7F2F8";
+    //   } else {
+    //     console.log(result);
+    //   }
+    // })
+    
+    try {
+      const result = await cloudinary.uploader.upload(newUser.avatar);
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+      newUser.avatar = "https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-3&_nc_sid=7206a8&_nc_ohc=kD8TgOu1pzYAX8JAzIl&_nc_ht=scontent.fsgn5-6.fna&oh=81482383c01711bdee6a54cf816d5d9c&oe=60E7F2F8";
+    }
   }
 
 
