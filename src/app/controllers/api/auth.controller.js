@@ -167,8 +167,12 @@ AuthController.prototype.forgot = async function (req, res, next) {
     }
 
     if (user.role === "admin" || user.role === "super admin"){
-      baseURL = process.env.HOST_BASE_URL + "auth/"
+      baseURL = process.env.HOST_BASE_URL + "auth/";
+    } else {
+      baseURL = process.env.USER_BASE_URL;
     }
+
+    console.log(baseURL);
 
     // set up google tokens
     const oAuth2token = await new google.auth.OAuth2(process.env.GOOGLEAPI_CLIENT_ID, process.env.GOOGLEAPI_CLIENT_SECRET, process.env.GOOGLEAPI_REDIRECT_URI);
@@ -198,12 +202,15 @@ AuthController.prototype.forgot = async function (req, res, next) {
       },
     });
 
+    console.log(`${baseURL}reset/${token}`);
+
+
     // create mail option
     const option = {
       from: '"VVVShop 👻" <tusocnau@gmail.com>', // sender address
       to: email, // list of receivers
       subject: "[reset password] VVVShop đặt lại mật khẩu - do not reply", // Subject line
-      html: `<p>Chào quý khách,</p><p>Chúng tôi đã tiếp nhận yêu cầu đặt lại mật khẩu của quý khách. Đây là mail tự động, vui lòng không phản hồi lại email này. Để đặt lại mật khẩu, quý khách vui lòng truy cập tại <a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">đây</a>&nbsp;và điền đầy đủ thông tin sau đó nhấn xác nhận.&nbsp;</p><p>Lưu ý: Quý khách chỉ có 15 phút kể từ lúc email này được gửi để xác nhận thay đổi mật khẩu. Sau thời gian này, đường dẫn trên sẽ không còn tác dụng.</p><p>Nếu có lỗi xảy ra, hãy truy cập đường dẫn này:&nbsp;<a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">${baseURL || "http://localhost:3001/"}reset/${token}</a></p><p>Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của chúng tôi,</p><p>Trân trọng,</p><p>VVVShop<br></p><p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p><p><br></p><p>Dear our customer,</p><p>We have recently received your request about resetting your password. This is an automated message, please not to reply directly to this email. In order proceed your password reset, click <a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank">here</a>,&nbsp;fulfill your form and submit it.&nbsp;</p><p>Note: You only have 15 minutes to complete your settings. After that, the url will no longer be available.</p><p>If any errors occur on this link, please access via this url:&nbsp;<a href="${baseURL || "http://localhost:3001/"}reset/${token}" target="_blank" style="font-size: 1rem; text-decoration-line: underline; color: rgb(0, 86, 179); background-color: rgb(255, 255, 255);">${baseURL || "http://localhost:3001/"}reset/${token}</a></p><p>Thanks for using our services.</p><p>Best regards,</p><p>VVVShop</p>`, // html body
+      html: `<p>Chào quý khách,</p><p>Chúng tôi đã tiếp nhận yêu cầu đặt lại mật khẩu của quý khách. Đây là mail tự động, vui lòng không phản hồi lại email này. Để đặt lại mật khẩu, quý khách vui lòng truy cập tại <a href="${baseURL}reset/${token}" target="_blank">đây</a>&nbsp;và điền đầy đủ thông tin sau đó nhấn xác nhận.&nbsp;</p><p>Lưu ý: Quý khách chỉ có 15 phút kể từ lúc email này được gửi để xác nhận thay đổi mật khẩu. Sau thời gian này, đường dẫn trên sẽ không còn tác dụng.</p><p>Nếu có lỗi xảy ra, hãy truy cập đường dẫn này:&nbsp;<a href="${baseURL}reset/${token}" target="_blank">${baseURL}reset/${token}</a></p><p>Cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của chúng tôi,</p><p>Trân trọng,</p><p>VVVShop<br></p><p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p><p><br></p><p>Dear our customer,</p><p>We have recently received your request about resetting your password. This is an automated message, please not to reply directly to this email. In order proceed your password reset, click <a href="${baseURL}reset/${token}" target="_blank">here</a>,&nbsp;fulfill your form and submit it.&nbsp;</p><p>Note: You only have 15 minutes to complete your settings. After that, the url will no longer be available.</p><p>If any errors occur on this link, please access via this url:&nbsp;<a href="${baseURL}reset/${token}" target="_blank" style="font-size: 1rem; text-decoration-line: underline; color: rgb(0, 86, 179); background-color: rgb(255, 255, 255);">${baseURL}reset/${token}</a></p><p>Thanks for using our services.</p><p>Best regards,</p><p>VVVShop</p>`, // html body
     }
 
     // send mail
